@@ -18,170 +18,80 @@ namespace Reluare_priectre
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static public Game1 game;
 
         public Game1()
         {
+            game = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
-        public class Proiectil
-        {
-            public Vector2 poz;
-            public int tip_p;
-            public float fx, fy;
-            public int pow;
-            public int t;
-        }
-        public class Componenta
-        {
-            public Texture2D T;
-            public int pow;
-            public int v;
-            public int eng;
-            public int nr;
-            public int proi;
-        }
-        public class Nava
-        {
-            public Vector2 poz;
-            public int[,] comp;
-            public int[,] viata;
-            public float rot;
-            public int pow;
-            public int eng;
-            public int eng_m;
-            public int nr_c;
-        }
-        public class Creatura
-        {
-            public int[] parti;
-            public float[] rot;
-            public int[] tip_parti;
-            public Vector2 poz;
-            public int pow;
-            public int r;
-            public SpriteEffects fata;
-            public int orientare;
-            public int viata;
-            public float mers;
-            public float fx, fy;
-            public int inteligenta;
-            public int agresiune;
-            public string nume;
-
-            public int X, Y; ///pozitia picioarelor pe planeta
-            public int xx, yy; ///pozitia "casei" 
-
-            public Creatura()
-            {
-                this.rot = new float[10];
-            }
-        }
-
-        public class Planeta
-        {
-            public int[,] a, b, apa;  /// a-element, b-"viata" 
-            public int[] ord_elm;
-            public Creatura[] creaturi;
-            public int inaltime;
-            public int ar, ge, be;     ///Culoarea cerului pe timp de zii
-            public Vector3 V_SKY;
-            public Vector3 SKY;
-            public float timp;
-            public int forta;
-            public int temperatura_z, temperatura_n;
-            public int MOON;
-            public int nr_creaturi;
-
-            public Planeta()
-            {
-                this.a = new int[300, 300];
-                this.b = new int[300, 300];
-                this.apa = new int[300, 300];
-            }
-        }
-        public class LocPlaneta
-        {
-            public int[] ord_elm;
-            public int MOON;
-            public int ID;
-            public Vector2 poz;
-            public string NUME;
-            public int SALVAT;
-            public int ar, ge, be;     ///Culoarea cerului pe timp de zii   
-            public int temperatura_z;
-            public int forta;
-            public int R; //raza fata de soare
-            public int p_orb; // planeta de care orbiteaza
-            public float ung; // unghiul la care se afla planeta fata de soare/planeta
-        }
-
         #region VARIABILE
-        string saveDir;
+        static public string saveDir;
 
-        public Texture2D[] BACK_IMG = new Texture2D[40];
-        public Texture2D MOUSE_T;
-        public Texture2D[,] MENIU_TEX;
-        public int L_BACK;
-        public int N_BACK = 6;
-        public int MENU = 3;
-        public int MENU_AUX;
-        public int[] d1 = { 0, 1, 0, -1, 1, 1, -1, -1 }, d2 = { -1, 0, 1, 0, 1, -1, 1, -1 };//SA NU SCHIMB DIRECTIILE!
-        public int[] OBTIUNI = { 0, 768, 1366, 0, 1 };
-        public int TIME = 0;
-        public Vector2 PL_P_E;
-        public Vector2 MOUSE_P;
-        public Vector2 WINDOW_REZ;
-        public Vector2 MENIU_VECTOR;
-        public bool BUTON_A_1 = false;
-        public bool BUTON_A_2 = false;
-        public bool BUTON_A_3 = false;
-        public string[] CHAT = new string[10];
-        public Random ran = new Random();
+        static public Texture2D[] BACK_IMG = new Texture2D[40];
+        static public Texture2D MOUSE_T;
+        static public Texture2D[,] MENIU_TEX;
+        static public int L_BACK;
+        static public int N_BACK = 6;
+        static public int MENU = 3;
+        static public int MENU_AUX;
+        static public int[] d1 = { 0, 1, 0, -1, 1, 1, -1, -1 }, d2 = { -1, 0, 1, 0, 1, -1, 1, -1 };//SA NU SCHIMB DIRECTIILE!
+        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1 };
+        static public int TIME = 0;
+        static public Vector2 PL_P_E;
+        static public Vector2 MOUSE_P;
+        static public Vector2 WINDOW_REZ;
+        static public Vector2 MENIU_VECTOR;
+        static public bool BUTON_A_1 = false;
+        static public bool BUTON_A_2 = false;
+        static public bool BUTON_A_3 = false;
+        static public string[] CHAT = new string[10];
+        static public Random ran = new Random();
 
-        private SpriteFont[] font = new SpriteFont[10];
-        private int nr_FOTNTS;
+        static public SpriteFont[] font = new SpriteFont[10];
+        static public int nr_FOTNTS;
 
-        public Nava PL = new Nava();
-
-
-        public Componenta[] comp;
-        public int NR_comp = 16;
-        public Texture2D[] items;
-        public int NR_subs = 5;
-        public int NR_elem = 22;
-        public int NR_item = 9;
-        public int[] inventar;
-        public int COMP_A = 0;
+        static public Nava PL = new Nava();
 
 
-        public int ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
-        public float ZOOM = 1;
+        static public Componenta[] comp;
+        static public int NR_comp = 16;
+        static public Texture2D[] items;
+        static public int NR_subs = 5;
+        static public int NR_elem = 22;
+        static public int NR_item = 9;
+        static public int[] inventar;
+        static public int COMP_A = 0;
 
 
-        public Proiectil[] LAS = new Proiectil[100000];
-        public Texture2D[] LAS_T = new Texture2D[10];
-        public int NR_PRO = 0;
-        public bool LAS_A = false;
+        static public int ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
+        static public float ZOOM = 1;
 
-        public Texture2D[,] PAR_C;
-        public int NR_PARTI = 4;
-        public Creatura PL_P = new Creatura();
 
-        public Planeta PLA_S = new Planeta();
-        public LocPlaneta[] L_PLA = new LocPlaneta[1000];
-        public Texture2D[] MOONS = new Texture2D[4];
-        public int nr_PLA_S = 1;
-        public int PLA_A = 1;
-        public Texture2D[,] PLA_T;
-        public Texture2D[] PLA_TEX = new Texture2D[10];
+        static public Proiectil[] LAS = new Proiectil[100000];
+        static public Texture2D[] LAS_T = new Texture2D[10];
+        static public int NR_PRO = 0;
+        static public bool LAS_A = false;
 
-        public int[,] JOC_MATRICE;
-        public int[] JOC_SIR;
-        public float[] JOC_X, JOC_Y;
-        public Vector2[] JOC_VECTOR;
-        public int NR_JOC;
+        static public Texture2D[,] PAR_C;
+        static public int NR_PARTI = 4;
+        static public Creatura PL_P = new Creatura();
+
+        static public Planeta PLA_S = new Planeta();
+        static public LocPlaneta[] L_PLA = new LocPlaneta[1000];
+        static public Texture2D[] MOONS = new Texture2D[4];
+        static public int nr_PLA_S = 1;
+        static public int PLA_A = 1;
+        static public Texture2D[,] PLA_T;
+        static public Texture2D[] PLA_TEX = new Texture2D[10];
+
+        static public int[,] JOC_MATRICE;
+        static public int[] JOC_SIR;
+        static public float[] JOC_X, JOC_Y;
+        static public Vector2[] JOC_VECTOR;
+        static public int NR_JOC;
         #endregion
 
         public void ADD_CHAT_LINE(string s)
@@ -190,245 +100,7 @@ namespace Reluare_priectre
                 CHAT[j] = CHAT[j - 1];
             CHAT[0] = s;
         }
-
-        public void COMANDA(string a1, string a2, float v1, float v2)
-        {
-            if (a1 == "set_menu")
-            {
-                ZOOM = 1;
-                PL.rot = 0f;
-                MENU = (int)v1;
-                if(MENU == 3)
-                    MOUSE_T = Content.Load<Texture2D>("MOUSE1");
-                else
-                    MOUSE_T = Content.Load<Texture2D>("MOUSE2");
-                COMP_A = 0;
-                if (MENU == 1)
-                {
-                    NR_PRO = 104;
-                    for (int i = 1; i <= NR_PRO; i++)
-                    {
-                        if (i % 20 != 1 && i <= NR_PRO - NR_PRO % 20)
-                        {
-                            LAS[i].poz = LAS[(int)(i / 20) * 20 + 1].poz + new Vector2(10 - ran.Next(20), 10 - ran.Next(20));
-                            LAS[i].t = (i - 1) % 20 + ran.Next(0, ((i - 1) % 20) / 2);
-                            LAS[i].fx = 0f;
-                            LAS[i].fy = 0f;
-                        }
-                        else
-                        {
-                            int rrr = ran.Next(0, 100);
-                            if (rrr % 4 == 0)
-                                LAS[i].poz = new Vector2(-20, ran.Next(5, (int)WINDOW_REZ.X - 5));
-                            else if (rrr % 4 == 1)
-                                LAS[i].poz = new Vector2(ran.Next(5, (int)WINDOW_REZ.Y - 5), (int)WINDOW_REZ.X + 20);
-                            else if (rrr % 4 == 2)
-                                LAS[i].poz = new Vector2((int)WINDOW_REZ.Y + 20, ran.Next(5, (int)WINDOW_REZ.X - 5));
-                            else if (rrr % 4 == 3)
-                                LAS[i].poz = new Vector2(ran.Next(5, (int)WINDOW_REZ.Y - 5), -20);
-
-                            float ung = ran.Next(0, 360) / 3.14159265f;
-                            LAS[i].fx = 7 * (float)Math.Sin(ung);
-                            LAS[i].fy = 7 * (float)Math.Cos(ung);
-
-                        }
-                    }
-                }
-                else
-                    NR_PRO = 0;
-                BUTON_A_1 = true;
-                BUTON_A_2 = true;
-                BUTON_A_3 = true;
-                if (MENU < 7)
-                    MENIU_VECTOR = new Vector2(MENIU_TEX[1, MENU].Width / 2, MENIU_TEX[1, MENU].Height / 2);
-
-                if (v1 >= 20)
-                {
-                    JOC_MATRICE = new int[50, 100];
-                    JOC_SIR = new int[1000];
-                    JOC_X = new float[1000];
-                    JOC_Y = new float[1000];
-                    JOC_VECTOR = new Vector2[1000];
-                    NR_JOC = 1;
-
-                    if (MENU == 20)
-                    {
-                        JOC_VECTOR[0].X = WINDOW_REZ.Y / 2;
-                        JOC_VECTOR[0].Y = WINDOW_REZ.X;
-                        JOC_VECTOR[0].Y -= WINDOW_REZ.X / 12;
-                        for (int i = 1; i < 50; i++)
-                            for (int j = 1; j < 100; j++)
-                                JOC_MATRICE[i, j] = 1;
-
-                        JOC_VECTOR[1] = JOC_VECTOR[0];
-                        JOC_VECTOR[1].Y -= 100;
-                        JOC_SIR[1] = 6;
-
-                        JOC_Y[1] = 5;
-                        JOC_X[1] = 0;
-                    }
-                    else if (MENU == 21)
-                    {
-                        JOC_VECTOR[0].X = WINDOW_REZ.Y / 2;
-                        JOC_VECTOR[0].Y = WINDOW_REZ.X;
-                        JOC_VECTOR[0].Y -= WINDOW_REZ.X / 12;
-
-                        for (int aux = 0; aux < 14; aux++)
-                        {
-                            int xx, yy;
-                            xx = ran.Next(1, 50);
-                            yy = ran.Next(1, 100);
-
-                            if (aux < 10)
-                                for (int jj = yy - 2; jj <= yy + 2; jj++)
-                                {
-                                    if (jj > 0 && jj < 100)
-                                        JOC_MATRICE[xx, jj] = 3;
-                                }
-                            else
-                            {
-                                while (xx > 25 || JOC_MATRICE[xx, yy] != 0)
-                                {
-                                    xx = ran.Next(1, 25);
-                                    yy = ran.Next(1, 100);
-                                }
-                                JOC_MATRICE[xx, yy] = -aux % 2 - 1;
-                            }
-                        }
-
-                        NR_JOC = 0;
-                    }
-                    else if (MENU == 22)
-                    {
-                        JOC_MATRICE = new int[51, 51];
-                        for (int i = 0; i <= 50; i++)
-                            JOC_MATRICE[0, i] = JOC_MATRICE[50, i] = JOC_MATRICE[i, 0] = JOC_MATRICE[i, 50] = 1;
-                        for (int i = 1; i <= 21; i++)
-                        {
-                            for (int j = i * 2; j < 25; j++)
-                                if (ran.Next(0, 3) != 2)
-                                {
-                                    JOC_MATRICE[i * 2, j] = JOC_MATRICE[50 - i * 2, j] = 1;
-                                    JOC_MATRICE[i * 2, 50 - j] = JOC_MATRICE[50 - i * 2, 50 - j] = 1;
-
-                                    JOC_MATRICE[j, i * 2] = JOC_MATRICE[j, 50 - i * 2] = 1;
-                                    JOC_MATRICE[50 - j, i * 2] = JOC_MATRICE[50 - j, 50 - i * 2] = 1;
-
-                                }
-                        }
-                        for (int i = 7; i < 18; i += 2)
-                            for (int j = i; j <= 25; j++)
-                            {
-                                JOC_MATRICE[i, j] = JOC_MATRICE[50 - i, j] = 2;
-                                JOC_MATRICE[i, 50 - j] = JOC_MATRICE[50 - i, 50 - j] = 2;
-
-                                JOC_MATRICE[j, i] = JOC_MATRICE[j, 50 - i] = 2;
-                                JOC_MATRICE[50 - j, i] = JOC_MATRICE[50 - j, 50 - i] = 2;
-
-                            }
-
-                        for (int i = 3; i <= 19; i += 2)
-                        {
-                            int x, y;
-                            do
-                            {
-                                x = ran.Next(0, 51);
-                                y = ran.Next(0, 51);
-                            } while (JOC_MATRICE[x, y] == 1);
-                            JOC_VECTOR[i] = new Vector2(y * 20, x * 20);
-                            JOC_SIR[i] = ran.Next(1, 5);
-                        }
-                        NR_JOC = 0;
-
-                        JOC_VECTOR[0] = new Vector2(500, 500);
-                    }
-                    else if (MENU == 23)
-                    {
-                        JOC_VECTOR[0].X = WINDOW_REZ.Y / 2;
-                        JOC_VECTOR[0].Y = WINDOW_REZ.X / 2;
-
-                        JOC_MATRICE = new int[51, 51];
-                        for (int i = 0; i <= 50; i++)
-                            JOC_MATRICE[0, i] = JOC_MATRICE[50, i] = JOC_MATRICE[i, 0] = JOC_MATRICE[i, 50] = 1;
-
-                        for (int nr = 0; nr < 100; nr++)
-                        {
-                            int x, y;
-                            do
-                            {
-                                x = ran.Next(1, 50);
-                                y = ran.Next(1, 50);
-                            } while (JOC_MATRICE[x, y] != 0 || (x > 20 && x < 30 && y > 20 && y < 30));
-                            if ((x + y) % 3 == 0)
-                                JOC_MATRICE[x, y] = 1;
-                            do
-                            {
-                                x = ran.Next(1, 50);
-                                y = ran.Next(1, 50);
-                            } while (JOC_MATRICE[x, y] != 0 || (x > 20 && x < 30 && y > 20 && y < 30));
-                            JOC_MATRICE[x, y] = 2;
-                            do
-                            {
-                                x = ran.Next(1, 50);
-                                y = ran.Next(1, 50);
-                            } while (JOC_MATRICE[x, y] != 0 || (x > 20 && x < 30 && y > 20 && y < 30));
-                            JOC_MATRICE[x, y] = 3;
-                        }
-
-                        NR_JOC = 0;
-                    }
-                }
-                else
-                {
-                    JOC_MATRICE = new int[1, 1];
-                    JOC_SIR = new int[1];
-                    JOC_X = new float[1];
-                    JOC_Y = new float[1];
-                    JOC_VECTOR = new Vector2[1];
-                    NR_JOC = 1;
-                }
-            }
-            else if (a1 == "add")
-            {
-                if (a2 == "item")
-                {
-                    inventar[(int)v1] += (int)v2;
-                    ADD_CHAT_LINE("ADDED  ITEM " + (int)v1 + "; quantity  " + (int)v2);
-                }
-                else if (a2 == "planet")
-                {
-                    if (v1 < 1000)
-                    {
-                        L_PLA[nr_PLA_S].ID = (int)v1;
-                        nr_PLA_S++;
-                        ADD_CHAT_LINE("ADDED  PLANET  with  ID  " + (int)v1);
-                    }
-                }
-            }
-            else if (a1 == "subtract")
-            {
-                if (a2 == "item")
-                {
-                    inventar[(int)v1] -= (int)v2;
-                    ADD_CHAT_LINE("SUBTRACTED  ITEM  " + (int)v1 + ";  quantity  " + (int)v2);
-                }
-                else if (a2 == "planet")
-                {
-                    int ok = -1;
-                    for (int i = 1; i <= nr_PLA_S; i++)
-                        if (L_PLA[i].ID == (int)v1)
-                            ok = i;
-                    if (ok != -1)
-                    {
-                        for (int i = ok; i < nr_PLA_S; i++)
-                            L_PLA[i] = L_PLA[i + 1];
-                        nr_PLA_S--;
-                        ADD_CHAT_LINE("SUBTRACTED  PLANET  with  ID  " + (int)v1);
-                    }
-                }
-            }
-        }
-
+        
         public void SAVE()
         {
             string[] planete_id = new string[nr_PLA_S+1];
@@ -630,1426 +302,7 @@ namespace Reluare_priectre
                         }
             return sf;
         }
-
-        public LocPlaneta CREARE_LOC_PLANETA(int k, int kk, int TIP)
-        {
-            LocPlaneta AUX = new LocPlaneta();
-            AUX.SALVAT = 0;
-            int ok = 1;
-            int aux = 0;
-            AUX.ord_elm = new int[NR_subs + 3];           ///ORDINEA ELEMENTELOR
-            for (int i = 1; i < NR_subs; i++)
-            {
-                ok = 0;
-                while (ok == 0)
-                {
-                    ok = 1;
-                    AUX.ord_elm[i] = ran.Next(1, NR_subs);
-                    for (int j = 0; j < i; j++)
-                        if (AUX.ord_elm[j] == AUX.ord_elm[i])
-                            ok = 0;
-                }
-            }
-            AUX.ord_elm[0] = 0;
-            AUX.temperatura_z = ran.Next(-300, 300);
-            AUX.p_orb = k;
-
-
-            if (TIP == 1)
-            {
-                if (k == kk)
-                {
-                    do
-                    {
-                        ok = 1;
-                        AUX.poz = PL.poz;
-                        AUX.poz.X += 800000 - ran.Next(200000, 1600000);
-                        AUX.poz.Y += 800000 - ran.Next(200000, 1600000);
-
-                        for (int i = 1; i <= nr_PLA_S; i++)
-                        {
-                            float xx, yy, r;
-                            xx = L_PLA[i].poz.X - AUX.poz.X;
-                            yy = L_PLA[i].poz.Y - AUX.poz.Y;
-                            r = (float)Math.Sqrt(xx * xx + yy * yy);
-
-                            if (r <= 100000)
-                                ok = 0;
-                        }
-                        aux++;
-                    }
-                    while (ok == 0 && aux < 50000);
-
-                    AUX.ord_elm[NR_subs + 1] = 8;
-
-                    /*AUX.poz = new Vector2(60000 * kk, 60000 * kk);  */
-                }
-                else
-                {
-                    aux = ran.Next(0, 15);
-                    if (aux != 10)
-                    {
-                        AUX.ar = ran.Next(150, 255);
-                        AUX.be = ran.Next(150, 255);
-                        AUX.ge = ran.Next(150, 255);
-
-                        aux = ran.Next(0, 4);
-                        AUX.MOON = aux;
-
-                        if (Math.Abs(AUX.temperatura_z) < 200)
-                            AUX.ord_elm[NR_subs + 1] = AUX.ord_elm[1];
-                        else if (AUX.temperatura_z < 0)
-                            AUX.ord_elm[NR_subs + 1] = NR_subs;
-                        else AUX.ord_elm[NR_subs + 1] = NR_subs + 1;
-
-                        AUX.forta = ran.Next(5, 25);
-                    }
-                    else
-                    {
-                        AUX.ar = ran.Next(10, 115);
-                        AUX.be = ran.Next(10, 115);
-                        AUX.ge = ran.Next(10, 115);
-                        AUX.MOON = 0;
-                        AUX.ord_elm[NR_subs + 1] = 0;
-                    }
-
-                    AUX.poz = L_PLA[k].poz;
-                    AUX.R = ran.Next(20000, 100000);
-                    AUX.ung = (float)ran.Next(0, 360) / 3.14159f;
-                    AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
-                    AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
-
-                }
-            }
-            else if (TIP == 0)
-            {
-                AUX.ord_elm[NR_subs + 1] = 7;
-                AUX.R = ran.Next(3500, 5000);
-                AUX.poz = L_PLA[k].poz;
-                AUX.ung = (float)ran.Next(0, 360) / 3.14159f;
-                AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
-                AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
-            }
-            else if (TIP == 2)
-            {
-                if (k != kk)
-                {
-                    AUX.poz = L_PLA[k].poz;
-
-                    AUX.ord_elm[NR_subs + 1] = 9;
-                    AUX.R = ran.Next(20000, 100000);
-                    AUX.poz = L_PLA[k].poz;
-                    AUX.ung = (float)ran.Next(0, 360) / 3.14159f;
-                    AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
-                    AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
-                }
-                else
-                {
-                    AUX.poz = new Vector2(0, 0);
-                    AUX.ord_elm[NR_subs + 1] = 8;
-                }
-            }
-
-            return AUX;
-        }
-
-        public Planeta CREARE_PLANETA()
-        {
-            Planeta AUX = new Planeta();
-            int aux;
-            int auy;
-
-            AUX.a = new int[300, 300];
-            AUX.b = new int[300, 300];
-
-
-            AUX.ar = L_PLA[PLA_A].ar;
-            AUX.be = L_PLA[PLA_A].ge;
-            AUX.ge = L_PLA[PLA_A].be;
-            AUX.V_SKY = new Vector3((float)AUX.ar / 1000, (float)AUX.ge / 1000, (float)AUX.be / 1000);
-            AUX.SKY = new Vector3(AUX.ar, AUX.ge, AUX.be);
-            AUX.temperatura_z = L_PLA[PLA_A].temperatura_z;
-            AUX.temperatura_n = AUX.temperatura_z - ran.Next(10, 200);
-
-            AUX.MOON = L_PLA[PLA_A].MOON;
-
-            AUX.forta = L_PLA[PLA_A].forta;
-
-            AUX.ord_elm = L_PLA[PLA_A].ord_elm;
-
-
-            AUX.inaltime = ran.Next(1, 10);
-
-            aux = 150;
-            //aux = ran.Next(100, 250);
-
-            for (int i = 0; i < 300; i++)
-            {                                                                       /// CREAREA TERENULUI
-                auy = 1;
-                for (int j = aux; j < 300; j++)
-                {
-                    int auz = ran.Next(0, NR_subs * NR_subs * NR_subs * NR_subs);              /// elementul la puterea a 4
-                    AUX.a[j, i] = auy * 100 + AUX.ord_elm[4 - (int)Math.Sqrt((int)Math.Sqrt(auz))];
-                    AUX.b[j, i] = auy * 100;
-
-                    if (j >= 180)
-                        if (auy < 2)
-                            if (ran.Next(0, AUX.inaltime) == 0)
-                                auy++;
-                }
-
-                int semn = 1 - ran.Next(0, 100) % 3;
-                if (ran.Next(0, 100) % 3 != 0)
-                    aux -= semn * (int)Math.Sqrt(ran.Next(1, AUX.inaltime * AUX.inaltime));
-
-                if (aux <= 0)
-                    aux = 1;
-                if (aux >= 300)
-                    aux = 295;
-            }
-
-            for (int i = 0; i < 30; i++)                   /// PESTERI
-            {
-                auy = ran.Next(0, 290);
-                aux = ran.Next(100, 290);
-
-                for (int j = 0; j <= 500; j++)
-                {
-                    AUX.b[aux, auy] = 0;
-                    int semn = 1 - ran.Next(0, 100) % 3;
-                    aux += semn;
-                    semn = 1 - ran.Next(0, 100) % 3;
-                    auy += semn;
-
-                    if (aux <= 0 || aux >= 300 || auy <= 0 || auy >= 300)
-                        break;
-                }
-            }
-
-
-
-            AUX.apa = new int[300, 300];             /// adaugarea apei
-            int y;
-            int nr_apa = ran.Next(10, 10 + (300 - Math.Abs(AUX.temperatura_z)));
-
-            for (int i = 0; i < nr_apa; i++)
-            {
-                int x = 10;
-                y = ran.Next(1, 300);
-                for (int j = x; j < 299; j++)
-                {
-                    x = j;
-                    if (AUX.b[j, y] == 0 && AUX.b[j + 1, y] != 0 && ran.Next(0, 10 - AUX.inaltime) == 1)
-                        break;
-                }
-                int tip_apa = ran.Next(0, Math.Abs(5 - AUX.inaltime));
-                if (tip_apa <= 1)
-                {
-                    if (AUX.temperatura_z > 3)
-                        AUX.apa[x, y] = 6000 + AUX.ord_elm[1];
-                    else
-                    {
-                        AUX.a[x, y] = 800 + AUX.ord_elm[1];
-                        AUX.b[x, y] = 200;
-                    }
-                }
-                else
-                {
-                    int k, l;
-                    k = l = y;
-                    while (k < 300 && AUX.b[x, k] == 0)
-                        k++;
-                    while (AUX.b[x, l] == 0 && l > 0)
-                        l--;
-                    if (k <= 290 && l >= 10)
-                        for (int j = l + 1; j < k; j++)
-                            for (int jj = x; AUX.b[jj, j] == 0 && jj < 290; jj++)
-                            {
-
-                                if (AUX.temperatura_z > 3)
-                                    AUX.apa[jj, j] = 6000 + AUX.ord_elm[1];
-                                else
-                                {
-                                    AUX.a[jj, j] = 800 + AUX.ord_elm[1];
-                                    AUX.b[jj, j] = 200;
-                                }
-                            }
-                    else if (AUX.temperatura_z > 3)
-                        AUX.apa[x, y] = 6000 + AUX.ord_elm[1];
-                    else
-                    {
-                        AUX.a[x, y] = 800 + AUX.ord_elm[1];
-                        AUX.b[x, y] = 200;
-                    }
-                }
-            }
-
-            int nr_c;
-
-            if (AUX.temperatura_z > 200)                                    ///AUGARE NISIP
-            {
-                nr_c = AUX.temperatura_z - AUX.temperatura_n;
-                nr_c = 203 - nr_c;
-
-                for (int j = 1; j < 300; j++)
-                {
-                    int i = 0;
-                    while (AUX.a[i, j] / 100 != 1 && i < 299)
-                        i++;
-                    for (; AUX.a[i, j] / 100 == 1 && ran.Next(0, nr_c) != 0 && i < 298; i++)
-                        AUX.a[i, j] = 900 + AUX.a[i, j] % 100;
-
-                }
-            }
-            else if (AUX.temperatura_z > -50)
-            {
-                nr_c = ran.Next(5, Math.Abs(AUX.temperatura_z) + 5);
-                int x;
-                for (int i = 0; i < nr_c; i++)
-                {
-                    do
-                    {
-                        x = ran.Next(10, 290);
-                        y = ran.Next(10, 290);
-                    } while (AUX.a[x, y] / 100 != 1 && AUX.a[x, y] / 100 != 2);
-
-                    AUX.a[x, y] = 900 + AUX.a[x, y] % 100;
-                }
-            }
-            else if (AUX.temperatura_z < -200)                                    ///AUGARE GHEATA
-            {
-                nr_c = AUX.temperatura_z - AUX.temperatura_n;
-                nr_c = 203 - nr_c;
-
-                for (int j = 1; j < 300; j++)
-                {
-                    int i = 0;
-                    while (AUX.a[i, j] / 100 != 1 && i < 299)
-                        i++;
-                    if (i != 300)
-                    {
-                        for (; (AUX.a[i, j] / 100 == 1 || AUX.a[i, j] / 100 == 8) && ran.Next(0, nr_c * 2) != 0 && i < 298; i++)
-                        {
-                            AUX.a[i, j] = 1100 + AUX.a[i, j] % 100;
-                            if (AUX.b[i, j] != 0)
-                                AUX.b[i, j] = 50;
-                        }
-                        i++;
-                        for (; i < 298 && (AUX.a[i, j] / 100 == 2 || AUX.a[i, j] / 100 == 8) && ran.Next(0, nr_c * 2) != 0; i++)
-                        {
-                            AUX.a[i, j] = 800 + AUX.a[i, j] % 100;
-                            if (AUX.b[i, j] != 0)
-                                AUX.b[i, j] = 200;
-                        }
-                    }
-                }
-            }
-
-
-            nr_c = 30 - ran.Next(0, 30 - (Math.Abs(AUX.temperatura_z) / 10));                     ///CREAREA COPACILOR
-            y = 0;
-            for (int nrn = 0; nrn < nr_c; nrn++)
-            {
-                int x = 0;
-                do
-                {
-                    x = 0;
-                    y += ran.Next(3, 6 * (30 - nr_c) + 3);
-                    if (y >= 300)
-                        break;
-                    while (x < 299 && AUX.a[x + 1, y] == 0)
-                        x++;
-                } while (AUX.a[x + 1, y] / 100 != 1 && AUX.a[x + 1, y] / 100 != 11 && AUX.a[x + 1, y] / 100 != 9);
-
-                if (y >= 300)
-                    break;
-                int tip, inal, lat;
-                tip = (int)Math.Sqrt(ran.Next(0, 25));
-                inal = ran.Next(2, AUX.inaltime * 3);
-                lat = ran.Next(1, inal + 1);
-                if (AUX.apa[x, y] == 0 && AUX.a[x, y] / 100 != 8)
-                {
-                    if (AUX.b[x + 1, y] == 0 && tip >= 2)
-                        tip -= 2;
-
-                    for (int i = 1; i <= inal; i++)
-                    {
-                        AUX.a[x, y] = 3 * 100 + AUX.ord_elm[tip % 2];
-                        if (tip >= 2)
-                            AUX.b[x, y] = 50;
-                        else
-                            AUX.b[x, y] = 0;
-                        x--;
-                        if (x <= 0)
-                            break;
-
-                        if (i >= inal / 2)
-                        {
-                            if (ran.Next(0, inal / 3) % 10 == 2)
-                            {
-                                for (int j = 1; j <= lat; j++)
-                                    if (y - j > 0 && y + j < 300)
-                                        if (AUX.a[x, y + j] == 0 && AUX.a[x, y - j] == 0)
-                                        {
-                                            AUX.a[x, y + j] = 3 * 100 + AUX.ord_elm[tip % 2];
-                                            if (tip >= 2)
-                                                AUX.b[x, y + j] = 50;
-
-                                            AUX.a[x, y - j] = 3 * 100 + AUX.ord_elm[tip % 2];
-                                            if (tip >= 2)
-                                                AUX.b[x, y - j] = 50;
-
-                                            if (ran.Next(0, 10) == 2)
-                                                break;
-                                        }
-                                        else break;
-                            }
-                            else for (int j = 1; j <= lat; j++)
-                                    if (y - j > 0 && y + j < 300)
-                                        if (AUX.a[x, y + j] == 0 && AUX.a[x, y - j] == 0)
-                                        {
-                                            AUX.a[x, y + j] = 4 * 100 + AUX.ord_elm[tip % 2];
-                                            if (tip >= 2)
-                                                AUX.b[x, y + j] = 5;
-
-                                            AUX.a[x, y - j] = 4 * 100 + AUX.ord_elm[tip % 2];
-                                            if (tip >= 2)
-                                                AUX.b[x, y - j] = 5;
-
-                                            if (ran.Next(0, 10) == 2)
-                                                break;
-                                        }
-                                        else break;
-                        }
-                    }
-                    for (int i = 0; i < ran.Next(1, 5); i++)
-                        if (x - i > 0)
-                        {
-                            AUX.a[x - i, y] = 4 * 100 + AUX.ord_elm[tip % 2];
-                            if (tip >= 2)
-                                AUX.b[x - i, y] = 5;
-                        }
-                        else break;
-                }
-            }
-
-            for (int j = 1; j < 300; j++)
-                if (ran.Next(1, AUX.inaltime) == 1)
-                {
-                    int i = 1;
-                    while (AUX.a[i, j] / 100 != 1 && i < 299)
-                        i++;
-                    if (i != 300)
-                        if (AUX.a[i - 1, j] == 0 && AUX.b[i, j] != 0)
-                        {
-                            AUX.a[i - 1, j] = 500 + AUX.a[i, j] % 100;
-                            AUX.b[i - 1, j] = 0;
-                            AUX.a[i, j] = 1400 + AUX.a[i, j] % 100;
-                        }
-                }
-
-            aux = ran.Next(1, 299);                       /// POZITIA JUCATORULI
-            for (int i = 0; i < 298; i++)
-            {
-                PL_P.poz.X = aux * 20;
-                PL_P.poz.Y = i * 20;
-                if (AUX.b[i + 2, aux] != 0)
-                    break;
-            }
-
-            PL_P.Y = (int)(PL_P.poz.X + 10) / 20;
-            PL_P.X = (int)(PL_P.poz.Y + 30) / 20;
-            for (int j = 1; j < 300; j++)
-                AUX.b[299, j] = 500;
-
-            for (int j = 1; j < 300; j++)                          /// ADAUGAREA LAVA
-                for (int i = 299; i > 0; i--)
-                {
-                    if (AUX.a[i, j] / 100 == 1)
-                        break;
-                    AUX.apa[i, j] = 7000 + ran.Next(0, 5) + (299 - i) * 10;
-                    if (i < 290 && (ran.Next(0, (Math.Abs(AUX.temperatura_z)) / 10 + 1) == 0 || AUX.temperatura_z <= 0))
-                        break;
-                }
-
-
-
-            AUX.creaturi = new Creatura[10];         //creare creaturi
-            AUX.nr_creaturi = ran.Next(0, (300 - Math.Abs(AUX.temperatura_z)) / 20);
-            for (int i = 0; i < AUX.nr_creaturi; i++)
-            {
-                Creatura cc = new Creatura();
-                cc.pow = ran.Next(2, 100);
-                cc.viata = 1000;
-                int x = 0;
-                int iii;
-                for (iii = 0; iii <= 1000; iii++)
-                {
-                    y = ran.Next(20, 280);
-                    x = 0;
-                    while (x < 290 && AUX.b[x + 2, y] == 0)
-                        x++;
-                    int OK = 0;
-                    for (int j = 0; j < i; j++)
-                    {
-                        int xxx, yyy;
-                        xxx = Math.Abs(AUX.creaturi[j].X - x);
-                        yyy = Math.Abs(AUX.creaturi[j].Y - y);
-
-                        if (xxx * xxx + yyy * yyy < (AUX.creaturi[j].r + 100) * (AUX.creaturi[j].r + 100))
-                            OK = 1;
-                    }
-                    if (OK == 0)
-                        break;
-                }
-                if (iii >= 1000)
-                {
-                    AUX.nr_creaturi = i;
-                    break;
-                }
-                cc.poz = new Vector2(x * 20, y * 20);
-                cc.X = cc.xx = x + 2;
-                cc.Y = cc.yy = y;
-                cc.rot = new float[11];
-                cc.parti = new int[11];
-                for (int j = 0; j <= 10; j++)
-                    cc.rot[j] = -99f;
-                nr_c = ran.Next(1, 5);
-                cc.parti[0] = ran.Next(1, NR_PARTI + 1);
-                cc.rot[0] = 0;
-                if (nr_c >= 2)
-                {
-                    cc.parti[2] = ran.Next(1, NR_PARTI + 1);
-                    cc.rot[2] = 0;
-                }
-                if (nr_c >= 3)
-                {
-                    cc.parti[1] = cc.parti[2];
-                    cc.rot[1] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
-                }
-                if (nr_c >= 4)
-                {
-                    cc.parti[3] = cc.parti[0];
-                    cc.rot[3] = cc.rot[1];
-                }
-
-                cc.parti[4] = ran.Next(1, NR_PARTI + 1);
-                cc.rot[4] = (float)(90 - ran.Next(0, 140)) * 0.01745327777777777777777777777778f;
-
-                nr_c = ran.Next(0, 5);
-                if (nr_c >= 1)
-                {
-                    cc.parti[5] = ran.Next(1, NR_PARTI + 1);
-                    cc.rot[5] = 0;
-                }
-                if (nr_c >= 2)
-                {
-                    cc.parti[7] = ran.Next(1, NR_PARTI + 1);
-                    cc.rot[7] = 0;
-                }
-                if (nr_c >= 3)
-                {
-                    cc.parti[6] = cc.parti[7];
-                    cc.rot[6] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
-                }
-                if (nr_c >= 4)
-                {
-                    cc.parti[8] = cc.parti[5];
-                    cc.rot[8] = cc.rot[1];
-                }
-                cc.parti[9] = ran.Next(1, NR_PARTI + 1);
-                cc.rot[9] = 0;
-
-                cc.mers = 10;
-
-                cc.pow = ran.Next(5, 21);
-                cc.inteligenta = ran.Next(1, 6);
-                cc.r = 20;
-                cc.agresiune = -1;
-                if (cc.inteligenta == 2)
-                    cc.agresiune = 1;
-                else if (cc.inteligenta == 4)
-                {
-                    cc.r = 7;
-                    if (AUX.a[cc.X + 1, cc.Y] < 100)
-                        AUX.a[cc.X + 1, cc.Y] = 100;
-                    if (AUX.b[cc.X + 1, cc.Y] == 0)
-                        AUX.b[cc.X + 1, cc.Y] = 100;
-                    for (int ii = 0; ii < 5; ii++)
-                        for (int j = -2; j <= 2; j++)
-                        {
-                            AUX.a[cc.X - ii, cc.Y + j] = AUX.a[cc.X + 1, cc.Y];
-                            AUX.b[cc.X - ii, cc.Y + j] = 0;
-                            AUX.apa[cc.X - ii, cc.Y + j] = 0;
-                        }
-                    for (int ii = 0; ii < 5; ii++)
-                    {
-                        AUX.a[cc.X - ii, cc.Y + 3] = 300 + AUX.a[cc.X + 1, cc.Y] % 100;
-                        AUX.b[cc.X - ii, cc.Y + 3] = 5;
-                        AUX.apa[cc.X - ii, cc.Y + 3] = 0;
-                        AUX.a[cc.X - ii, cc.Y - 3] = 300 + AUX.a[cc.X + 1, cc.Y] % 100;
-                        AUX.b[cc.X - ii, cc.Y - 3] = 5;
-                        AUX.apa[cc.X - ii, cc.Y - 3] = 0;
-                        AUX.a[cc.X - 5, cc.Y - 2 + ii] = 300 + AUX.a[cc.X + 1, cc.Y] % 100;
-                        AUX.b[cc.X - 5, cc.Y - 2 + ii] = 5;
-                        AUX.apa[cc.X - 5, cc.Y - 2 + ii] = 0;
-                    }
-                    AUX.b[cc.X, cc.Y - 3] = 0;
-                    AUX.b[cc.X - 1, cc.Y - 3] = 0;
-                    AUX.b[cc.X, cc.Y + 3] = 0;
-                    AUX.b[cc.X - 1, cc.Y + 3] = 0;
-                    for (int ii = 4; ii <= 7; ii++)
-                    {
-                        AUX.b[cc.X, cc.Y + ii] = 0;
-                        AUX.b[cc.X, cc.Y - ii] = 0;
-                        AUX.b[cc.X - 1, cc.Y + ii] = 0;
-                        AUX.b[cc.X - 1, cc.Y - ii] = 0;
-                        AUX.apa[cc.X, cc.Y + ii] = 0;
-                        AUX.apa[cc.X, cc.Y - ii] = 0;
-                        AUX.apa[cc.X - 1, cc.Y + ii] = 0;
-                        AUX.apa[cc.X - 1, cc.Y - ii] = 0;
-                    }
-                    for (int ii = -7; ii <= 7; ii++)
-                        for (int j = 1; j <= 3; j++)
-                        {
-                            AUX.apa[cc.X + j, cc.Y + ii] = 0;
-                            AUX.b[cc.X + j, cc.Y + ii] = AUX.b[cc.X + 1, cc.Y];
-                            AUX.a[cc.X + j, cc.Y + ii] = (int)(AUX.a[cc.X + 1, cc.Y] / 100) * 100 + AUX.a[cc.X + j, cc.Y + ii] % 100;
-                        }
-                }
-                else
-                {
-                    cc.r = 10;
-                    aux = 1000 + AUX.ord_elm[1];
-                    auy = ran.Next(0, 2) - 1;
-                    if (auy == 0)
-                        auy = 1;
-                    for (int ii = 0; ii <= 9; ii++)
-                        for (int jj = 10; jj >= -10; jj--)
-                        {
-                            AUX.b[cc.X - ii, cc.Y + jj * auy] = 0;
-                            AUX.apa[cc.X - ii, cc.Y + jj * auy] = 0;
-                        }
-                    for (int ii = 0; ii <= 5; ii++)
-                        for (int jj = -6; jj <= 6; jj++)
-                        {
-                            AUX.a[cc.X - ii, cc.Y + jj * auy - 4 * auy] = aux;
-                            if ((ii >= 2 && (jj == -6 || jj == 6)) || ii == 5)
-                                AUX.b[cc.X - ii, cc.Y + jj * auy - 4 * auy] = 300;
-                            else AUX.b[cc.X - ii, cc.Y + jj * auy - 4 * auy] = 0;
-                            AUX.apa[cc.X - ii, cc.Y + jj * auy - 4 * auy] = 0;
-                        }
-                    for (int jj = -10; jj <= 9; jj++)
-                    {
-                        AUX.a[cc.X + 1, cc.Y + jj * auy] = aux;
-                        AUX.b[cc.X + 1, cc.Y + jj * auy] = 300;
-                        AUX.apa[cc.X + 1, cc.Y + jj * auy] = 0;
-                    }
-
-                    AUX.a[cc.X, cc.Y + 8 * auy] = aux;
-                    AUX.b[cc.X, cc.Y + 8 * auy] = 300;
-                    AUX.a[cc.X, cc.Y + 4 * auy] = aux;
-                    AUX.b[cc.X, cc.Y + 4 * auy] = 300;
-                    AUX.a[cc.X, cc.Y + 6 * auy] = aux;
-                    AUX.b[cc.X, cc.Y + 6 * auy] = 300;
-                    AUX.a[cc.X - 1, cc.Y + 6 * auy] = aux;
-                    AUX.b[cc.X - 1, cc.Y + 6 * auy] = 0;
-                    AUX.apa[cc.X - 2, cc.Y + 6 * auy] = 6000;
-
-                    for (int ii = 6; ii <= 10; ii++)
-                        for (int jj = -13 + (ii - 5) * 2; jj <= 2 + (int)((10 - ii) / 4) * 2; jj++)
-                        {
-                            AUX.a[cc.X - ii + 1, cc.Y + jj * auy] = aux;
-                            if (jj <= -13 + (ii - 5) * 2 + 1 || ii == 6 || ii == 10)
-                                AUX.b[cc.X - ii + 1, cc.Y + jj * auy] = 300;
-                            else
-                                AUX.b[cc.X - ii + 1, cc.Y + jj * auy] = 0;
-                            AUX.apa[cc.X - ii + 1, cc.Y + jj * auy] = 0;
-                        }
-                    AUX.a[cc.X - 6, cc.Y + 4 * auy] = aux;
-                    AUX.b[cc.X - 6, cc.Y + 4 * auy] = 300;
-                    AUX.b[cc.X - 8, cc.Y + 2 * auy] = 300;
-                    for (int ii = 1; ii <= 6; ii++)
-                        for (int jj = -5; jj <= 3; jj++)
-                        {
-                            AUX.a[cc.X + ii, cc.Y + jj * auy] = aux;
-                            if (jj == -5 || jj == 3 || ii == 1 || ii == 6)
-                                AUX.b[cc.X + ii + 1, cc.Y + jj * auy] = 300;
-                            else
-                                AUX.b[cc.X + ii, cc.Y + jj * auy] = 0;
-                            AUX.apa[cc.X + ii, cc.Y + jj * auy] = 0;
-                        }
-                    for (int jj = -6; jj <= 0; jj++)
-                        for (int ii = 2; ii <= -jj; ii++)
-                        {
-                            AUX.b[cc.X + 5 - ii + 2, cc.Y + jj * auy] = 300;
-                            AUX.a[cc.X + 5 - ii + 2, cc.Y + jj * auy] = aux;
-                        }
-                    for (int jj = -5; jj <= -3; jj++)
-                        AUX.b[cc.X + 1, cc.Y + jj * auy] = 0;
-
-                }
-
-                AUX.creaturi[i] = cc;
-            }
-
-            return AUX;
-        }
-        public Planeta CREARE_STATIE()
-        {
-            Planeta AUX = new Planeta();
-
-            AUX.a = new int[300, 300];
-            AUX.b = new int[300, 300];
-            AUX.apa = new int[300, 300];
-
-            AUX.ar = L_PLA[PLA_A].ar;
-            AUX.be = L_PLA[PLA_A].ge;
-            AUX.ge = L_PLA[PLA_A].be;
-
-            AUX.V_SKY = new Vector3((float)AUX.ar / 1000, (float)AUX.ge / 1000, (float)AUX.be / 1000);
-            AUX.SKY = Vector3.Zero;
-            AUX.timp = 0;
-            AUX.forta = 7;
-            AUX.temperatura_n = AUX.temperatura_z = 30;
-            AUX.MOON = 0;
-
-            PL_P.poz = new Vector2(3000, 3000);
-            PL_P.X = 150;
-            PL_P.Y = 150;
-
-
-            int[][][] mod_loc = new int[20][][];
-            #region MOD2
-            mod_loc[2] = new int[20][];
-            mod_loc[2][0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[2][1] = new int[] { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 };
-            mod_loc[2][2] = new int[] { 0, 0, 1, 2, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 2, 1, 0, 0 };
-            mod_loc[2][3] = new int[] { 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0 };
-            mod_loc[2][4] = new int[] { 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0 };
-            mod_loc[2][5] = new int[] { 0, 0, 1, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 2, 1, 0, 0 };
-            mod_loc[2][6] = new int[] { 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0 };
-            mod_loc[2][7] = new int[] { 1, 1, 1, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 1, 1, 1 };
-            mod_loc[2][8] = new int[] { 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[2][9] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[2][10] = new int[] { 2, 2, 2, 1, 1, 1, 3, 2, 2, 2, 2, 2, 3, 1, 1, 1, 2, 2, 2 };
-            mod_loc[2][11] = new int[] { 2, 2, 1, 1, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 2 };
-            mod_loc[2][12] = new int[] { 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1 };
-            mod_loc[2][13] = new int[] { 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1 };
-            mod_loc[2][14] = new int[] { 1, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 1 };
-            mod_loc[2][15] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[2][16] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            mod_loc[2][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[2][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD3
-            mod_loc[3] = new int[20][];
-            mod_loc[3][0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][2] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][3] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][4] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][5] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][6] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][7] = new int[] { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0 };
-            mod_loc[3][8] = new int[] { 1, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 1, 1 };
-            mod_loc[3][9] = new int[] { 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2 };
-            mod_loc[3][10] = new int[] { 2, 3, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0, 3, 2 };
-            mod_loc[3][11] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[3][12] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            mod_loc[3][13] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][14] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][15] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][16] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[3][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD4
-            mod_loc[4] = new int[20][];
-            mod_loc[4][0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][2] = new int[] { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][3] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][4] = new int[] { 0, 0, 0, 1, 3, 0, 0, 2, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][5] = new int[] { 0, 0, 0, 1, 2, 0, 0, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][6] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][7] = new int[] { 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[4][8] = new int[] { 1, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1 };
-            mod_loc[4][9] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[4][10] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 3, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2 };
-            mod_loc[4][11] = new int[] { 1, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[4][12] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[4][13] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0 };
-            mod_loc[4][14] = new int[] { 1, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[4][15] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][16] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[4][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD5
-            mod_loc[5] = new int[20][];
-            mod_loc[5][0] = new int[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            mod_loc[5][1] = new int[] { 0, 1, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][2] = new int[] { 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][3] = new int[] { 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 2, 2, 2, 2, 1, 1, 1, 1 };
-            mod_loc[5][4] = new int[] { 0, 1, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1 };
-            mod_loc[5][5] = new int[] { 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][6] = new int[] { 0, 1, 2, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 2, 1 };
-            mod_loc[5][7] = new int[] { 0, 1, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1 };
-            mod_loc[5][8] = new int[] { 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][9] = new int[] { 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[5][10] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 1 };
-            mod_loc[5][11] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][12] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1 };
-            mod_loc[5][13] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][14] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][15] = new int[] { 0, 0, 0, 0, 0, 1, 2, 3, 2, 1, 1, 1, 1, 1, 1, 2, 3, 2, 1 };
-            mod_loc[5][16] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 1 };
-            mod_loc[5][17] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[5][18] = new int[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            #endregion
-            #region MOD6
-            mod_loc[6] = new int[20][];
-            mod_loc[6][0] = new int[] { 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0 };
-            mod_loc[6][1] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][2] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][3] = new int[] { 0, 0, 0, 1, 3, 2, 2, 1, 1, 1, 1, 1, 2, 2, 3, 1, 0, 0, 0 };
-            mod_loc[6][4] = new int[] { 0, 0, 0, 1, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 1, 0, 0, 0 };
-            mod_loc[6][5] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][6] = new int[] { 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
-            mod_loc[6][7] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][8] = new int[] { 1, 1, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 1, 1 };
-            mod_loc[6][9] = new int[] { 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2 };
-            mod_loc[6][10] = new int[] { 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2 };
-            mod_loc[6][11] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[6][12] = new int[] { 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 2, 1, 1, 1, 1, 1, 1, 1 };
-            mod_loc[6][13] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][14] = new int[] { 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][15] = new int[] { 0, 0, 0, 1, 2, 2, 3, 1, 1, 1, 1, 1, 3, 2, 2, 1, 0, 0, 0 };
-            mod_loc[6][16] = new int[] { 0, 0, 0, 1, 1, 2, 2, 2, 0, 0, 0, 2, 2, 2, 1, 1, 0, 0, 0 };
-            mod_loc[6][17] = new int[] { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[6][18] = new int[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD7
-            mod_loc[7] = new int[20][];
-            mod_loc[7][0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[7][1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[7][2] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[7][3] = new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[7][4] = new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[7][5] = new int[] { 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0 };
-            mod_loc[7][6] = new int[] { 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 0, 0, 3, 2, 1, 0, 0, 0, 0 };
-            mod_loc[7][7] = new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[7][8] = new int[] { 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1 };
-            mod_loc[7][9] = new int[] { 2, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2 };
-            mod_loc[7][10] = new int[] { 2, 0, 0, 0, 0, 2, 3, 2, 2, 2, 2, 3, 2, 2, 0, 0, 0, 0, 2 };
-            mod_loc[7][11] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[7][12] = new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[7][13] = new int[] { 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1 };
-            mod_loc[7][14] = new int[] { 1, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 1 };
-            mod_loc[7][15] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[7][16] = new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[7][17] = new int[] { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0 };
-            mod_loc[7][18] = new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD8
-            mod_loc[8] = new int[20][];
-            mod_loc[8][0] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 };
-            mod_loc[8][1] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][2] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][3] = new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[8][4] = new int[] { 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][5] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][6] = new int[] { 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1 };
-            mod_loc[8][7] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][8] = new int[] { 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][9] = new int[] { 2, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 2 };
-            mod_loc[8][10] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[8][11] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[8][12] = new int[] { 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1 };
-            mod_loc[8][13] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][14] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][15] = new int[] { 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 1 };
-            mod_loc[8][16] = new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1 };
-            mod_loc[8][17] = new int[] { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0 };
-            mod_loc[8][18] = new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD9
-            mod_loc[9] = new int[20][];
-            mod_loc[9][0] = new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][1] = new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][2] = new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][3] = new int[] { 0, 0, 0, 0, 1, 1, 2, 2, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][4] = new int[] { 0, 0, 0, 1, 1, 2, 0, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][5] = new int[] { 0, 0, 1, 1, 2, 2, 0, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][6] = new int[] { 0, 1, 1, 2, 0, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][7] = new int[] { 1, 1, 2, 2, 0, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][8] = new int[] { 1, 2, 0, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][9] = new int[] { 2, 2, 0, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][10] = new int[] { 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][11] = new int[] { 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][12] = new int[] { 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][13] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][14] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][15] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][16] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[9][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion 
-            #region MOD10
-            mod_loc[10] = new int[20][];
-            mod_loc[10][0] = new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][2] = new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 0, 2, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[10][3] = new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 0, 2, 2, 1, 1, 0, 0, 0, 0 };
-            mod_loc[10][4] = new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 0, 2, 1, 1, 0, 0, 0 };
-            mod_loc[10][5] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 2, 2, 1, 1, 0, 0 };
-            mod_loc[10][6] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 0, 2, 1, 1, 0 };
-            mod_loc[10][7] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 2, 2, 1, 1 };
-            mod_loc[10][8] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 0, 2, 1 };
-            mod_loc[10][9] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 0, 2, 2 };
-            mod_loc[10][10] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 2 };
-            mod_loc[10][11] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2 };
-            mod_loc[10][12] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-            mod_loc[10][13] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][14] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][15] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][16] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[10][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD11
-            mod_loc[11] = new int[20][];
-            mod_loc[11][0] = new int[] { 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[11][1] = new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[11][2] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[11][3] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[11][4] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[11][5] = new int[] { 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0, 0, 0 };
-            mod_loc[11][6] = new int[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0 };
-            mod_loc[11][7] = new int[] { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0 };
-            mod_loc[11][8] = new int[] { 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0 };
-            mod_loc[11][9] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 };
-            mod_loc[11][10] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0 };
-            mod_loc[11][11] = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0 };
-            mod_loc[11][12] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 0 };
-            mod_loc[11][13] = new int[] { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 };
-            mod_loc[11][14] = new int[] { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 };
-            mod_loc[11][15] = new int[] { 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0 };
-            mod_loc[11][16] = new int[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
-            mod_loc[11][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[11][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MOD12
-            mod_loc[12] = new int[20][];
-            mod_loc[12][0] = new int[] { 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][1] = new int[] { 0, 0, 1, 2, 0, 0, 2, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][2] = new int[] { 0, 0, 1, 2, 0, 0, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][3] = new int[] { 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][4] = new int[] { 0, 0, 1, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][5] = new int[] { 0, 0, 1, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][6] = new int[] { 0, 0, 1, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][7] = new int[] { 0, 0, 1, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][8] = new int[] { 0, 0, 1, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 };
-            mod_loc[12][9] = new int[] { 0, 0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2 };
-            mod_loc[12][10] = new int[] { 0, 0, 1, 2, 2, 2, 2, 2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 2, 2 };
-            mod_loc[12][11] = new int[] { 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-            mod_loc[12][12] = new int[] { 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            mod_loc[12][13] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][14] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][15] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][16] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[12][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            #endregion
-            #region MODEL_0
-            /*
-            mod_loc[\] = new int[20][];
-            mod_loc[\][0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][2] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][3] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][4] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][5] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][6] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][7] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][8] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][9] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][10] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][11] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][12] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][13] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][14] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][15] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][16] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][17] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            mod_loc[\][18] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-              */
-            #endregion
-            int NR_LOC = 13;
-
-            Vector2[] loc = new Vector2[1000];
-            int[] tip_loc = new int[1000];
-            int nr_loc = 1;
-            loc[1] = new Vector2(150, 150);
-            tip_loc[1] = 2;
-            AUX.creaturi = new Creatura[150];
-
-            for (int nr = 1; nr <= nr_loc; nr++)
-            {
-                for (int i = -9; i <= +9; i++)
-                    for (int j = -9; j <= +9; j++)
-                        if ((int)loc[nr].X + i < 300 && (int)loc[nr].X + i > 0)
-                            if ((int)loc[nr].Y + j < 300 && (int)loc[nr].Y + j > 0)
-                                if (mod_loc[tip_loc[nr]][i + 9][j + 9] != 0)
-                                {
-                                    AUX.a[(int)loc[nr].X + i, (int)loc[nr].Y + j] = 1000;
-                                    if (mod_loc[tip_loc[nr]][i + 9][j + 9] == 1)
-                                        AUX.b[(int)loc[nr].X + i, (int)loc[nr].Y + j] = 1000000000;
-
-                                    if (mod_loc[tip_loc[nr]][i + 9][j + 9] == 3 && AUX.nr_creaturi < 150 && (AUX.nr_creaturi == 0 || ran.Next(0, 5) == 3))
-                                    {
-                                        #region ADAUGARE_CREATURI
-                                        Creatura cc = new Creatura();
-                                        cc.pow = ran.Next(2, 100);
-                                        cc.viata = 1000;
-                                        int x, y;
-                                        x = (int)loc[nr].X + i;
-                                        y = (int)loc[nr].Y + j;
-                                        cc.r = 15;
-
-                                        cc.poz = new Vector2(x * 20, y * 20);
-                                        cc.X = cc.xx = x + 2;
-                                        cc.Y = cc.yy = y;
-
-                                        cc.pow = ran.Next(5, 21);
-                                        cc.r = 20;
-                                        cc.agresiune = -1;
-
-                                        cc.rot = new float[11];
-                                        cc.parti = new int[11];
-
-                                        if (ran.Next(0, 5) != 2)
-                                        {
-                                            cc.inteligenta = ran.Next(1, 6);
-                                            for (int k = 0; k <= 10; k++)
-                                                cc.rot[k] = -99f;
-
-                                            int nr_c = ran.Next(1, 5);
-                                            cc.parti[0] = ran.Next(1, NR_PARTI + 1);
-                                            cc.rot[0] = 0;
-                                            if (nr_c >= 2)
-                                            {
-                                                cc.parti[2] = ran.Next(1, NR_PARTI + 1);
-                                                cc.rot[2] = 0;
-                                            }
-                                            if (nr_c >= 3)
-                                            {
-                                                cc.parti[1] = cc.parti[2];
-                                                cc.rot[1] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
-                                            }
-                                            if (nr_c >= 4)
-                                            {
-                                                cc.parti[3] = cc.parti[0];
-                                                cc.rot[3] = cc.rot[1];
-                                            }
-
-                                            cc.parti[4] = ran.Next(1, NR_PARTI + 1);
-                                            cc.rot[4] = (float)(90 - ran.Next(0, 140)) * 0.01745327777777777777777777777778f;
-
-                                            nr_c = ran.Next(0, 5);
-                                            if (nr_c >= 1)
-                                            {
-                                                cc.parti[5] = ran.Next(1, NR_PARTI + 1);
-                                                cc.rot[5] = 0;
-                                            }
-                                            if (nr_c >= 2)
-                                            {
-                                                cc.parti[7] = ran.Next(1, NR_PARTI + 1);
-                                                cc.rot[7] = 0;
-                                            }
-                                            if (nr_c >= 3)
-                                            {
-                                                cc.parti[6] = cc.parti[7];
-                                                cc.rot[6] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
-                                            }
-                                            if (nr_c >= 4)
-                                            {
-                                                cc.parti[8] = cc.parti[5];
-                                                cc.rot[8] = cc.rot[1];
-                                            }
-                                            cc.parti[9] = ran.Next(1, NR_PARTI + 1);
-                                            cc.rot[9] = 0;
-
-                                            cc.mers = 10;
-
-
-                                            if (mod_loc[tip_loc[nr]][i + 9][j + 9 - 1] != 1 && ran.Next(0, 3) != 0)
-                                            {
-                                                cc.fata = SpriteEffects.None;
-                                                cc.orientare = 1;
-                                            }
-                                            else
-                                            {
-                                                cc.fata = SpriteEffects.FlipHorizontally;
-                                                cc.orientare = -1;
-                                            }
-                                        }
-                                        else cc.inteligenta = -ran.Next(2, 6);
-
-                                        AUX.creaturi[AUX.nr_creaturi++] = cc;
-                                        #endregion
-                                    }
-                                }
-                int next_loc;
-                #region URM_LOC_2  
-                if (tip_loc[nr] == 2 || tip_loc[nr] == 3 || tip_loc[nr] == 6 || tip_loc[nr] == 7 || tip_loc[nr] == 8 || tip_loc[nr] == 9 || tip_loc[nr] == 10 || tip_loc[nr] == 11)
-                {
-                    if (loc[nr].Y - 19 > 30 && tip_loc[nr] != 10 && tip_loc[nr] != 12)
-                    {
-                        int ok = 1;
-                        for (int xx = 1; xx <= nr_loc; xx++)
-                            if (loc[xx].X == loc[nr].X && loc[xx].Y == loc[nr].Y - 19)
-                                ok = 0;
-                        if (ok == 1)
-                        {
-                            nr_loc++;
-                            do
-                                next_loc = ran.Next(2, NR_LOC);
-                            while (next_loc == 5 || next_loc == 9 || next_loc == 11);
-
-                            tip_loc[nr_loc] = next_loc;
-                            loc[nr_loc] = new Vector2(loc[nr].X, loc[nr].Y - 19);
-                        }
-                    }
-                    if (loc[nr].Y + 19 < 270 && tip_loc[nr] != 9 && tip_loc[nr] != 11)
-                    {
-                        int ok = 1;
-                        for (int xx = 1; xx <= nr_loc; xx++)
-                            if (loc[xx].X == loc[nr].X && loc[xx].Y == loc[nr].Y + 19)
-                                ok = 0;
-                        if (ok == 1)
-                        {
-                            nr_loc++;
-                            do
-                                next_loc = ran.Next(2, NR_LOC);
-                            while (next_loc == 4 || next_loc == 10 || next_loc == 12);
-
-                            tip_loc[nr_loc] = next_loc;
-                            loc[nr_loc] = new Vector2(loc[nr].X, loc[nr].Y + 19);
-                        }
-                    }
-                }
-
-                if (tip_loc[nr] == 6 || tip_loc[nr] == 8 || tip_loc[nr] == 9 || tip_loc[nr] == 10 || tip_loc[nr] == 11 || tip_loc[nr] == 12)
-                    if (loc[nr].X - 19 > 30)
-                    {
-                        int ok = 1;
-                        for (int xx = 1; xx <= nr_loc; xx++)
-                            if (loc[xx].X == loc[nr].X - 19 && loc[xx].Y == loc[nr].Y)
-                                ok = 0;
-                        if (ok == 1)
-                        {
-                            do
-                                next_loc = ran.Next(2, NR_LOC);
-                            while (next_loc != 7);
-                            nr_loc++;
-                            tip_loc[nr_loc] = next_loc;
-                            loc[nr_loc] = new Vector2(loc[nr].X - 19, loc[nr].Y);
-                        }
-                    }
-                if (tip_loc[nr] == 7 || tip_loc[nr] == 8)
-                    if (loc[nr].X + 19 < 270)
-                    {
-                        int ok = 1;
-                        for (int xx = 1; xx <= nr_loc; xx++)
-                            if (loc[xx].X == loc[nr].X + 19 && loc[xx].Y == loc[nr].Y)
-                                ok = 0;
-                        if (ok == 1)
-                        {
-                            do
-                                next_loc = ran.Next(2, NR_LOC);
-                            while (next_loc != 6 && next_loc != 9 && next_loc != 10 && next_loc != 11 && next_loc != 12);
-                            nr_loc++;
-                            tip_loc[nr_loc] = next_loc;
-                            loc[nr_loc] = new Vector2(loc[nr].X + 19, loc[nr].Y);
-                        }
-                    }
-                #endregion
-            }
-
-            for (int nr = 1; nr <= nr_loc; nr++)
-            {
-                int xx, yy;
-                xx = (int)loc[nr].X;
-                yy = (int)loc[nr].Y;
-
-                if (AUX.a[xx, yy - 10] == 0)
-                    AUX.b[xx, yy - 9] = 1000000000;
-                if (AUX.a[xx + 2, yy - 10] == 0)
-                    AUX.b[xx + 2, yy - 9] = 1000000000;
-                if (AUX.a[xx + 1, yy - 10] == 0)
-                    AUX.b[xx + 1, yy - 9] = 1000000000;
-
-                if (AUX.a[xx, yy + 10] == 0)
-                    AUX.b[xx, yy + 9] = 1000000000;
-                if (AUX.a[xx + 2, yy + 10] == 0)
-                    AUX.b[xx + 2, yy + 9] = 1000000000;
-                if (AUX.a[xx + 1, yy + 10] == 0)
-                    AUX.b[xx + 1, yy + 9] = 1000000000;
-
-                if (AUX.a[xx + 10, yy] == 0)
-                    AUX.b[xx + 9, yy] = 1000000000;
-                if (AUX.a[xx + 10, yy + 1] == 0)
-                    AUX.b[xx + 9, yy + 1] = 1000000000;
-                if (AUX.a[xx + 10, yy - 1] == 0)
-                    AUX.b[xx + 9, yy - 1] = 1000000000;
-                if (AUX.a[xx + 10, yy + 2] == 0)
-                    AUX.b[xx + 9, yy + 2] = 1000000000;
-                if (AUX.a[xx + 10, yy - 2] == 0)
-                    AUX.b[xx + 9, yy - 2] = 1000000000;
-
-                if (AUX.a[xx - 10, yy] == 0)
-                    AUX.b[xx - 9, yy] = 1000000000;
-                if (AUX.a[xx - 10, yy + 1] == 0)
-                    AUX.b[xx - 9, yy + 1] = 1000000000;
-                if (AUX.a[xx - 10, yy - 1] == 0)
-                    AUX.b[xx - 9, yy - 1] = 1000000000;
-            }
-
-            return AUX;
-        }
-        public Planeta CREARE_ASTERORID()
-        {
-            Planeta AUX = new Planeta();
-
-            int r1, r2;
-            r1 = r2 = 0;
-            int j = 1;
-            for (j = -100; j <= 100; j++)
-            {
-                r1 = 101 + ran.Next(-1, 2);
-                r2 = 101 + ran.Next(-1, 2);
-                for (int i = -(int)Math.Sqrt(r1 * r1 - j * j); i <= (int)Math.Sqrt(r2 * r2 - j * j); i++)
-                {
-                    AUX.a[150 + i, 150 + j] = 200 + ran.Next(0, NR_subs);
-                    AUX.b[150 + i, 150 + j] = 200;
-                }
-            }
-            for (j = -20; j <= 20; j++)
-            {
-                r1 = 21 + ran.Next(-1, 2);
-                r2 = 21 + ran.Next(-1, 2);
-                for (int i = -(int)Math.Sqrt(r1 * r1 - j * j); i <= (int)Math.Sqrt(r2 * r2 - j * j); i++)
-                {
-                    AUX.apa[150 + i, 150 + j] = 7000 + ran.Next(0, NR_subs);
-                    // AUX.b[150 + i, 150 + j] = 200;
-                }
-            }
-
-            AUX.forta = 10;
-
-            j = 2;
-            while (AUX.a[150, j + 3] == 0)
-                j++;
-
-            PL_P.poz = new Vector2(150 * 20, j * 20);
-            PL_P.Y = (int)(PL_P.poz.X + 10) / 20;
-            PL_P.X = (int)(PL_P.poz.Y + 30) / 20;
-
-            AUX.creaturi = new Creatura[2];
-            AUX.creaturi[0] = new Creatura();
-            AUX.creaturi[0].inteligenta = -1;
-            AUX.creaturi[0].poz = PL_P.poz;
-
-            return AUX;
-        }
-        public Planeta CREARE_PLANETA_AUX()
-        {
-            Planeta AUX = new Planeta();
-
-            AUX.forta = 10;
-            AUX.creaturi = new Creatura[100];
-            for (int i = 0; i < 100; i++)
-                AUX.creaturi[i] = new Creatura();
-            AUX.nr_creaturi = 1;
-            for (int i = 150; i < 300; i++)
-                for (int j = 1; j < 300; j++)
-                {
-                    AUX.a[i, j] = 100;
-                    AUX.b[i, j] = 1000000;
-                }
-            for (int i = 1; i < 300; i++)
-                AUX.apa[150, i] = 12003;
-
-            AUX.creaturi[0].inteligenta = -6;
-
-            for (int i = 15; i < 30; i++)
-            {
-                AUX.a[149, i] = 1300;
-                AUX.b[149, i] = 1000000;
-                AUX.a[148, i] = 1301;
-                AUX.b[148, i] = 0;
-                AUX.a[147, i] = 1302;
-                AUX.b[147, i] = 0;
-            }
-            for (int i = 2; i < 30; i++)
-            {
-                AUX.a[145, i] = 1303;
-                AUX.b[145, i] = 0;
-            }
-            for (int i = 140; i <= 150; i++)
-                AUX.apa[i, 6] = 12003;
-
-            PL_P.poz = new Vector2(100, 100);
-            AUX.creaturi[0].poz = new Vector2(200, 200);
-            AUX.creaturi[0].X = 10;
-            AUX.creaturi[0].Y = 10;
-            AUX.creaturi[0].rot[4] = 0f;
-
-            return AUX;
-        }
-        public Planeta CREARE_PLANETA_FROM_IMG(Texture2D aux)
-        {
-            Planeta PLAN = new Planeta();
-            int nr = 0;
-            Color[] pixels = new Color[aux.Height * aux.Width];
-            aux.GetData<Color>(pixels);
-            PLAN.ar = pixels[0].R;
-            PLAN.ge = pixels[0].G;
-            PLAN.be = pixels[0].B;
-            PLAN.V_SKY = new Vector3((float)PLAN.ar / 1000, (float)PLAN.ge / 1000, (float)PLAN.be / 1000);
-
-            for (int i = 1; i < 300; i++)
-                for (int j = 1; j < 300; j++)
-                {
-                    Color auxx = pixels[i * 300 + j];
-                    PLAN.a[i, j] = auxx.R * 100 + (auxx.B % 100) / 10;
-                    PLAN.apa[i, j] = auxx.G * 1000 + auxx.B % 10;
-                    if (auxx.B >= 100)
-                        PLAN.b[i, j] = 1;
-                    else PLAN.b[i, j] = 0;
-                }
-            PLAN.creaturi = new Creatura[aux.Height - 301];
-            PLAN.nr_creaturi = 0;
-            for(int k=1;k <= aux.Height - 301; k++)
-            {
-                int i = 300 + k;
-                Creatura cre = new Creatura();
-                cre.X = cre.Y = 0;
-
-                Color C_p = pixels[i * 300 + 0];
-                cre.X = C_p.R * 100 + C_p.G * 10 + C_p.B;
-
-                C_p = pixels[i * 300 + 1];
-                cre.Y = C_p.R * 100 + C_p.G * 10 + C_p.B;
-                cre.poz = new Vector2(cre.X * 20, cre.Y * 20);
-
-                C_p = pixels[i * 300 + 2];
-                cre.inteligenta = C_p.G;
-                if (C_p.R % 10 == 1)
-                    cre.inteligenta *= -1;
-                cre.parti = new int[10];
-                for (int j = 0; j <= 9; j++)
-                     cre.parti[j] = C_p.B;
-                cre.rot = new float[10];
-                cre.orientare = 1 - C_p.R / 10;
-                if (cre.orientare == -1)
-                    cre.fata = SpriteEffects.FlipHorizontally;
-                cre.rot[0] = -100;
-                cre.rot[1] = -0.9f * cre.orientare;
-                cre.rot[2] = -100;
-                cre.rot[3] = 0.9f * cre.orientare;
-                cre.rot[4] = 0f; /// Corp
-                cre.rot[5] = -0.9f * cre.orientare;
-                cre.rot[6] = -100;
-                cre.rot[7] = 0.9f * cre.orientare;
-                cre.rot[8] = -100;
-                cre.rot[9] = 0f; /// Cap
-
-                string nume = "";
-                for (int j = 0; ; j++)
-                {
-                    C_p = pixels[i * 300 + 3 + j];
-                    char character = (char)C_p.R;
-                    if (character != 0)
-                        nume += character + "";
-                    character = (char)C_p.G;
-                    if (character != 0)
-                        nume += character + "";
-                    character = (char)C_p.B;
-                    if (character != 0)
-                        nume += character + "";
-                    if (C_p.R == 0 || C_p.G == 0 || C_p.B == 0 || j == 290)
-                        break;
-                }
-                cre.nume = nume;
-
-                PLAN.creaturi[PLAN.nr_creaturi++] = cre;
-            }
-            PLAN.forta = 10;
-            PL_P.X = PLAN.creaturi[0].Y;
-            PL_P.Y = PLAN.creaturi[0].X;
-            PL_P.poz = new Vector2(PL_P.X * 20, PL_P.Y * 20);
-            return PLAN;
-        }
-
-        public void SELECTEAZA_PLANETA()
-        {
-            if (L_PLA[PLA_A].SALVAT == 0)
-            {
-                if (L_PLA[PLA_A].ID < 1000 && L_PLA[PLA_A].ID > 0)
-                {
-                    PLA_S = CREARE_PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_" + (L_PLA[PLA_A].ID - 1)));
-                    L_PLA[PLA_A].SALVAT = 1;
-                }
-                else
-                {
-                    if (L_PLA[PLA_A].ord_elm[NR_subs + 1] == 7)
-                    {
-                        PLA_S = CREARE_ASTERORID();
-                    }
-                    else
-                    {
-                        if (L_PLA[PLA_A].ord_elm[NR_subs + 1] == 0)
-                            PLA_S = CREARE_STATIE();
-                        else PLA_S = CREARE_PLANETA();
-                        PLA_S.creaturi[PLA_S.nr_creaturi] = new Creatura();
-                        PLA_S.creaturi[PLA_S.nr_creaturi].viata = 100000000;
-                        PLA_S.creaturi[PLA_S.nr_creaturi].inteligenta = -1;
-                        PLA_S.creaturi[PLA_S.nr_creaturi].poz.X = PL_P.poz.Y;
-                        PLA_S.creaturi[PLA_S.nr_creaturi].poz.Y = PL_P.poz.X;
-                        PLA_S.creaturi[PLA_S.nr_creaturi].agresiune = 0;
-                        PLA_S.creaturi[PLA_S.nr_creaturi].rot = new float[11];
-                        PLA_S.nr_creaturi++;
-                    }
-                    L_PLA[PLA_A].SALVAT = 1;
-                    MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + L_PLA[PLA_A].ID);
-                }
-            }
-            else
-            {
-                PLA_S = MaxiFun.IO.Load<Planeta>(saveDir, "PLANETA" + L_PLA[PLA_A].ID);
-                // PLA_S = Newtonsoft.Json.JsonConvert.DeserializeObject<Planeta>(Unzip(File.ReadAllBytes("test.json")));
-
-                int aux_sel = -1;
-                for (int i = 0; i < PLA_S.nr_creaturi; i++)
-                    if (PLA_S.creaturi[i].inteligenta == -1)
-                        if (aux_sel == -1 || ran.Next(0, PLA_S.nr_creaturi + 1) == 1)
-                            aux_sel = i;
-
-                if (aux_sel != -1)
-                {
-                    PL_P.poz.X = PLA_S.creaturi[aux_sel].poz.Y;
-                    PL_P.poz.Y = PLA_S.creaturi[aux_sel].poz.X;
-                }
-                else
-                {
-                    PL_P.poz = new Vector2(100, 100);
-                }
-            }
-        }
-
+        
         public void ELIMINARE_BLOCK(int i, int j)
         {
             int r;
@@ -2067,286 +320,7 @@ namespace Reluare_priectre
                         PLA_S.creaturi[ass].agresiune = 1;
             }
         }
-        public Creatura AI_FIINTA(Creatura aux)
-        {
-            aux.X = (int)(aux.poz.X + 16 - Math.Abs(Math.Sin(aux.rot[4])) * 8) / 20 + 1;
-            aux.Y = (int)(aux.poz.Y + 10) / 20;
-            if (aux.X > 0 && aux.X < 300)
-                if (aux.Y > 0 && aux.Y < 300)
-                {
-                    if (aux.X > 3)
-                        if (PLA_S.b[aux.X - 2, aux.Y] != 0)
-                        {
-                            aux.poz.X += aux.fx;
-                            aux.fx = 0;
-                            aux.poz.X += (int)(aux.poz.X + 16 - Math.Abs(Math.Sin(aux.rot[4])) * 8) % 20 / 2;
-                        }
-                    if (PLA_S.b[aux.X, aux.Y] != 0)
-                    {
-                        //aux.forta = (float)aux.pow / 3;
-                        aux.fx = 0;
-                        aux.poz.X -= (int)(aux.poz.X + 16 - Math.Abs(Math.Sin(aux.rot[4])) * 8) % 20 / 2;
-                    }
-                    else aux.fx -= (float)PLA_S.forta / 30;
-                    if (aux.fx <= -20)
-                        aux.fx = -19;
-
-                    aux.poz.X -= aux.fx;
-
-                    int x, y;
-                    x = aux.xx;
-                    y = aux.yy;
-
-                    if (aux.agresiune == 1)
-                    {
-                        float xx, yy;
-                        xx = aux.X - PL_P.X;
-                        yy = aux.Y - PL_P.Y;
-                        if (xx * xx + yy * yy <= aux.r * aux.r)
-                        {
-                            x = PL_P.X;
-                            y = PL_P.Y;
-                            if (xx * xx + yy * yy <= 2)
-                            {
-                                PL_P.viata -= aux.pow;
-                                if (PL_P.viata < 0)
-                                {
-                                    PL_P.fx = 0;
-                                    MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + PLA_A);
-                                    COMANDA("set_menu", "", 3, 0);
-                                }
-                            }
-                            else if (aux.inteligenta >= 5)
-                            {
-                                if (TIME % 4 == 0)
-                                {
-                                    float L, Lx, Ly;
-                                    Lx = PL_P.poz.X - aux.poz.Y;
-                                    Ly = PL_P.poz.Y - aux.poz.X;
-                                    L = (float)Math.Sqrt(Lx * Lx + Ly * Ly);
-
-                                    LAS[NR_PRO].poz.X = aux.poz.Y;
-                                    LAS[NR_PRO].poz.Y = aux.poz.X;
-                                    LAS[NR_PRO].fx -= -Lx / L * 2;
-                                    LAS[NR_PRO].fy = Ly / L * 2;
-                                    LAS[NR_PRO].poz.X += LAS[NR_PRO].fx;
-                                    LAS[NR_PRO].poz.Y += LAS[NR_PRO].fy - 8;
-                                    LAS[NR_PRO].pow = aux.pow;
-                                    LAS[NR_PRO].tip_p = 7;
-
-                                    NR_PRO++;
-                                }
-                            }
-                        }
-
-                        if (aux.Y < y)
-                        {
-                            aux.mers++;
-                            if (aux.mers >= 20)
-                                aux.mers = -19;
-                            if (PLA_S.b[aux.X - 1, aux.Y + 1] == 0 && PLA_S.b[aux.X - 2, aux.Y + 1] == 0)
-                            {
-                                aux.poz.Y += 3;
-                                aux.fata = SpriteEffects.FlipHorizontally;
-                                aux.orientare = -1;
-                            }
-                            else if (PLA_S.b[aux.X, aux.Y] != 0 && PLA_S.b[aux.X - 3, aux.Y] == 0)
-                            {
-                                aux.fx = (float)aux.pow * 0.7f;
-                                aux.poz.X -= aux.fx;
-                            }
-
-                        }
-                        else if (aux.Y > y)
-                        {
-                            aux.mers++;
-                            if (aux.mers >= 20)
-                                aux.mers = -19;
-                            if (aux.X > 3 && aux.Y > 2)
-                                if (PLA_S.b[aux.X - 1, aux.Y - 1] == 0 && PLA_S.b[aux.X - 2, aux.Y - 1] == 0)
-                                {
-                                    aux.poz.Y -= 3;
-                                    aux.fata = SpriteEffects.None;
-                                    aux.orientare = 1;
-                                }
-                                else if (PLA_S.b[aux.X, aux.Y] != 0 && PLA_S.b[aux.X - 3, aux.Y] == 0)
-                                {
-                                    aux.fx = (float)aux.pow * 0.7f;
-                                    aux.poz.X -= aux.fx;
-                                }
-
-                        }
-                        else aux.mers = 10;
-                    }
-                }
-
-            return aux;
-        }
-
-        public int CRAFTING(int a1, int a2)
-        {
-            if (a1 != 0 && a2 != 0)
-            {
-                if (a2 >= 0)
-                {
-                    if (inventar[COMP_A] > 0)
-                    {
-                        inventar[COMP_A]--;
-                        inventar[NR_comp + NR_subs * NR_elem + a2 + 1]++;
-                    }
-                    else return 0;
-                }
-                else if (a2 == -1)
-                {
-                    int s1 = NR_comp + NR_subs * NR_elem + 1;
-                    if (a1 == 2)    //10 fer + 5 carbon
-                    {
-                        if (inventar[s1 + 1] < 10 || inventar[s1 + 3] < 5)
-                            return 0;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 3] -= 5;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 3) //10 fer + 10 carbon + 20 uraniu + 5 sulfur
-                    {
-                        if (inventar[s1 + 1] < 10 || inventar[s1 + 3] < 10 || inventar[s1 + 4] < 20 || inventar[s1 + 2] < 5)
-                            return 0;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 3] -= 10;
-                        inventar[s1 + 4] -= 20;
-                        inventar[s1 + 2] -= 5;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 4) // 10 fer + 10 uraniu + 10 sulfir
-                    {
-                        if (inventar[s1 + 1] < 10 || inventar[s1 + 2] < 10 || inventar[s1 + 4] < 10)
-                            return 0;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 2] -= 10;
-                        inventar[s1 + 4] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 5)    // 10 fer + 10 carbon + 2 uraniu
-                    {
-                        if (inventar[s1 + 1] < 10 || inventar[s1 + 3] < 10 || inventar[s1 + 4] < 2)
-                            return 0;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 3] -= 10;
-                        inventar[s1 + 4] -= 2;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 6) //30 fer + 10 carbon
-                    {
-                        if (inventar[s1 + 1] < 30 || inventar[s1 + 3] < 10)
-                            return 0;
-                        inventar[s1 + 1] -= 30;
-                        inventar[s1 + 3] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 7) //1 Placaj1 + 5 fer + 10 carbon
-                    {
-                        if (inventar[2] < 1 || inventar[s1 + 1] < 5 || inventar[s1 + 3] < 10)
-                            return 0;
-                        inventar[2] -= 1;
-                        inventar[s1 + 1] -= 5;
-                        inventar[s1 + 3] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 8) //3 Propulsoare1 + 10 fer + 10 carbon
-                    {
-                        if (inventar[3] < 3 || inventar[s1 + 1] < 10 || inventar[s1 + 3] < 10)
-                            return 0;
-                        inventar[3] -= 3;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 3] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 9) // 2 Generatoare1 + 5 fer + 10 carbon + 10 uraniu
-                    {
-                        if (inventar[4] < 2 || inventar[s1 + 1] < 5 || inventar[s1 + 3] < 10 || inventar[s1 + 4] < 10)
-                            return 0;
-                        inventar[4] -= 2;
-                        inventar[s1 + 1] -= 5;
-                        inventar[s1 + 3] -= 10;
-                        inventar[s1 + 4] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 10) // 1 Tureta1 + 10 fer + 5 carbon + 5 uraniu
-                    {
-                        if (inventar[5] < 1 || inventar[s1 + 1] < 10 || inventar[s1 + 3] < 5 || inventar[s1 + 4] < 5)
-                            return 0;
-                        inventar[5] -= 1;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 3] -= 5;
-                        inventar[s1 + 4] -= 5;
-                        inventar[s1 + 2] -= 5;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 11) // 4 Placaj2 + 10 fer + 10 sulfur + 5 carbon
-                    {
-                        if (inventar[7] < 4 || inventar[s1 + 1] < 10 || inventar[s1 + 3] < 5 || inventar[s1 + 2] < 10)
-                            return 0;
-                        inventar[7] -= 4;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 3] -= 5;
-                        inventar[s1 + 2] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 12) //4 Generatoare2 + 5 fer + 10 uraniu
-                    {
-                        if (inventar[9] < 4 || inventar[s1 + 1] < 5 || inventar[s1 + 4] < 10)
-                            return 0;
-                        inventar[9] -= 4;
-                        inventar[s1 + 1] -= 5;
-                        inventar[s1 + 4] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 13) // 2 Tureta2 + 5 uraniu + 5 carbon + 5 fer
-                    {
-                        if (inventar[10] < 2 || inventar[s1 + 1] < 5 || inventar[s1 + 3] < 5 || inventar[s1 + 4] < 5)
-                            return 0;
-                        inventar[10] -= 2;
-                        inventar[s1 + 1] -= 5;
-                        inventar[s1 + 4] -= 5;
-                        inventar[s1 + 3] -= 5;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 14) // 4 Propulsoare2 + 10 uraniu + 10 fer + 10 sulf
-                    {
-                        if (inventar[8] < 4 || inventar[s1 + 1] < 10 || inventar[s1 + 4] < 10 || inventar[s1 + 2] < 10)
-                            return 0;
-                        inventar[8] -= 4;
-                        inventar[s1 + 1] -= 10;
-                        inventar[s1 + 4] -= 20;
-                        inventar[s1 + 2] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 15) //
-                    {
-                        if (inventar[11] < 3 || inventar[s1 + 1] < 20 || inventar[s1 + 3] < 10)
-                            return 0;
-                        inventar[11] -= 3;
-                        inventar[s1 + 1] -= 20;
-                        inventar[s1 + 3] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                    else if (a1 == 16) //
-                    {
-                        if (inventar[11] < 3 || inventar[s1 + 1] < 5 || inventar[s1 + 3] < 20 || inventar[s1 + 4] < 20 || inventar[s1 + 2] < 10)
-                            return 0;
-                        inventar[11] -= 3;
-                        inventar[s1 + 1] -= 5;
-                        inventar[s1 + 3] -= 20;
-                        inventar[s1 + 4] -= 20;
-                        inventar[s1 + 2] -= 10;
-                        inventar[COMP_A]++;
-                    }
-                }
-            }
-            return 1;
-        }
-
-
+        
         protected override void Initialize()
         {
             saveDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/B_T_H";
@@ -2470,57 +444,8 @@ namespace Reluare_priectre
                     PAR_C[i, j] = Content.Load<Texture2D>("BODY" + i + j);
             for (int i = NR_PARTI + 1; i <= NR_PARTI + 9; i++)
                 PAR_C[i, 0] = Content.Load<Texture2D>("BODY" + i + "0");
-
-
             for (int i = 0; i < NR_subs + 5; i++)
                 PLA_TEX[i] = Content.Load<Texture2D>("PLANETA" + i);
-
-            L_PLA[0].ID = 1000;
-            int aux = 1;
-            int tip_PLA = 1;
-            int tip_AST = 0;
-            int nr_pln_s = 3;
-            nr_PLA_S = 500;
-            for (int i = 1; i < nr_PLA_S; i++)
-            {
-                if (i <= nr_pln_s)
-                {
-                    L_PLA[i] = CREARE_LOC_PLANETA(aux, i, 2);
-                    L_PLA[i].ID = i;
-                    L_PLA[i].SALVAT = 0;
-                }
-                else
-                {
-                    if (tip_PLA != 0 || aux == i)
-                        L_PLA[i] = CREARE_LOC_PLANETA(aux, i, 1);
-                    else L_PLA[i] = CREARE_LOC_PLANETA(tip_AST, i, 0);
-
-                    if (L_PLA[i].MOON == 1 && L_PLA[i].p_orb != 0)
-                    {
-                        tip_AST = i;
-                        tip_PLA = 0;
-                    }
-                    if ((int)Math.Sqrt(ran.Next(0, 100025)) <= 24 || i - tip_AST >= 15)
-                        tip_AST = 0;
-                    if (tip_AST == 0)
-                        tip_PLA = i;
-
-                    int last_id = L_PLA[i - 1].ID;
-                    if (last_id < 0)
-                        last_id *= -1;
-                    if (last_id < 1000)
-                        last_id = 1000;
-                    if (tip_AST != 0)
-                        L_PLA[i].ID = last_id + 1;
-                    else
-                        L_PLA[i].ID = -last_id - i;
-                    if (ran.Next(0, 40) == 2)
-                    {
-                        aux = i + 1;
-                        tip_AST = 0;
-                    }
-                }
-            }
             for (int i = 1; i <= 3; i++)
                 MOONS[i] = Content.Load<Texture2D>("MOON" + i);
 
@@ -2543,9 +468,10 @@ namespace Reluare_priectre
                 PL = MaxiFun.IO.Load<Nava>(saveDir, "NAVA_PLAYER");
                 inventar = MaxiFun.IO.Load<int[]>(saveDir, "INVENTAR");
             }
-            PLA_S = CREARE_PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_2"));
+            else CREARE.SISTEM();
+            PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_2"));
             //OBTIUNI[3] = 1;
-            COMANDA("set_menu", "", 5, 0);
+            COMANDA.cmd("set_menu", "", 5, 0);
         }
 
         protected override void UnloadContent()
@@ -2626,9 +552,9 @@ namespace Reluare_priectre
                             this.Exit();
                         }
                         else if (y > 100 && y <= 200)
-                            COMANDA("set_menu", "", 2, 0);
+                            COMANDA.cmd("set_menu", "", 2, 0);
                         else if (y > 200 && y <= 300)
-                            COMANDA("set_menu", "", 3, 0);
+                            COMANDA.cmd("set_menu", "", 3, 0);
                     }
                 }
 
@@ -2641,7 +567,7 @@ namespace Reluare_priectre
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     if (BUTON_A_3 == false)
-                        COMANDA("set_menu", "", 1, 0);
+                        COMANDA.cmd("set_menu", "", 1, 0);
                     BUTON_A_3 = true;
                 }
                 else BUTON_A_3 = false;
@@ -2818,14 +744,14 @@ namespace Reluare_priectre
                             if (BUTON_A_2 == false)
                             {
                                 BUTON_A_2 = true;
-                                if (L_PLA[i].p_orb != 0)
+                                if (L_PLA[i].p_orb != i)
                                 {
                                     PLA_A = i;
-                                    SELECTEAZA_PLANETA();
+                                    SELECTARE.PLANETA();
                                     if (L_PLA[PLA_A].ord_elm[NR_subs + 1] != 7)
-                                        COMANDA("set_menu", "", 5, 0);
+                                        COMANDA.cmd("set_menu", "", 5, 0);
                                     else
-                                        COMANDA("set_menu", "", 8, 0);
+                                        COMANDA.cmd("set_menu", "", 8, 0);
                                     break;
                                 }
                             }
@@ -2837,7 +763,7 @@ namespace Reluare_priectre
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     if (BUTON_A_3 == false)
-                        COMANDA("set_menu", "", 1, 0);
+                        COMANDA.cmd("set_menu", "", 1, 0);
                     BUTON_A_3 = true;
                 }
                 else BUTON_A_3 = false;
@@ -3033,7 +959,7 @@ namespace Reluare_priectre
                     if (BUTON_A_1 == false)
                     {
                         BUTON_A_1 = true;
-                        COMANDA("set_menu", "", 6, 0);
+                        COMANDA.cmd("set_menu", "", 6, 0);
                     }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.F))
@@ -3041,7 +967,7 @@ namespace Reluare_priectre
                     if (BUTON_A_1 == false)
                     {
                         BUTON_A_1 = true;
-                        COMANDA("set_menu", "", 9, 0);
+                        COMANDA.cmd("set_menu", "", 9, 0);
                     }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.M))
@@ -3050,7 +976,7 @@ namespace Reluare_priectre
                     {
                         BUTON_A_1 = true;
                         MENU_AUX = -1;
-                        COMANDA("set_menu", "", 7, 0);
+                        COMANDA.cmd("set_menu", "", 7, 0);
                     }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.Add))
@@ -3157,7 +1083,7 @@ namespace Reluare_priectre
 
 
                 for (int i = 0; i < PLA_S.nr_creaturi; i++)
-                    PLA_S.creaturi[i] = AI_FIINTA(PLA_S.creaturi[i]);
+                    PLA_S.creaturi[i] = AI.FIINTA(PLA_S.creaturi[i]);
 
                 if (Keyboard.GetState().IsKeyDown(Keys.E))
                 {
@@ -3208,18 +1134,18 @@ namespace Reluare_priectre
                                     if (PLA_S.creaturi[i].inteligenta == -1)
                                     {
                                         MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + L_PLA[PLA_A].ID);
-                                        COMANDA("set_menu", "", 3, 0);
+                                        COMANDA.cmd("set_menu", "", 3, 0);
                                         BUTON_A_2 = false;
                                         break;
                                     }
                                     else if (PLA_S.creaturi[i].inteligenta == -2)
-                                        COMANDA("set_menu", "", 20, 0);
+                                        COMANDA.cmd("set_menu", "", 20, 0);
                                     else if (PLA_S.creaturi[i].inteligenta == -3)
-                                        COMANDA("set_menu", "", 21, 0);
+                                        COMANDA.cmd("set_menu", "", 21, 0);
                                     else if (PLA_S.creaturi[i].inteligenta == -4)
-                                        COMANDA("set_menu", "", 22, 0);
+                                        COMANDA.cmd("set_menu", "", 22, 0);
                                     else if (PLA_S.creaturi[i].inteligenta == -5)
-                                        COMANDA("set_menu", "", 23, 0);
+                                        COMANDA.cmd("set_menu", "", 23, 0);
                                     else if (PLA_S.creaturi[i].inteligenta == -6)
                                         CURENT(PLA_S.creaturi[i].X, PLA_S.creaturi[i].Y);
                                     else if (PLA_S.creaturi[i].inteligenta == -8)
@@ -3399,7 +1325,7 @@ namespace Reluare_priectre
                     if (BUTON_A_1 == false)
                     {
                         BUTON_A_1 = true;
-                        COMANDA("set_menu", "", 5, 0);
+                        COMANDA.cmd("set_menu", "", 5, 0);
                     }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -3570,7 +1496,7 @@ namespace Reluare_priectre
                     if (BUTON_A_3 == false)
                     {
                         MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + L_PLA[PLA_A].ID);
-                        COMANDA("set_menu", "", 3, 0);
+                        COMANDA.cmd("set_menu", "", 3, 0);
                     }
                     BUTON_A_3 = true;
                 }
@@ -3624,7 +1550,7 @@ namespace Reluare_priectre
                 {
                     if (BUTON_A_1 == false)
                     {
-                        COMANDA("set_menu", "", 5, 0);
+                        COMANDA.cmd("set_menu", "", 5, 0);
                     }
                     BUTON_A_1 = true;
                 }
@@ -3917,7 +1843,7 @@ namespace Reluare_priectre
 
                             if (x * x + y * y <= 300)
                             {
-                                COMANDA("set_menu", "", 5, 0);
+                                COMANDA.cmd("set_menu", "", 5, 0);
                                 break;
                             }
 
@@ -3989,7 +1915,7 @@ namespace Reluare_priectre
                         NR_JOC--;
                 }
                 else if (JOC_MATRICE[y, x] == 1)
-                    COMANDA("set_menu", "", 23, 0);
+                    COMANDA.cmd("set_menu", "", 23, 0);
                 #endregion
             }
 
@@ -4480,7 +2406,7 @@ namespace Reluare_priectre
                                                     PLA_S.creaturi[jj].fx = LAS[i].fy * 3;
                                                     if (PLA_S.creaturi[jj].viata <= 0)
                                                     {
-                                                        for (int aui = jj; aui < PLA_S.nr_creaturi; aui++)
+                                                        for (int aui = jj; aui < PLA_S.nr_creaturi - 1; aui++)
                                                             PLA_S.creaturi[aui] = PLA_S.creaturi[aui + 1];
                                                         PLA_S.nr_creaturi--;
                                                         jj--;
@@ -5024,7 +2950,7 @@ namespace Reluare_priectre
                 for (int i = 1; i <= NR_JOC; i++)
                     spriteBatch.Draw(LAS_T[JOC_SIR[i]], JOC_VECTOR[i], Color.White);
                 if (ok == 0 || NR_JOC <= 0)
-                    COMANDA("set_menu", "", 5, 0);
+                    COMANDA.cmd("set_menu", "", 5, 0);
 
                 #endregion
             }
@@ -5166,7 +3092,7 @@ namespace Reluare_priectre
                 #endregion
 
                 if (ok == 0)
-                    COMANDA("set_menu", "", 5, 0);
+                    COMANDA.cmd("set_menu", "", 5, 0);
 
                 #endregion
             }
@@ -5236,7 +3162,7 @@ namespace Reluare_priectre
                         spriteBatch.Draw(LAS_T[1], new Vector2(JOC_VECTOR[i].X / 20 * xx, JOC_VECTOR[i].Y / 20 * yy), null, Color.White, Rot, new Vector2(10, 10), new Vector2(Math.Min(xx / 40, yy / 40), Math.Min(xx / 40, yy / 40)), SpriteEffects.None, 0f);
 
                 if (ok == 0)
-                    COMANDA("set_menu", "", 5, 0);
+                    COMANDA.cmd("set_menu", "", 5, 0);
 
                 #endregion
             }
@@ -5270,7 +3196,7 @@ namespace Reluare_priectre
                     spriteBatch.Draw(LAS_T[6], JOC_VECTOR[i], null, Color.White, 0f, new Vector2(7, 7), zz / (15 + i), SpriteEffects.None, 0f);
 
                 if (ok == 0 || NR_JOC < 0)
-                    COMANDA("set_menu", "", 5, 0);
+                    COMANDA.cmd("set_menu", "", 5, 0);
                 #endregion
             }
 

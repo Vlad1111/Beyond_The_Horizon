@@ -41,9 +41,20 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AI.cs" />
+    <Compile Include="COMANDA.cs" />
+    <Compile Include="Componenta.cs" />
+    <Compile Include="CRAFTING.cs" />
+    <Compile Include="CREARE.cs" />
+    <Compile Include="Creatura.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="LocPlaneta.cs" />
+    <Compile Include="Nava.cs" />
+    <Compile Include="Planeta.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Proiectil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SELECTARE.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MaxiFun, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
