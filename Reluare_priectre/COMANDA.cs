@@ -19,14 +19,18 @@ namespace Reluare_priectre
                 Game1.ZOOM = 1;
                 Game1.PL.rot = 0f;
                 Game1.MENU = (int)v1;
-                if (Game1.MENU == 5)
-                    Game1.PL_P.viata = Game1.PL_P.max_viata;
-                Game1.TIME = 0;
+
+                if(Game1.MENU == 4)
+                    if (Game1.WINDOW_REZ.X < 700)
+                        Game1.ZOOM = Game1.WINDOW_REZ.X / 700;
 
                 if (Game1.MENU == 3)
                     Game1.MOUSE_T = Game1.game.Content.Load<Texture2D>("MOUSE1");
                 else
                     Game1.MOUSE_T = Game1.game.Content.Load<Texture2D>("MOUSE2");
+                if (Game1.MENU == 5)
+                    Game1.PL_P.viata = Game1.PL_P.max_viata;
+                Game1.TIME = 0;
                 Game1.COMP_A = 0;
                 if (Game1.MENU == 1)
                 {

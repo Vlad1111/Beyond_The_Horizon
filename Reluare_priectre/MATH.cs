@@ -9,7 +9,7 @@ namespace Reluare_priectre
 {
     class MATH
     {
-        static public int semn(int x)
+        static public int semn(float x)
         {
             if (x == 0)
                 return 0;
@@ -30,6 +30,11 @@ namespace Reluare_priectre
         static public float ung(Vector2 A, Vector2 B)
         {
             return (float)Math.Atan2(A.X - B.X, A.Y - B.Y);
+        }
+
+        static public float sqrt(float x)
+        {
+            return (float)Math.Sqrt(x * semn(x)) * semn(x);
         }
     }
 }
