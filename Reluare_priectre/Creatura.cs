@@ -19,6 +19,7 @@ namespace Reluare_priectre
         public SpriteEffects fata;
         public int orientare;
         public int viata;
+        public int max_viata;
         public float mers;
         public float fx, fy;
         public int inteligenta;

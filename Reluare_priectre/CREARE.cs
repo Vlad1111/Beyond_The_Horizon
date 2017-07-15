@@ -12,7 +12,6 @@ namespace Reluare_priectre
     {
         static public Planeta PLANETA()
         {
-            Random ran = new Random();
             Planeta AUX = new Planeta();
             int aux;
             int auy;
@@ -27,7 +26,7 @@ namespace Reluare_priectre
             AUX.V_SKY = new Vector3((float)AUX.ar / 1000, (float)AUX.ge / 1000, (float)AUX.be / 1000);
             AUX.SKY = new Vector3(AUX.ar, AUX.ge, AUX.be);
             AUX.temperatura_z = Game1.L_PLA[Game1.PLA_A].temperatura_z;
-            AUX.temperatura_n = AUX.temperatura_z - ran.Next(10, 200);
+            AUX.temperatura_n = AUX.temperatura_z - Game1.ran.Next(10, 200);
 
             AUX.MOON = Game1.L_PLA[Game1.PLA_A].MOON;
 
@@ -36,29 +35,29 @@ namespace Reluare_priectre
             AUX.ord_elm = Game1.L_PLA[Game1.PLA_A].ord_elm;
 
 
-            AUX.inaltime = ran.Next(1, 10);
+            AUX.inaltime = Game1.ran.Next(1, 10);
 
             aux = 150;
-            //aux = ran.Next(100, 250);
+            //aux = Game1.ran.Next(100, 250);
 
             for (int i = 0; i < 300; i++)
             {                                                                       /// CREAREA TERENULUI
                 auy = 1;
                 for (int j = aux; j < 300; j++)
                 {
-                    int auz = ran.Next(0, Game1.NR_subs * Game1.NR_subs * Game1.NR_subs * Game1.NR_subs);              /// elementul la puterea a 4
+                    int auz = Game1.ran.Next(0, Game1.NR_subs * Game1.NR_subs * Game1.NR_subs * Game1.NR_subs);              /// elementul la puterea a 4
                     AUX.a[j, i] = auy * 100 + AUX.ord_elm[4 - (int)Math.Sqrt((int)Math.Sqrt(auz))];
                     AUX.b[j, i] = auy * 100;
 
                     if (j >= 180)
                         if (auy < 2)
-                            if (ran.Next(0, AUX.inaltime) == 0)
+                            if (Game1.ran.Next(0, AUX.inaltime) == 0)
                                 auy++;
                 }
 
-                int semn = 1 - ran.Next(0, 100) % 3;
-                if (ran.Next(0, 100) % 3 != 0)
-                    aux -= semn * (int)Math.Sqrt(ran.Next(1, AUX.inaltime * AUX.inaltime));
+                int semn = 1 - Game1.ran.Next(0, 100) % 3;
+                if (Game1.ran.Next(0, 100) % 3 != 0)
+                    aux -= semn * (int)Math.Sqrt(Game1.ran.Next(1, AUX.inaltime * AUX.inaltime));
 
                 if (aux <= 0)
                     aux = 1;
@@ -68,15 +67,15 @@ namespace Reluare_priectre
 
             for (int i = 0; i < 30; i++)                   /// PESTERI
             {
-                auy = ran.Next(0, 290);
-                aux = ran.Next(100, 290);
+                auy = Game1.ran.Next(0, 290);
+                aux = Game1.ran.Next(100, 290);
 
                 for (int j = 0; j <= 500; j++)
                 {
                     AUX.b[aux, auy] = 0;
-                    int semn = 1 - ran.Next(0, 100) % 3;
+                    int semn = 1 - Game1.ran.Next(0, 100) % 3;
                     aux += semn;
-                    semn = 1 - ran.Next(0, 100) % 3;
+                    semn = 1 - Game1.ran.Next(0, 100) % 3;
                     auy += semn;
 
                     if (aux <= 0 || aux >= 300 || auy <= 0 || auy >= 300)
@@ -88,19 +87,19 @@ namespace Reluare_priectre
 
             AUX.apa = new int[300, 300];             /// adaugarea apei
             int y;
-            int nr_apa = ran.Next(10, 10 + (300 - Math.Abs(AUX.temperatura_z)));
+            int nr_apa = Game1.ran.Next(10, 10 + (300 - Math.Abs(AUX.temperatura_z)));
 
             for (int i = 0; i < nr_apa; i++)
             {
                 int x = 10;
-                y = ran.Next(1, 300);
+                y = Game1.ran.Next(1, 300);
                 for (int j = x; j < 299; j++)
                 {
                     x = j;
-                    if (AUX.b[j, y] == 0 && AUX.b[j + 1, y] != 0 && ran.Next(0, 10 - AUX.inaltime) == 1)
+                    if (AUX.b[j, y] == 0 && AUX.b[j + 1, y] != 0 && Game1.ran.Next(0, 10 - AUX.inaltime) == 1)
                         break;
                 }
-                int tip_apa = ran.Next(0, Math.Abs(5 - AUX.inaltime));
+                int tip_apa = Game1.ran.Next(0, Math.Abs(5 - AUX.inaltime));
                 if (tip_apa <= 1)
                 {
                     if (AUX.temperatura_z > 3)
@@ -154,21 +153,21 @@ namespace Reluare_priectre
                     int i = 0;
                     while (AUX.a[i, j] / 100 != 1 && i < 299)
                         i++;
-                    for (; AUX.a[i, j] / 100 == 1 && ran.Next(0, nr_c) != 0 && i < 298; i++)
+                    for (; AUX.a[i, j] / 100 == 1 && Game1.ran.Next(0, nr_c) != 0 && i < 298; i++)
                         AUX.a[i, j] = 900 + AUX.a[i, j] % 100;
 
                 }
             }
             else if (AUX.temperatura_z > -50)
             {
-                nr_c = ran.Next(5, Math.Abs(AUX.temperatura_z) + 5);
+                nr_c = Game1.ran.Next(5, Math.Abs(AUX.temperatura_z) + 5);
                 int x;
                 for (int i = 0; i < nr_c; i++)
                 {
                     do
                     {
-                        x = ran.Next(10, 290);
-                        y = ran.Next(10, 290);
+                        x = Game1.ran.Next(10, 290);
+                        y = Game1.ran.Next(10, 290);
                     } while (AUX.a[x, y] / 100 != 1 && AUX.a[x, y] / 100 != 2);
 
                     AUX.a[x, y] = 900 + AUX.a[x, y] % 100;
@@ -186,14 +185,14 @@ namespace Reluare_priectre
                         i++;
                     if (i != 300)
                     {
-                        for (; (AUX.a[i, j] / 100 == 1 || AUX.a[i, j] / 100 == 8) && ran.Next(0, nr_c * 2) != 0 && i < 298; i++)
+                        for (; (AUX.a[i, j] / 100 == 1 || AUX.a[i, j] / 100 == 8) && Game1.ran.Next(0, nr_c * 2) != 0 && i < 298; i++)
                         {
                             AUX.a[i, j] = 1100 + AUX.a[i, j] % 100;
                             if (AUX.b[i, j] != 0)
                                 AUX.b[i, j] = 50;
                         }
                         i++;
-                        for (; i < 298 && (AUX.a[i, j] / 100 == 2 || AUX.a[i, j] / 100 == 8) && ran.Next(0, nr_c * 2) != 0; i++)
+                        for (; i < 298 && (AUX.a[i, j] / 100 == 2 || AUX.a[i, j] / 100 == 8) && Game1.ran.Next(0, nr_c * 2) != 0; i++)
                         {
                             AUX.a[i, j] = 800 + AUX.a[i, j] % 100;
                             if (AUX.b[i, j] != 0)
@@ -204,7 +203,7 @@ namespace Reluare_priectre
             }
 
 
-            nr_c = 30 - ran.Next(0, 30 - (Math.Abs(AUX.temperatura_z) / 10));                     ///CREAREA COPACILOR
+            nr_c = 30 - Game1.ran.Next(0, 30 - (Math.Abs(AUX.temperatura_z) / 10));                     ///CREAREA COPACILOR
             y = 0;
             for (int nrn = 0; nrn < nr_c; nrn++)
             {
@@ -212,7 +211,7 @@ namespace Reluare_priectre
                 do
                 {
                     x = 0;
-                    y += ran.Next(3, 6 * (30 - nr_c) + 3);
+                    y += Game1.ran.Next(3, 6 * (30 - nr_c) + 3);
                     if (y >= 300)
                         break;
                     while (x < 299 && AUX.a[x + 1, y] == 0)
@@ -222,9 +221,9 @@ namespace Reluare_priectre
                 if (y >= 300)
                     break;
                 int tip, inal, lat;
-                tip = (int)Math.Sqrt(ran.Next(0, 25));
-                inal = ran.Next(2, AUX.inaltime * 3);
-                lat = ran.Next(1, inal + 1);
+                tip = (int)Math.Sqrt(Game1.ran.Next(0, 25));
+                inal = Game1.ran.Next(2, AUX.inaltime * 3);
+                lat = Game1.ran.Next(1, inal + 1);
                 if (AUX.apa[x, y] == 0 && AUX.a[x, y] / 100 != 8)
                 {
                     if (AUX.b[x + 1, y] == 0 && tip >= 2)
@@ -243,7 +242,7 @@ namespace Reluare_priectre
 
                         if (i >= inal / 2)
                         {
-                            if (ran.Next(0, inal / 3) % 10 == 2)
+                            if (Game1.ran.Next(0, inal / 3) % 10 == 2)
                             {
                                 for (int j = 1; j <= lat; j++)
                                     if (y - j > 0 && y + j < 300)
@@ -257,7 +256,7 @@ namespace Reluare_priectre
                                             if (tip >= 2)
                                                 AUX.b[x, y - j] = 50;
 
-                                            if (ran.Next(0, 10) == 2)
+                                            if (Game1.ran.Next(0, 10) == 2)
                                                 break;
                                         }
                                         else break;
@@ -274,13 +273,13 @@ namespace Reluare_priectre
                                             if (tip >= 2)
                                                 AUX.b[x, y - j] = 5;
 
-                                            if (ran.Next(0, 10) == 2)
+                                            if (Game1.ran.Next(0, 10) == 2)
                                                 break;
                                         }
                                         else break;
                         }
                     }
-                    for (int i = 0; i < ran.Next(1, 5); i++)
+                    for (int i = 0; i < Game1.ran.Next(1, 5); i++)
                         if (x - i > 0)
                         {
                             AUX.a[x - i, y] = 4 * 100 + AUX.ord_elm[tip % 2];
@@ -292,7 +291,7 @@ namespace Reluare_priectre
             }
 
             for (int j = 1; j < 300; j++)
-                if (ran.Next(1, AUX.inaltime) == 1)
+                if (Game1.ran.Next(1, AUX.inaltime) == 1)
                 {
                     int i = 1;
                     while (AUX.a[i, j] / 100 != 1 && i < 299)
@@ -306,7 +305,7 @@ namespace Reluare_priectre
                         }
                 }
 
-            aux = ran.Next(1, 299);                       /// POZITIA JUCATORULI
+            aux = Game1.ran.Next(1, 299);                       /// POZITIA JUCATORULI
             for (int i = 0; i < 298; i++)
             {
                 Game1.PL_P.poz.X = aux * 20;
@@ -325,25 +324,25 @@ namespace Reluare_priectre
                 {
                     if (AUX.a[i, j] / 100 == 1)
                         break;
-                    AUX.apa[i, j] = 7000 + ran.Next(0, 5) + (299 - i) * 10;
-                    if (i < 290 && (ran.Next(0, (Math.Abs(AUX.temperatura_z)) / 10 + 1) == 0 || AUX.temperatura_z <= 0))
+                    AUX.apa[i, j] = 7000 + Game1.ran.Next(0, 5) + (299 - i) * 10;
+                    if (i < 290 && (Game1.ran.Next(0, (Math.Abs(AUX.temperatura_z)) / 10 + 1) == 0 || AUX.temperatura_z <= 0))
                         break;
                 }
 
 
 
             AUX.creaturi = new Creatura[10];         //creare creaturi
-            AUX.nr_creaturi = ran.Next(0, (300 - Math.Abs(AUX.temperatura_z)) / 20);
+            AUX.nr_creaturi = Game1.ran.Next(0, (300 - Math.Abs(AUX.temperatura_z)) / 20);
             for (int i = 0; i < AUX.nr_creaturi; i++)
             {
                 Creatura cc = new Creatura();
-                cc.pow = ran.Next(2, 100);
+                cc.pow = Game1.ran.Next(2, 100);
                 cc.viata = 1000;
                 int x = 0;
                 int iii;
                 for (iii = 0; iii <= 1000; iii++)
                 {
-                    y = ran.Next(20, 280);
+                    y = Game1.ran.Next(20, 280);
                     x = 0;
                     while (x < 290 && AUX.b[x + 2, y] == 0)
                         x++;
@@ -372,18 +371,18 @@ namespace Reluare_priectre
                 cc.parti = new int[11];
                 for (int j = 0; j <= 10; j++)
                     cc.rot[j] = -99f;
-                nr_c = ran.Next(1, 5);
-                cc.parti[0] = ran.Next(1, Game1.NR_PARTI + 1);
+                nr_c = Game1.ran.Next(1, 5);
+                cc.parti[0] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                 cc.rot[0] = 0;
                 if (nr_c >= 2)
                 {
-                    cc.parti[2] = ran.Next(1, Game1.NR_PARTI + 1);
+                    cc.parti[2] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                     cc.rot[2] = 0;
                 }
                 if (nr_c >= 3)
                 {
                     cc.parti[1] = cc.parti[2];
-                    cc.rot[1] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
+                    cc.rot[1] = (float)(Game1.ran.Next(0, 45)) * 0.0174532778f;
                 }
                 if (nr_c >= 4)
                 {
@@ -391,37 +390,37 @@ namespace Reluare_priectre
                     cc.rot[3] = cc.rot[1];
                 }
 
-                cc.parti[4] = ran.Next(1, Game1.NR_PARTI + 1);
-                cc.rot[4] = (float)(90 - ran.Next(0, 140)) * 0.01745327777777777777777777777778f;
+                cc.parti[4] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
+                cc.rot[4] = (float)(90 - Game1.ran.Next(0, 140)) * 0.0174532778f;
 
-                nr_c = ran.Next(0, 5);
+                nr_c = Game1.ran.Next(0, 5);
                 if (nr_c >= 1)
                 {
-                    cc.parti[5] = ran.Next(1, Game1.NR_PARTI + 1);
+                    cc.parti[5] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                     cc.rot[5] = 0;
                 }
                 if (nr_c >= 2)
                 {
-                    cc.parti[7] = ran.Next(1, Game1.NR_PARTI + 1);
+                    cc.parti[7] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                     cc.rot[7] = 0;
                 }
                 if (nr_c >= 3)
                 {
                     cc.parti[6] = cc.parti[7];
-                    cc.rot[6] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
+                    cc.rot[6] = (float)(Game1.ran.Next(0, 45)) * 0.0174532778f;
                 }
                 if (nr_c >= 4)
                 {
                     cc.parti[8] = cc.parti[5];
                     cc.rot[8] = cc.rot[1];
                 }
-                cc.parti[9] = ran.Next(1, Game1.NR_PARTI + 1);
+                cc.parti[9] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                 cc.rot[9] = 0;
 
                 cc.mers = 10;
 
-                cc.pow = ran.Next(5, 21);
-                cc.inteligenta = ran.Next(1, 6);
+                cc.pow = Game1.ran.Next(5, 21);
+                cc.inteligenta = Game1.ran.Next(1, 6);
                 cc.r = 20;
                 cc.agresiune = -1;
                 if (cc.inteligenta == 2)
@@ -429,123 +428,110 @@ namespace Reluare_priectre
                 else if (cc.inteligenta == 4)
                 {
                     cc.r = 7;
-                    if (AUX.a[cc.X + 1, cc.Y] < 100)
-                        AUX.a[cc.X + 1, cc.Y] = 100;
-                    if (AUX.b[cc.X + 1, cc.Y] == 0)
-                        AUX.b[cc.X + 1, cc.Y] = 100;
-                    for (int ii = 0; ii < 5; ii++)
-                        for (int j = -2; j <= 2; j++)
-                        {
-                            AUX.a[cc.X - ii, cc.Y + j] = AUX.a[cc.X + 1, cc.Y];
-                            AUX.b[cc.X - ii, cc.Y + j] = 0;
-                            AUX.apa[cc.X - ii, cc.Y + j] = 0;
-                        }
-                    for (int ii = 0; ii < 5; ii++)
-                    {
-                        AUX.a[cc.X - ii, cc.Y + 3] = 300 + AUX.a[cc.X + 1, cc.Y] % 100;
-                        AUX.b[cc.X - ii, cc.Y + 3] = 5;
-                        AUX.apa[cc.X - ii, cc.Y + 3] = 0;
-                        AUX.a[cc.X - ii, cc.Y - 3] = 300 + AUX.a[cc.X + 1, cc.Y] % 100;
-                        AUX.b[cc.X - ii, cc.Y - 3] = 5;
-                        AUX.apa[cc.X - ii, cc.Y - 3] = 0;
-                        AUX.a[cc.X - 5, cc.Y - 2 + ii] = 300 + AUX.a[cc.X + 1, cc.Y] % 100;
-                        AUX.b[cc.X - 5, cc.Y - 2 + ii] = 5;
-                        AUX.apa[cc.X - 5, cc.Y - 2 + ii] = 0;
-                    }
-                    AUX.b[cc.X, cc.Y - 3] = 0;
-                    AUX.b[cc.X - 1, cc.Y - 3] = 0;
-                    AUX.b[cc.X, cc.Y + 3] = 0;
-                    AUX.b[cc.X - 1, cc.Y + 3] = 0;
-                    for (int ii = 4; ii <= 7; ii++)
-                    {
-                        AUX.b[cc.X, cc.Y + ii] = 0;
-                        AUX.b[cc.X, cc.Y - ii] = 0;
-                        AUX.b[cc.X - 1, cc.Y + ii] = 0;
-                        AUX.b[cc.X - 1, cc.Y - ii] = 0;
-                        AUX.apa[cc.X, cc.Y + ii] = 0;
-                        AUX.apa[cc.X, cc.Y - ii] = 0;
-                        AUX.apa[cc.X - 1, cc.Y + ii] = 0;
-                        AUX.apa[cc.X - 1, cc.Y - ii] = 0;
-                    }
-                    for (int ii = -7; ii <= 7; ii++)
-                        for (int j = 1; j <= 3; j++)
-                        {
-                            AUX.apa[cc.X + j, cc.Y + ii] = 0;
-                            AUX.b[cc.X + j, cc.Y + ii] = AUX.b[cc.X + 1, cc.Y];
-                            AUX.a[cc.X + j, cc.Y + ii] = (int)(AUX.a[cc.X + 1, cc.Y] / 100) * 100 + AUX.a[cc.X + j, cc.Y + ii] % 100;
-                        }
+
+                    int[][] casa = new int[8][];
+
+                    casa[0] = new int[] { 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0 };
+                    casa[1] = new int[] { 0, 0, 0, 0, 0, 4, 4, 2, 2, 2, 4, 2, 2, 2, 4, 4, 0, 0, 0, 0, 0 };
+                    casa[2] = new int[] { 0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0 };
+                    casa[3] = new int[] { 0, 0, 0, 0, 0, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 0, 0, 0, 0, 0 };
+                    casa[4] = new int[] { 1, 5, 5, 5, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 5, 5, 5, 1 };
+                    casa[5] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1 };
+                    casa[6] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+                    casa[7] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
+                    int cub = AUX.a[cc.X, cc.Y];
+                    if(cub/100==14)
+                        cub = 100 + cub % 100;
+
+                    for (int k = 0; k <= 7; k++)
+                        for (int l = 0; l < 21; l++)
+                            if (casa[k][l] == 0)
+                            {
+                                AUX.a[cc.X + k - 6, cc.Y + l - 10] = 0;
+                                AUX.b[cc.X + k - 6, cc.Y + l - 10] = 0;
+                                AUX.apa[cc.X + k - 6, cc.Y + l - 10] = 0;
+                            }
+                            else if (casa[k][l] == 1)
+                            {
+                                AUX.a[cc.X + k - 6, cc.Y + l - 10] = cub;
+                                AUX.b[cc.X + k - 6, cc.Y + l - 10] = VALOARE_CUB.val((Game1.NR_subs * (cub / 100 - 1) + Game1.NR_comp + 1));
+                                AUX.apa[cc.X + k - 6, cc.Y + l - 10] = 0;
+                            }
+                            else if (casa[k][l] == 2)
+                            {
+                                AUX.a[cc.X + k - 6, cc.Y + l - 10] = cub;
+                                AUX.b[cc.X + k - 6, cc.Y + l - 10] = 0;
+                                AUX.apa[cc.X + k - 6, cc.Y + l - 10] = 0;
+                            }
+                            else if (casa[k][l] == 3)
+                            {
+                                AUX.a[cc.X + k - 6, cc.Y + l - 10] = 300 + cub % 100;
+                                AUX.b[cc.X + k - 6, cc.Y + l - 10] = 0;
+                                AUX.apa[cc.X + k - 6, cc.Y + l - 10] = 0;
+                            }
+                            else if (casa[k][l] == 4)
+                            {
+                                AUX.a[cc.X + k - 6, cc.Y + l - 10] = 300 + cub % 100;
+                                AUX.b[cc.X + k - 6, cc.Y + l - 10] = VALOARE_CUB.val(Game1.NR_subs * 2 + Game1.NR_comp + 1);
+                                AUX.apa[cc.X + k - 6, cc.Y + l - 10] = 0;
+                            }
+                            else if (casa[k][l] == 5)
+                            {
+                                AUX.apa[cc.X + k - 6, cc.Y + l - 10] = 6000 + cub % 100;
+                                AUX.a[cc.X + k - 6, cc.Y + l - 10] = 0;
+                                AUX.b[cc.X + k - 6, cc.Y + l - 10] = 0;
+                            }
                 }
                 else
                 {
                     cc.r = 10;
                     aux = 1000 + AUX.ord_elm[1];
-                    auy = ran.Next(0, 2) - 1;
+                    auy = Game1.ran.Next(0, 2) - 1;
                     if (auy == 0)
                         auy = 1;
-                    for (int ii = 0; ii <= 9; ii++)
-                        for (int jj = 10; jj >= -10; jj--)
-                        {
-                            AUX.b[cc.X - ii, cc.Y + jj * auy] = 0;
-                            AUX.apa[cc.X - ii, cc.Y + jj * auy] = 0;
-                        }
-                    for (int ii = 0; ii <= 5; ii++)
-                        for (int jj = -6; jj <= 6; jj++)
-                        {
-                            AUX.a[cc.X - ii, cc.Y + jj * auy - 4 * auy] = aux;
-                            if ((ii >= 2 && (jj == -6 || jj == 6)) || ii == 5)
-                                AUX.b[cc.X - ii, cc.Y + jj * auy - 4 * auy] = 300;
-                            else AUX.b[cc.X - ii, cc.Y + jj * auy - 4 * auy] = 0;
-                            AUX.apa[cc.X - ii, cc.Y + jj * auy - 4 * auy] = 0;
-                        }
-                    for (int jj = -10; jj <= 9; jj++)
-                    {
-                        AUX.a[cc.X + 1, cc.Y + jj * auy] = aux;
-                        AUX.b[cc.X + 1, cc.Y + jj * auy] = 300;
-                        AUX.apa[cc.X + 1, cc.Y + jj * auy] = 0;
-                    }
 
-                    AUX.a[cc.X, cc.Y + 8 * auy] = aux;
-                    AUX.b[cc.X, cc.Y + 8 * auy] = 300;
-                    AUX.a[cc.X, cc.Y + 4 * auy] = aux;
-                    AUX.b[cc.X, cc.Y + 4 * auy] = 300;
-                    AUX.a[cc.X, cc.Y + 6 * auy] = aux;
-                    AUX.b[cc.X, cc.Y + 6 * auy] = 300;
-                    AUX.a[cc.X - 1, cc.Y + 6 * auy] = aux;
-                    AUX.b[cc.X - 1, cc.Y + 6 * auy] = 0;
-                    AUX.apa[cc.X - 2, cc.Y + 6 * auy] = 6000;
+                    int[][] casa = new int[14][];
+                    casa[0] = new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    casa[1] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    casa[2] = new int[] { 1, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    casa[3] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0 };
+                    casa[4] = new int[] { 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
+                    casa[5] = new int[] { 1, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    casa[6] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    casa[7] = new int[] { 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+                    casa[8] = new int[] { 1, 2, 0, 0, 2, 2, 2, 2, 0, 0, 2, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0 };
+                    casa[9] = new int[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 0, 1, 0, 0 };
+                    casa[10] = new int[] { 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+                    casa[11] = new int[] { 4, 4, 4, 4, 1, 1, 2, 2, 2, 2, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 };
+                    casa[12] = new int[] { 4, 4, 4, 4, 1, 1, 1, 2, 2, 2, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 };
+                    casa[13] = new int[] { 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 };
 
-                    for (int ii = 6; ii <= 10; ii++)
-                        for (int jj = -13 + (ii - 5) * 2; jj <= 2 + (int)((10 - ii) / 4) * 2; jj++)
-                        {
-                            AUX.a[cc.X - ii + 1, cc.Y + jj * auy] = aux;
-                            if (jj <= -13 + (ii - 5) * 2 + 1 || ii == 6 || ii == 10)
-                                AUX.b[cc.X - ii + 1, cc.Y + jj * auy] = 300;
-                            else
-                                AUX.b[cc.X - ii + 1, cc.Y + jj * auy] = 0;
-                            AUX.apa[cc.X - ii + 1, cc.Y + jj * auy] = 0;
-                        }
-                    AUX.a[cc.X - 6, cc.Y + 4 * auy] = aux;
-                    AUX.b[cc.X - 6, cc.Y + 4 * auy] = 300;
-                    AUX.b[cc.X - 8, cc.Y + 2 * auy] = 300;
-                    for (int ii = 1; ii <= 6; ii++)
-                        for (int jj = -5; jj <= 3; jj++)
-                        {
-                            AUX.a[cc.X + ii, cc.Y + jj * auy] = aux;
-                            if (jj == -5 || jj == 3 || ii == 1 || ii == 6)
-                                AUX.b[cc.X + ii + 1, cc.Y + jj * auy] = 300;
-                            else
-                                AUX.b[cc.X + ii, cc.Y + jj * auy] = 0;
-                            AUX.apa[cc.X + ii, cc.Y + jj * auy] = 0;
-                        }
-                    for (int jj = -6; jj <= 0; jj++)
-                        for (int ii = 2; ii <= -jj; ii++)
-                        {
-                            AUX.b[cc.X + 5 - ii + 2, cc.Y + jj * auy] = 300;
-                            AUX.a[cc.X + 5 - ii + 2, cc.Y + jj * auy] = aux;
-                        }
-                    for (int jj = -5; jj <= -3; jj++)
-                        AUX.b[cc.X + 1, cc.Y + jj * auy] = 0;
-
+                    for (int k = 0; k <= 13; k++)
+                        for (int l = 0; l < 21; l++)
+                            if (casa[k][l] == 0)
+                            {
+                                AUX.b[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                                AUX.apa[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                            }
+                            else if (casa[k][l] == 1)
+                            {
+                                AUX.a[cc.X + k - 8, cc.Y + (l - 10) * auy] = 1000 + AUX.ord_elm[0];
+                                AUX.b[cc.X + k - 8, cc.Y + (l - 10) * auy] = VALOARE_CUB.val(Game1.NR_subs * 9 + Game1.NR_comp + 1);
+                                AUX.apa[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                            }
+                            else if (casa[k][l] == 2)
+                            {
+                                AUX.a[cc.X + k - 8, cc.Y + (l - 10) * auy] = 1000 + AUX.ord_elm[0];
+                                AUX.b[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                                AUX.apa[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                            }
+                            else if (casa[k][l] == 3)
+                            {
+                                AUX.apa[cc.X + k - 8, cc.Y + (l - 10) * auy] = 6000 + AUX.ord_elm[0];
+                                AUX.a[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                                AUX.b[cc.X + k - 8, cc.Y + (l - 10) * auy] = 0;
+                            }
                 }
 
                 AUX.creaturi[i] = cc;
@@ -555,7 +541,6 @@ namespace Reluare_priectre
         }
         static public Planeta STATIE()
         {
-            Random ran = new Random();
             Planeta AUX = new Planeta();
 
             AUX.a = new int[300, 300];
@@ -866,11 +851,11 @@ namespace Reluare_priectre
                                     if (mod_loc[tip_loc[nr]][i + 9][j + 9] == 1)
                                         AUX.b[(int)loc[nr].X + i, (int)loc[nr].Y + j] = 1000000000;
 
-                                    if (mod_loc[tip_loc[nr]][i + 9][j + 9] == 3 && AUX.nr_creaturi < 150 && (AUX.nr_creaturi == 0 || ran.Next(0, 5) == 3))
+                                    if (mod_loc[tip_loc[nr]][i + 9][j + 9] == 3 && AUX.nr_creaturi < 150 && (AUX.nr_creaturi == 0 || Game1.ran.Next(0, 5) == 3))
                                     {
                                         #region ADAUGARE_CREATURI
                                         Creatura cc = new Creatura();
-                                        cc.pow = ran.Next(2, 100);
+                                        cc.pow = Game1.ran.Next(2, 100);
                                         cc.viata = 1000;
                                         int x, y;
                                         x = (int)loc[nr].X + i;
@@ -881,31 +866,31 @@ namespace Reluare_priectre
                                         cc.X = cc.xx = x + 2;
                                         cc.Y = cc.yy = y;
 
-                                        cc.pow = ran.Next(5, 21);
+                                        cc.pow = Game1.ran.Next(5, 21);
                                         cc.r = 20;
                                         cc.agresiune = -1;
 
                                         cc.rot = new float[11];
                                         cc.parti = new int[11];
 
-                                        if (ran.Next(0, 5) != 2)
+                                        if (Game1.ran.Next(0, 5) != 2)
                                         {
-                                            cc.inteligenta = ran.Next(1, 6);
+                                            cc.inteligenta = Game1.ran.Next(1, 6);
                                             for (int k = 0; k <= 10; k++)
                                                 cc.rot[k] = -99f;
 
-                                            int nr_c = ran.Next(1, 5);
-                                            cc.parti[0] = ran.Next(1, Game1.NR_PARTI + 1);
+                                            int nr_c = Game1.ran.Next(1, 5);
+                                            cc.parti[0] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                                             cc.rot[0] = 0;
                                             if (nr_c >= 2)
                                             {
-                                                cc.parti[2] = ran.Next(1, Game1.NR_PARTI + 1);
+                                                cc.parti[2] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                                                 cc.rot[2] = 0;
                                             }
                                             if (nr_c >= 3)
                                             {
                                                 cc.parti[1] = cc.parti[2];
-                                                cc.rot[1] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
+                                                cc.rot[1] = (float)(Game1.ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
                                             }
                                             if (nr_c >= 4)
                                             {
@@ -913,37 +898,37 @@ namespace Reluare_priectre
                                                 cc.rot[3] = cc.rot[1];
                                             }
 
-                                            cc.parti[4] = ran.Next(1, Game1.NR_PARTI + 1);
-                                            cc.rot[4] = (float)(90 - ran.Next(0, 140)) * 0.01745327777777777777777777777778f;
+                                            cc.parti[4] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
+                                            cc.rot[4] = (float)(90 - Game1.ran.Next(0, 140)) * 0.01745327777777777777777777777778f;
 
-                                            nr_c = ran.Next(0, 5);
+                                            nr_c = Game1.ran.Next(0, 5);
                                             if (nr_c >= 1)
                                             {
-                                                cc.parti[5] = ran.Next(1, Game1.NR_PARTI + 1);
+                                                cc.parti[5] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                                                 cc.rot[5] = 0;
                                             }
                                             if (nr_c >= 2)
                                             {
-                                                cc.parti[7] = ran.Next(1, Game1.NR_PARTI + 1);
+                                                cc.parti[7] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                                                 cc.rot[7] = 0;
                                             }
                                             if (nr_c >= 3)
                                             {
                                                 cc.parti[6] = cc.parti[7];
-                                                cc.rot[6] = (float)(ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
+                                                cc.rot[6] = (float)(Game1.ran.Next(0, 45)) * 0.01745327777777777777777777777778f;
                                             }
                                             if (nr_c >= 4)
                                             {
                                                 cc.parti[8] = cc.parti[5];
                                                 cc.rot[8] = cc.rot[1];
                                             }
-                                            cc.parti[9] = ran.Next(1, Game1.NR_PARTI + 1);
+                                            cc.parti[9] = Game1.ran.Next(1, Game1.NR_PARTI + 1);
                                             cc.rot[9] = 0;
 
                                             cc.mers = 10;
 
 
-                                            if (mod_loc[tip_loc[nr]][i + 9][j + 9 - 1] != 1 && ran.Next(0, 3) != 0)
+                                            if (mod_loc[tip_loc[nr]][i + 9][j + 9 - 1] != 1 && Game1.ran.Next(0, 3) != 0)
                                             {
                                                 cc.fata = SpriteEffects.None;
                                                 cc.orientare = 1;
@@ -954,7 +939,7 @@ namespace Reluare_priectre
                                                 cc.orientare = -1;
                                             }
                                         }
-                                        else cc.inteligenta = -ran.Next(2, 6);
+                                        else cc.inteligenta = -Game1.ran.Next(2, 6);
 
                                         AUX.creaturi[AUX.nr_creaturi++] = cc;
                                         #endregion
@@ -974,7 +959,7 @@ namespace Reluare_priectre
                         {
                             nr_loc++;
                             do
-                                next_loc = ran.Next(2, NR_LOC);
+                                next_loc = Game1.ran.Next(2, NR_LOC);
                             while (next_loc == 5 || next_loc == 9 || next_loc == 11);
 
                             tip_loc[nr_loc] = next_loc;
@@ -991,7 +976,7 @@ namespace Reluare_priectre
                         {
                             nr_loc++;
                             do
-                                next_loc = ran.Next(2, NR_LOC);
+                                next_loc = Game1.ran.Next(2, NR_LOC);
                             while (next_loc == 4 || next_loc == 10 || next_loc == 12);
 
                             tip_loc[nr_loc] = next_loc;
@@ -1010,7 +995,7 @@ namespace Reluare_priectre
                         if (ok == 1)
                         {
                             do
-                                next_loc = ran.Next(2, NR_LOC);
+                                next_loc = Game1.ran.Next(2, NR_LOC);
                             while (next_loc != 7);
                             nr_loc++;
                             tip_loc[nr_loc] = next_loc;
@@ -1027,7 +1012,7 @@ namespace Reluare_priectre
                         if (ok == 1)
                         {
                             do
-                                next_loc = ran.Next(2, NR_LOC);
+                                next_loc = Game1.ran.Next(2, NR_LOC);
                             while (next_loc != 6 && next_loc != 9 && next_loc != 10 && next_loc != 11 && next_loc != 12);
                             nr_loc++;
                             tip_loc[nr_loc] = next_loc;
@@ -1080,7 +1065,6 @@ namespace Reluare_priectre
         }
         static public Planeta ASTERORID()
         {
-            Random ran = new Random();
             Planeta AUX = new Planeta();
 
             int r1, r2;
@@ -1088,21 +1072,21 @@ namespace Reluare_priectre
             int j = 1;
             for (j = -100; j <= 100; j++)
             {
-                r1 = 101 + ran.Next(-1, 2);
-                r2 = 101 + ran.Next(-1, 2);
+                r1 = 101 + Game1.ran.Next(-1, 2);
+                r2 = 101 + Game1.ran.Next(-1, 2);
                 for (int i = -(int)Math.Sqrt(r1 * r1 - j * j); i <= (int)Math.Sqrt(r2 * r2 - j * j); i++)
                 {
-                    AUX.a[150 + i, 150 + j] = 200 + ran.Next(0, Game1.NR_subs);
+                    AUX.a[150 + i, 150 + j] = 200 + Game1.ran.Next(0, Game1.NR_subs);
                     AUX.b[150 + i, 150 + j] = 200;
                 }
             }
             for (j = -20; j <= 20; j++)
             {
-                r1 = 21 + ran.Next(-1, 2);
-                r2 = 21 + ran.Next(-1, 2);
+                r1 = 21 + Game1.ran.Next(-1, 2);
+                r2 = 21 + Game1.ran.Next(-1, 2);
                 for (int i = -(int)Math.Sqrt(r1 * r1 - j * j); i <= (int)Math.Sqrt(r2 * r2 - j * j); i++)
                 {
-                    AUX.apa[150 + i, 150 + j] = 7000 + ran.Next(0, Game1.NR_subs);
+                    AUX.apa[150 + i, 150 + j] = 7000 + Game1.ran.Next(0, Game1.NR_subs);
                     // AUX.b[150 + i, 150 + j] = 200;
                 }
             }
@@ -1256,7 +1240,6 @@ namespace Reluare_priectre
 
         static public LocPlaneta LOC_PLANETA(int k, int kk, int TIP)
         {
-            Random ran = new Random();
             LocPlaneta AUX = new LocPlaneta();
             AUX.SALVAT = 0;
             int ok = 1;
@@ -1268,14 +1251,14 @@ namespace Reluare_priectre
                 while (ok == 0)
                 {
                     ok = 1;
-                    AUX.ord_elm[i] = ran.Next(1, Game1.NR_subs);
+                    AUX.ord_elm[i] = Game1.ran.Next(1, Game1.NR_subs);
                     for (int j = 0; j < i; j++)
                         if (AUX.ord_elm[j] == AUX.ord_elm[i])
                             ok = 0;
                 }
             }
             AUX.ord_elm[0] = 0;
-            AUX.temperatura_z = ran.Next(-300, 300);
+            AUX.temperatura_z = Game1.ran.Next(-300, 300);
             AUX.p_orb = k;
 
 
@@ -1287,8 +1270,8 @@ namespace Reluare_priectre
                     {
                         ok = 1;
                         AUX.poz = Game1.PL.poz;
-                        AUX.poz.X += 800000 - ran.Next(200000, 1600000);
-                        AUX.poz.Y += 800000 - ran.Next(200000, 1600000);
+                        AUX.poz.X += 800000 - Game1.ran.Next(200000, 1600000);
+                        AUX.poz.Y += 800000 - Game1.ran.Next(200000, 1600000);
 
                         for (int i = 1; i <= Game1.nr_PLA_S; i++)
                         {
@@ -1310,14 +1293,14 @@ namespace Reluare_priectre
                 }
                 else
                 {
-                    aux = ran.Next(0, 15);
+                    aux = Game1.ran.Next(0, 15);
                     if (aux != 10)
                     {
-                        AUX.ar = ran.Next(150, 255);
-                        AUX.be = ran.Next(150, 255);
-                        AUX.ge = ran.Next(150, 255);
+                        AUX.ar = Game1.ran.Next(150, 255);
+                        AUX.be = Game1.ran.Next(150, 255);
+                        AUX.ge = Game1.ran.Next(150, 255);
 
-                        aux = ran.Next(0, 4);
+                        aux = Game1.ran.Next(0, 4);
                         AUX.MOON = aux;
 
                         if (Math.Abs(AUX.temperatura_z) < 200)
@@ -1326,20 +1309,20 @@ namespace Reluare_priectre
                             AUX.ord_elm[Game1.NR_subs + 1] = Game1.NR_subs;
                         else AUX.ord_elm[Game1.NR_subs + 1] = Game1.NR_subs + 1;
 
-                        AUX.forta = ran.Next(5, 25);
+                        AUX.forta = Game1.ran.Next(5, 25);
                     }
                     else
                     {
-                        AUX.ar = ran.Next(10, 115);
-                        AUX.be = ran.Next(10, 115);
-                        AUX.ge = ran.Next(10, 115);
+                        AUX.ar = Game1.ran.Next(10, 115);
+                        AUX.be = Game1.ran.Next(10, 115);
+                        AUX.ge = Game1.ran.Next(10, 115);
                         AUX.MOON = 0;
                         AUX.ord_elm[Game1.NR_subs + 1] = 0;
                     }
 
                     AUX.poz = Game1.L_PLA[k].poz;
-                    AUX.R = ran.Next(20000, 100000);
-                    AUX.ung = (float)ran.Next(0, 360) / 3.14159f;
+                    AUX.R = Game1.ran.Next(20000, 100000);
+                    AUX.ung = (float)Game1.ran.Next(0, 360) / 3.14159f;
                     AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
                     AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
 
@@ -1348,9 +1331,9 @@ namespace Reluare_priectre
             else if (TIP == 0)
             {
                 AUX.ord_elm[Game1.NR_subs + 1] = 7;
-                AUX.R = ran.Next(3500, 5000);
+                AUX.R = Game1.ran.Next(3500, 5000);
                 AUX.poz = Game1.L_PLA[k].poz;
-                AUX.ung = (float)ran.Next(0, 360) / 3.14159f;
+                AUX.ung = (float)Game1.ran.Next(0, 360) / 3.14159f;
                 AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
                 AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
             }
@@ -1361,9 +1344,9 @@ namespace Reluare_priectre
                     AUX.poz = Game1.L_PLA[k].poz;
 
                     AUX.ord_elm[Game1.NR_subs + 1] = 9;
-                    AUX.R = ran.Next(20000, 100000);
+                    AUX.R = Game1.ran.Next(20000, 100000);
                     AUX.poz = Game1.L_PLA[k].poz;
-                    AUX.ung = (float)ran.Next(0, 360) / 3.14159f;
+                    AUX.ung = (float)Game1.ran.Next(0, 360) / 3.14159f;
                     AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
                     AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
                 }
@@ -1379,7 +1362,6 @@ namespace Reluare_priectre
 
         static public void SISTEM()
         {
-            Random ran = new Random();
             Game1.L_PLA[0].ID = 1000;
             int aux = 1;
             int tip_PLA = 1;
@@ -1405,7 +1387,7 @@ namespace Reluare_priectre
                         tip_AST = i;
                         tip_PLA = 0;
                     }
-                    if ((int)Math.Sqrt(ran.Next(0, 100025)) <= 24 || i - tip_AST >= 15)
+                    if ((int)Math.Sqrt(Game1.ran.Next(0, 100025)) <= 24 || i - tip_AST >= 15)
                         tip_AST = 0;
                     if (tip_AST == 0)
                         tip_PLA = i;
@@ -1419,7 +1401,7 @@ namespace Reluare_priectre
                         Game1.L_PLA[i].ID = last_id + 1;
                     else
                         Game1.L_PLA[i].ID = -last_id - i;
-                    if (ran.Next(0, 40) == 2)
+                    if (Game1.ran.Next(0, 40) == 2)
                     {
                         aux = i + 1;
                         tip_AST = 0;

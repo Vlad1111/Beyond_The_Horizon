@@ -49,15 +49,7 @@ namespace Reluare_priectre
                             x = Game1.PL_P.X;
                             y = Game1.PL_P.Y;
                             if (xx * xx + yy * yy <= 2)
-                            {
                                 Game1.PL_P.viata -= aux.pow;
-                                if (Game1.PL_P.viata < 0)
-                                {
-                                    Game1.PL_P.fx = 0;
-                                    MaxiFun.IO.Save<Planeta>(Game1.PLA_S, Game1.saveDir, "PLANETA" + Game1.PLA_A);
-                                    COMANDA.cmd("set_menu", "", 3, 0);
-                                }
-                            }
                             else if (aux.inteligenta >= 5)
                             {
                                 if (Game1.TIME % 4 == 0)
