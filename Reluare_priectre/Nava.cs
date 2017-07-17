@@ -17,5 +17,6 @@ namespace Reluare_priectre
         public int eng;
         public int eng_m;
         public int nr_c;
+        public int auto_pilot;
     }
 }

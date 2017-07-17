@@ -2995,3 +2995,10 @@
 /processorParam:TextureFormat=Color
 /build:PLANETA_3.png
 
+#begin FONT_7.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:FONT_7.spritefont
+

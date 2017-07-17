@@ -277,3 +277,4 @@ D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\De
 D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\PLANETA_2.xnb
 D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\BODY130.xnb
 D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\PLANETA_3.xnb
+D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\FONT_7.xnb

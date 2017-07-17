@@ -1288,8 +1288,7 @@ namespace Reluare_priectre
                     while (ok == 0 && aux < 50000);
 
                     AUX.ord_elm[Game1.NR_subs + 1] = 8;
-
-                    /*AUX.poz = new Vector2(60000 * kk, 60000 * kk);  */
+                    AUX.NUME = "Alpha _ " + kk;
                 }
                 else
                 {
@@ -1310,6 +1309,7 @@ namespace Reluare_priectre
                         else AUX.ord_elm[Game1.NR_subs + 1] = Game1.NR_subs + 1;
 
                         AUX.forta = Game1.ran.Next(5, 25);
+                        AUX.NUME = "Gama _ " + kk;
                     }
                     else
                     {
@@ -1318,6 +1318,7 @@ namespace Reluare_priectre
                         AUX.ge = Game1.ran.Next(10, 115);
                         AUX.MOON = 0;
                         AUX.ord_elm[Game1.NR_subs + 1] = 0;
+                        AUX.NUME = "Sigma _ " + kk;
                     }
 
                     AUX.poz = Game1.L_PLA[k].poz;
@@ -1336,6 +1337,7 @@ namespace Reluare_priectre
                 AUX.ung = (float)Game1.ran.Next(0, 360) / 3.14159f;
                 AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
                 AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
+                AUX.NUME = "Betta _ " + kk;
             }
             else if (TIP == 2)
             {
@@ -1349,11 +1351,13 @@ namespace Reluare_priectre
                     AUX.ung = (float)Game1.ran.Next(0, 360) / 3.14159f;
                     AUX.poz.X += (float)Math.Sin(AUX.ung) * AUX.R;
                     AUX.poz.Y += (float)Math.Cos(AUX.ung) * AUX.R;
+                    AUX.NUME = "Sigma _ " + kk;
                 }
                 else
                 {
                     AUX.poz = new Vector2(0, 0);
                     AUX.ord_elm[Game1.NR_subs + 1] = 8;
+                    AUX.NUME = "Alpha _ 1";
                 }
             }
 
@@ -1366,7 +1370,7 @@ namespace Reluare_priectre
             int aux = 1;
             int tip_PLA = 1;
             int tip_AST = 0;
-            int nr_pln_s = 3;
+            int nr_pln_s = 4;
             Game1.nr_PLA_S = 500;
             for (int i = 1; i < Game1.nr_PLA_S; i++)
             {

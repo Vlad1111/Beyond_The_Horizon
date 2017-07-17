@@ -290,7 +290,7 @@ namespace Reluare_priectre
             OBTIUNI[2] = (int)WINDOW_REZ.Y;
             graphics.ApplyChanges();
 
-            nr_FOTNTS = 6;
+            nr_FOTNTS = 7;
             for(int i=1;i<=nr_FOTNTS;i++)
                 font[i] = Content.Load<SpriteFont>("FONT_"+i);
             for (int i = 0; i < 10; i++)
@@ -430,6 +430,7 @@ namespace Reluare_priectre
             {
                 CREARE.SISTEM();
                 PLA_A = 2;
+                PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_1"));
             }
             //PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_3"));
             //PLA_A = 3;
@@ -454,6 +455,15 @@ namespace Reluare_priectre
 
             MOUSE_P.X = Mouse.GetState().X;
             MOUSE_P.Y = Mouse.GetState().Y;
+            if (MOUSE_P.X > PL_P_E.X * 2)
+                MOUSE_P.X = PL_P_E.X * 2;
+            else if (MOUSE_P.X < 0)
+                MOUSE_P.X = 0;
+
+            if (MOUSE_P.Y > PL_P_E.Y * 2)
+                MOUSE_P.Y = PL_P_E.Y * 2;
+            else if (MOUSE_P.Y < 0)
+                MOUSE_P.Y = 0;
 
 
             if (MENU == 1)   // FIRST MENIU
@@ -538,7 +548,16 @@ namespace Reluare_priectre
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     if (BUTON_A_3 == false)
+                    {
+                        // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                        OBTIUNI[1] = (int)WINDOW_REZ.X;
+                        OBTIUNI[2] = (int)WINDOW_REZ.Y;
+                        PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
+                        graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                        graphics.PreferredBackBufferWidth = OBTIUNI[2];
+                        graphics.ApplyChanges();
                         COMANDA.cmd("set_menu", "", 1, 0);
+                    }
                     BUTON_A_3 = true;
                 }
                 else BUTON_A_3 = false;
@@ -589,10 +608,10 @@ namespace Reluare_priectre
                                     OBTIUNI[2] = 700;
                                 if (OBTIUNI[2] >= GraphicsDevice.DisplayMode.Width)
                                     OBTIUNI[2] = GraphicsDevice.DisplayMode.Width;
-                                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
-                                PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
-                                graphics.PreferredBackBufferHeight = (int)WINDOW_REZ.X;
-                                graphics.PreferredBackBufferWidth = (int)WINDOW_REZ.Y;
+                                //WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                PL_P_E = new Vector2(OBTIUNI[2] / 2, OBTIUNI[1] / 2);
+                                graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                                graphics.PreferredBackBufferWidth = OBTIUNI[2];
                                 graphics.ApplyChanges();
                             }
                             else if (x >= 25 && x <= 225)
@@ -602,10 +621,10 @@ namespace Reluare_priectre
                                     OBTIUNI[1] = 460;
                                 if (OBTIUNI[1] >= GraphicsDevice.DisplayMode.Height)
                                     OBTIUNI[1] = GraphicsDevice.DisplayMode.Height;
-                                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
-                                PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
-                                graphics.PreferredBackBufferHeight = (int)WINDOW_REZ.X;
-                                graphics.PreferredBackBufferWidth = (int)WINDOW_REZ.Y;
+                                // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                PL_P_E = new Vector2(OBTIUNI[2] / 2, OBTIUNI[1] / 2);
+                                graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                                graphics.PreferredBackBufferWidth = OBTIUNI[2];
                                 graphics.ApplyChanges();
                             }
                         }
@@ -619,11 +638,11 @@ namespace Reluare_priectre
                         {
                             if (x < 250)
                             {
-                                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
                                 if (OBTIUNI[1] < 460)
                                     OBTIUNI[1] = 460;
                                 if (OBTIUNI[2] < 700)
                                     OBTIUNI[2] = 700;
+                                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
                                 PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
                                 graphics.PreferredBackBufferHeight = (int)WINDOW_REZ.X;
                                 graphics.PreferredBackBufferWidth = (int)WINDOW_REZ.Y;
@@ -631,9 +650,13 @@ namespace Reluare_priectre
                             }
                             else
                             {
-                                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
                                 OBTIUNI[1] = (int)WINDOW_REZ.X;
                                 OBTIUNI[2] = (int)WINDOW_REZ.Y;
+                                PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
+                                graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                                graphics.PreferredBackBufferWidth = OBTIUNI[2];
+                                graphics.ApplyChanges();
                             }
                             COMANDA.cmd("set_menu", "", 1, 0);
                         }
@@ -690,9 +713,13 @@ namespace Reluare_priectre
             {
                 #region MENIU_3    
 
-                PL.rot = (float)Math.Atan((PL_P_E.Y - MOUSE_P.Y) / (PL_P_E.X - MOUSE_P.X));
-                if (PL_P_E.X >= MOUSE_P.X)
-                    PL.rot += 3.1415f;
+                if (PL.auto_pilot == 0)
+                {
+                    PL.rot = (float)Math.Atan((PL_P_E.Y - MOUSE_P.Y) / (PL_P_E.X - MOUSE_P.X));
+                    if (PL_P_E.X >= MOUSE_P.X)
+                        PL.rot += 3.1415f;
+                }
+                else PL.rot = 3.1515f / 2 - MATH.ung(L_PLA[PL.auto_pilot].poz, PL.poz);
 
                 if (Keyboard.GetState().IsKeyDown(Keys.W))  /// MISCAREA
                 {
@@ -734,6 +761,15 @@ namespace Reluare_priectre
                     if (BUTON_A_1 == false)
                     {
                         COMANDA.cmd("set_menu", "", 4, 0);
+                        base.Update(gameTime);
+                        return;
+                    }
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.M))
+                {
+                    if (BUTON_A_1 == false)
+                    {
+                        COMANDA.cmd("set_menu", "", 10, 0);
                         base.Update(gameTime);
                         return;
                     }
@@ -1615,6 +1651,157 @@ namespace Reluare_priectre
 
                 #endregion
             }
+            else if (MENU == 10) // HARTA SISTEMULUI
+            {
+                #region MENIU_10
+                if (ZOOM_VAL < Mouse.GetState().ScrollWheelValue)
+                {
+                    ZOOM += ZOOM / 10;
+                    ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
+                }
+                else if (ZOOM_VAL > Mouse.GetState().ScrollWheelValue)
+                {
+                    ZOOM -= ZOOM / 10;
+                    ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    if (BUTON_A_3 == false)
+                    {
+                        if (PL.auto_pilot == 0)
+                            PL.auto_pilot = 1;
+                        else if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 8)
+                        {
+                            PL.auto_pilot++;
+                            if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 8 || L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 7)
+                                PL.auto_pilot--;
+                        }
+                        else if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] != 7)
+                            if (L_PLA[PL.auto_pilot + 1].ord_elm[NR_subs + 1] == 7)
+                                PL.auto_pilot++;
+                    }
+                    BUTON_A_3 = true;
+                }
+                else if(Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    if (BUTON_A_3 == false)
+                        if (PL.auto_pilot != 0)
+                        {
+                            if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 8)
+                                PL.auto_pilot = 0;
+                            else if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 7)
+                            {
+                                while (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 7 && PL.auto_pilot > 0)
+                                    PL.auto_pilot--;
+                            }
+                            else
+                            {
+                                while (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] != 8 && PL.auto_pilot > 0)
+                                    PL.auto_pilot--;
+                            }
+                        }
+                    BUTON_A_3 = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    if (BUTON_A_3 == false)
+                        if (PL.auto_pilot != 0)
+                        {
+                            int urm_min = PL.auto_pilot;
+                            for (int i = urm_min + 1; i < nr_PLA_S; i++)
+                                if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 7)
+                                {
+                                    if (L_PLA[i].ord_elm[NR_subs + 1] == 7)
+                                    {
+                                        urm_min = i;
+                                        break;
+                                    }
+                                    else break;
+                                }
+                                else if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 8)
+                                {
+                                    if (L_PLA[i].ord_elm[NR_subs + 1] == 8)
+                                    {
+                                        urm_min = i;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (L_PLA[i].ord_elm[NR_subs + 1] != 8 && L_PLA[i].ord_elm[NR_subs + 1] != 7)
+                                    {
+                                        urm_min = i;
+                                        break;
+                                    }
+                                    else if (L_PLA[i].ord_elm[NR_subs + 1] == 8)
+                                        break;
+                                }
+
+                            PL.auto_pilot = urm_min;
+                        }
+                    BUTON_A_3 = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                {
+                    if (BUTON_A_3 == false)
+                        if (PL.auto_pilot != 0)
+                        {
+                            int urm_min = PL.auto_pilot;
+                            for (int i = urm_min - 1; i > 0; i--)
+                                if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 7)
+                                {
+                                    if (L_PLA[i].ord_elm[NR_subs + 1] == 7)
+                                    {
+                                        urm_min = i;
+                                        break;
+                                    }
+                                    else break;
+                                }
+                                else if (L_PLA[PL.auto_pilot].ord_elm[NR_subs + 1] == 8)
+                                {
+                                    if (L_PLA[i].ord_elm[NR_subs + 1] == 8)
+                                    {
+                                        urm_min = i;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (L_PLA[i].ord_elm[NR_subs + 1] != 8 && L_PLA[i].ord_elm[NR_subs + 1] != 7)
+                                    {
+                                        urm_min = i;
+                                        break;
+                                    }
+                                    else if (L_PLA[i].ord_elm[NR_subs + 1] == 8)
+                                        break;
+                                }
+                            PL.auto_pilot = urm_min;
+                        }
+                    BUTON_A_3 = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.E))
+                {
+                    if (BUTON_A_3 == false)
+                    {
+                        PL.auto_pilot = 0;
+                    }
+                    BUTON_A_3 = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.M))
+                {
+                    if (BUTON_A_3 == false)
+                    {
+                        COMANDA.cmd("set_menu", "", 3, 0);
+                        base.Update(gameTime);
+                        return;
+                    }
+                    BUTON_A_3 = true;
+                }
+                else BUTON_A_3 = false;
+
+                #endregion
+            }
             else if (MENU == 20) // JOC1
             {
                 #region MENIU_20
@@ -2007,7 +2194,7 @@ namespace Reluare_priectre
             {
                 #region MENIU_2
                 GraphicsDevice.Clear(new Color(15, 15, 50));
-                Vector2 poz = new Vector2(0, (float)(-MENIU_TEX[0, MENU].Height + WINDOW_REZ.X) * MOUSE_P.Y / WINDOW_REZ.X);
+                Vector2 poz = new Vector2(0, (float)(-MENIU_TEX[0, MENU].Height + PL_P_E.Y * 2) * MOUSE_P.Y / (PL_P_E.Y * 2));
                 spriteBatch.Draw(MENIU_TEX[0, MENU], poz, Color.White);
 
                 if (OBTIUNI[0] == 1)
@@ -2546,9 +2733,9 @@ namespace Reluare_priectre
                                 else
                                     ox.X += -150 * ZOOM / 3;
 
-                                spriteBatch.DrawString(font[6], PLA_S.creaturi[i].nume, ox - new Vector2(ZOOM / 3, 0), Color.Blue, 0f, Vector2.Zero, 0.1f * ZOOM, SpriteEffects.None, 0f);
-                                spriteBatch.DrawString(font[6], PLA_S.creaturi[i].nume, ox + new Vector2(ZOOM / 3, 0), Color.White, 0f, Vector2.Zero, 0.1f * ZOOM, SpriteEffects.None, 0f);
-                                spriteBatch.DrawString(font[6], PLA_S.creaturi[i].nume, ox, Color.LightBlue, 0f, Vector2.Zero, 0.1f * ZOOM, SpriteEffects.None, 0f);
+                                spriteBatch.DrawString(font[7], PLA_S.creaturi[i].nume, ox - new Vector2(ZOOM / 3, 0), Color.Blue, 0f, Vector2.Zero, 0.1f * ZOOM, SpriteEffects.None, 0f);
+                                spriteBatch.DrawString(font[7], PLA_S.creaturi[i].nume, ox + new Vector2(ZOOM / 3, 0), Color.White, 0f, Vector2.Zero, 0.1f * ZOOM, SpriteEffects.None, 0f);
+                                spriteBatch.DrawString(font[7], PLA_S.creaturi[i].nume, ox, Color.LightBlue, 0f, Vector2.Zero, 0.1f * ZOOM, SpriteEffects.None, 0f);
 
                             }
                     }
@@ -2954,6 +3141,73 @@ namespace Reluare_priectre
                     spriteBatch.Draw(items[COMP_A - (NR_comp + NR_elem * NR_subs) - 1], PL_P_E, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 #endregion
             }
+            else if (MENU == 10)
+            {
+                #region MENIU_10
+                GraphicsDevice.Clear(new Color(5, 5, 15));
+
+                Vector2 poz = PL_P_E;
+                float xx, yy, r;
+                float ung;
+                if (PL.auto_pilot != 0 && L_PLA[PL.auto_pilot].p_orb != PL.auto_pilot)
+                {
+                    ung = -MATH.ung(L_PLA[L_PLA[PL.auto_pilot].p_orb].poz, L_PLA[PL.auto_pilot].poz);
+                    spriteBatch.Draw(LAS_T[4], PL_P_E, null, Color.LightBlue, ung, new Vector2(1, 0), new Vector2(1, (float)L_PLA[PL.auto_pilot].R * ZOOM / 3), SpriteEffects.None, 0f);
+                }
+
+                for (int i = nr_PLA_S - 1; i > 0; i--)
+                {
+                    poz = PL_P_E;
+                    if (PL.auto_pilot == 0)
+                    {
+                        xx = PL.poz.X - L_PLA[i].poz.X;
+                        yy = PL.poz.Y - L_PLA[i].poz.Y;
+                    }
+                    else
+                    {
+                        xx = L_PLA[PL.auto_pilot].poz.X - L_PLA[i].poz.X;
+                        yy = L_PLA[PL.auto_pilot].poz.Y - L_PLA[i].poz.Y;
+                    }
+                    r = (float)Math.Sqrt(xx * xx + yy * yy);
+                    if (r < (WINDOW_REZ.Y * 5) / ZOOM)
+                    {
+                        poz.X -= xx * ZOOM;
+                        poz.Y -= yy * ZOOM;
+
+                        float zoom = 1;
+                        if (L_PLA[i].ord_elm[NR_subs + 1] == 8)
+                            zoom = 7;
+                        else if (L_PLA[i].ord_elm[NR_subs + 1] == 7)
+                            zoom = 0.8f;
+                        if (L_PLA[i].p_orb == PL.auto_pilot)
+                        {
+                            ung = -MATH.ung(L_PLA[i].poz, L_PLA[PL.auto_pilot].poz);
+                            spriteBatch.Draw(LAS_T[7], PL_P_E, null, Color.LightBlue, ung, new Vector2(1, 0), new Vector2(1, (float)L_PLA[i].R * ZOOM / 3), SpriteEffects.None, 0f);
+                        }
+                        spriteBatch.Draw(PLA_TEX[L_PLA[i].ord_elm[NR_subs + 1]], poz, null, Color.White, 0f, new Vector2(500, 500), ZOOM * zoom, SpriteEffects.None, 1f);
+                        
+                        spriteBatch.DrawString(font[7], L_PLA[i].NUME, poz, Color.LightBlue, 0f, Vector2.Zero, 0.4f * (float)Math.Sqrt(ZOOM) * zoom, SpriteEffects.None, 0f);
+                    }
+                }
+
+                poz = PL_P_E;
+                if (PL.auto_pilot == 0)
+                {
+                    xx = 0;
+                    yy = 0;
+                }
+                else
+                {
+                    xx = L_PLA[PL.auto_pilot].poz.X - PL.poz.X;
+                    yy = L_PLA[PL.auto_pilot].poz.Y - PL.poz.Y;
+                }
+                poz.X -= xx * ZOOM;
+                poz.Y -= yy * ZOOM;
+
+                spriteBatch.Draw(MOUSE_T, poz, null, Color.White, 3.927f, new Vector2(MOUSE_T . Height / 2, MOUSE_T.Height / 2), 1f, SpriteEffects.None, 1f);
+                
+                #endregion
+            }
             else if (MENU == 20)
             {
                 #region MENIU_20
@@ -3234,8 +3488,8 @@ namespace Reluare_priectre
                 spriteBatch.DrawString(font[5], CHAT[i], new Vector2(13, 100 + 20 * i), Color.Blue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font[5], CHAT[i], new Vector2(15, 100 + 20 * i), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
             }
-
-            spriteBatch.Draw(MOUSE_T, MOUSE_P, null, Color.White, PL.rot, new Vector2(40, 40), 1f, SpriteEffects.None, 0f);
+            if (MENU != 10 && MENU < 20)
+                spriteBatch.Draw(MOUSE_T, MOUSE_P, null, Color.White, PL.rot, new Vector2(40, 40), 1f, SpriteEffects.None, 0f);
 
             spriteBatch.End();
             base.Draw(gameTime);
