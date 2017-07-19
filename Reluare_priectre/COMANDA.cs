@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Reluare_priectre
 {
@@ -253,6 +255,20 @@ namespace Reluare_priectre
                         Game1.nr_PLA_S--;
                        /// ADD_CHAT_LINE("SUBTRACTED  PLANET  with  ID  " + (int)v1);
                     }
+                }
+            }
+            else if(a1 == "play")
+            {
+                if(a2 == "B_music_")
+                {
+                   // SoundEffect Backgound_music = Game1.game.Content.Load<SoundEffect>("Sounds/" + a2 + (int)v1);
+                    MediaPlayer.Play(Song.FromUri("Sounds/" + a2 + (int)v1, new Uri("Sounds/" + a2 + (int)v1)));
+                    
+                }
+                else
+                {
+                    SoundEffect sound = Game1.game.Content.Load<SoundEffect>("Sounds/" + a2 + (int)v1);
+                    sound.Play(v2, 0f, 0f);
                 }
             }
         }

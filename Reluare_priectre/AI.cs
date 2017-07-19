@@ -69,6 +69,7 @@ namespace Reluare_priectre
                                     Game1.LAS[Game1.NR_PRO].tip_p = 7;
 
                                     Game1.NR_PRO++;
+                                    COMANDA.cmd("play", "Laser_", 1, 1);
                                 }
                             }
                         }
