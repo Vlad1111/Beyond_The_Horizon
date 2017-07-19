@@ -2503,8 +2503,8 @@ namespace Reluare_priectre
                 #endregion
 
 
-                spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
                 spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
+                spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
                 
                 if (COMP_A < NR_comp && COMP_A > 1)
                     spriteBatch.Draw(comp[COMP_A].T, MOUSE_P, null, Color.White, PL.rot, new Vector2(5, 5), 1f, SpriteEffects.None, 0f);
@@ -2515,7 +2515,7 @@ namespace Reluare_priectre
             {
                 #region MENIU_5
                 GraphicsDevice.Clear(new Color((int)PLA_S.SKY.X, (int)PLA_S.SKY.Y, (int)PLA_S.SKY.Z));
-                spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
+                spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
 
                 if (PLA_S.MOON != 0)
                     spriteBatch.Draw(MOONS[PLA_S.MOON], new Vector2(PL_P_E.X * 0.5f, PL_P_E.Y * 1.5f), null, Color.White, (float)(PLA_S.timp) * 0.00314159f, new Vector2(1000, 1000), 1f, SpriteEffects.None, 0f);
@@ -2859,7 +2859,7 @@ namespace Reluare_priectre
                 spriteBatch.Draw(PAR_C[0, 3], oz, null, Color.White, PL_P.rot[4] + Rot, new Vector2(8, 0), ZOOM / 2, PL_P.fata, 1f);  //MANA DREPT
 
 
-                spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
+                spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font[1], PL_P.viata + "", Vector2.Zero, new Color(255 - (int)PLA_S.SKY.X, 255 - (int)PLA_S.SKY.Y, 255 - (int)PLA_S.SKY.Z));
                 for (int nr = 1; nr <= PL_P.viata; nr += 3)
                     spriteBatch.Draw(LAS_T[6], new Vector2(nr / 3, 50), Color.White);
