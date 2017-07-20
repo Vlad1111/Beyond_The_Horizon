@@ -3245,19 +3245,16 @@ namespace Reluare_priectre
                 {
                     spriteBatch.Draw(comp[COMP_A].T, PL_P_E - new Vector2(WINDOW_REZ.Y / 10, 0), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
                     ADD_CHAT_LINE("1 " + COMP_A + " " + COMP_A);
-                    CRAFTING.ver(1, COMP_A, ingrediente);
                 }
                 else if (COMP_A <= NR_comp + NR_elem * NR_subs)
                 {
                     spriteBatch.Draw(PLA_T[(COMP_A - NR_comp - 1) / NR_subs + 1, (COMP_A - NR_comp - 1) % NR_subs], PL_P_E - new Vector2(WINDOW_REZ.Y / 10, 0), null, Color.White, 0f, Vector2.Zero, 4f, SpriteEffects.None, 0f);
                     ADD_CHAT_LINE("1 " + (COMP_A - NR_comp) + " " + COMP_A);
-                    CRAFTING.ver(2, COMP_A - NR_comp, ingrediente);
                 }
                 else if (COMP_A < NR_comp + NR_elem * NR_subs + NR_item + 1)
                 {
                     spriteBatch.Draw(items[COMP_A - (NR_comp + NR_elem * NR_subs) - 1], PL_P_E - new Vector2(WINDOW_REZ.Y / 10, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                     ADD_CHAT_LINE("1 " + (COMP_A - NR_comp - NR_elem * NR_subs) + " " + COMP_A);
-                    CRAFTING.ver(3, COMP_A - NR_elem * NR_subs - NR_comp, ingrediente);
                 }
 
                 BUTON_A_2 = true;
