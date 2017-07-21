@@ -296,3 +296,8 @@ D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\De
 D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\B_music_1.xnb
 D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\B_music_1.wma
 D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Laser_3.xnb
+D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_6.xnb
+D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_7.xnb
+D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_8.xnb
+D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_9.xnb
+D:\hiden folder\programe C#\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_10.xnb

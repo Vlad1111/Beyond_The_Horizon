@@ -3140,3 +3140,33 @@
 /processorParam:Quality=Best
 /build:Sounds/Laser_3.wav
 
+#begin Sounds/Sfx_6.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Sfx_6.wav
+
+#begin Sounds/Sfx_7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Sfx_7.wav
+
+#begin Sounds/Sfx_8.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Sfx_8.wav
+
+#begin Sounds/Sfx_9.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Sfx_9.wav
+
+#begin Sounds/Sfx_10.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Sfx_10.wav
+

@@ -261,9 +261,8 @@ namespace Reluare_priectre
             {
                 if(a2 == "B_music_")
                 {
-                   // SoundEffect Backgound_music = Game1.game.Content.Load<SoundEffect>("Sounds/" + a2 + (int)v1);
-                    MediaPlayer.Play(Song.FromUri("Sounds/" + a2 + (int)v1, new Uri("Sounds/" + a2 + (int)v1)));
-                    
+                    Song Backgound_music = Game1.game.Content.Load<Song>("Sounds/" + a2 + (int)v1);
+                    MediaPlayer.Play(Backgound_music);
                 }
                 else
                 {
