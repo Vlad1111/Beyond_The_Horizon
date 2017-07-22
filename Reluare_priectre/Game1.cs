@@ -55,6 +55,8 @@ namespace Reluare_priectre
         static public int nr_FOTNTS;
 
         static public Nava PL = new Nava();
+        static public Nava[] NPC = new Nava[121];
+        static public int NR_NPC = 0;
 
 
         static public Componenta[] comp;
@@ -410,6 +412,14 @@ namespace Reluare_priectre
             for (int i = 1; i <= 3; i++)
                 MOONS[i] = Content.Load<Texture2D>("MOON" + i);
 
+
+            NR_NPC = 10;
+            for(int i=0;i<NR_NPC;i++)
+            {
+                NPC[i] = CREARE.NAVA(i);
+                NPC[i].poz = PL.poz + new Vector2(ran.Next(-5000, 5000), ran.Next(-5000, 5000));
+            }
+
             base.Initialize();
         }
 
@@ -433,10 +443,13 @@ namespace Reluare_priectre
             else
             {
                 CREARE.SISTEM();
-                PLA_A = 4;
+                PLA_A = 2;
                 PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_" + (PLA_A - 1)));
             }
-            COMANDA.cmd("set_menu", "", 1, 0);
+            inventar[NR_comp + NR_elem * NR_subs + 12] = 1;
+            COMANDA.cmd("set_menu", "", 3, 0);
+            ///Song testMusic = Content.Load<Song>("test");
+            ///MediaPlayer.Play(testMusic);
         }
 
         protected override void UnloadContent()
@@ -768,28 +781,21 @@ namespace Reluare_priectre
                         PL.rot += 3.1415f;
                 }
                 else PL.rot = 3.1515f / 2 - MATH.ung(L_PLA[PL.auto_pilot].poz, PL.poz);
-
-                if (Keyboard.GetState().IsKeyDown(Keys.W))  /// MISCAREA
+                
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
-                    PL.poz.X += PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c;
-                    PL.poz.Y += PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c;
+                    PL.F += 0.005f;
+                    if (PL.F > 1f)
+                        PL.F = 1f;
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
-                    PL.poz.X -= PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c / 1.5f;
-                    PL.poz.Y -= PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c / 1.5f;
+                    PL.F -= 0.005f;
+                    if (PL.F < 0)
+                        PL.F = 0;
                 }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.D))
-                {
-                    PL.poz.X -= PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c / 1.5f;
-                    PL.poz.Y += PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c / 1.5f;
-                }
-                else if (Keyboard.GetState().IsKeyDown(Keys.A))
-                {
-                    PL.poz.X += PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c / 1.5f;
-                    PL.poz.Y -= PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c / 1.5f;
-                }
+                PL.poz.X += PL.F * PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c;
+                PL.poz.Y += PL.F * PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c;
 
                 if (ZOOM_VAL < Mouse.GetState().ScrollWheelValue)
                 {
@@ -1501,9 +1507,9 @@ namespace Reluare_priectre
                                         PL_P.parti[p_aleasa] = 0;
                                         COMANDA.cmd("play", "Sfx_", 2, 0.7f);
                                     }
-                                   // if (p_aleasa == 2)
-                                   //     if (PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11 > 0)
-                                   //         COMANDA.cmd("play", "B_music_", PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11, 0.5f);
+                                    if (p_aleasa == 2)
+                                        if (PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11 > 0)
+                                            COMANDA.cmd("play", "B_music_", PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11, 0.5f);
                                 }
                             }
                         }
@@ -2477,6 +2483,31 @@ namespace Reluare_priectre
                                 }
                         }
 
+                #endregion
+                #region AFISARE_NPC
+                for (int nr = 0; nr < NR_NPC; nr++)
+                    for (int i = 18; i >= -18; i--)
+                        for (int j = 18; j >= -18; j--)
+                            if (NPC[nr].comp[i + 18, j + 18] != 0)
+                            {
+                                Vector2 poz = PL_P_E + (NPC[nr].poz - PL.poz) * ZOOM;
+                                poz.X += ((float)(i * Math.Cos(NPC[nr].rot) - j * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
+                                poz.Y += ((float)(j * Math.Cos(NPC[nr].rot) + i * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
+
+                                spriteBatch.Draw(comp[NPC[nr].comp[i + 18, j + 18]].T, poz, null, Color.White, NPC[nr].rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+                                
+                                /*if (comp[NPC[nr].comp[i + 18, j + 18]].pow != 0)
+                                    if (ran.Next(1, 5) == 2)
+                                    {
+                                        LAS[NR_PRO].poz = new Vector2((poz.X - NPC[nr].poz.X + PL.poz.X) / ZOOM + PL.poz.X + ran.Next(-15, 10), (poz.Y - PL_P_E.Y) / ZOOM + PL.poz.Y + ran.Next(-15, 10));
+                                        LAS[NR_PRO].tip_p = 3;
+                                        LAS[NR_PRO].fx = ran.Next(-2, 2);
+                                        LAS[NR_PRO].fy = ran.Next(-2, 2);
+                                        LAS[NR_PRO].pow = 1;
+                                        LAS[NR_PRO].t = 10;
+                                        NR_PRO++;
+                                    }*/
+                            }
                 #endregion
 
                 #region INVENTAR COMPONENTE NAVA

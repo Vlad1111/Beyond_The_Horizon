@@ -10,6 +10,7 @@ namespace Reluare_priectre
     public class Nava
     {
         public Vector2 poz;
+        public float F;
         public int[,] comp;
         public int[,] viata;
         public float rot;

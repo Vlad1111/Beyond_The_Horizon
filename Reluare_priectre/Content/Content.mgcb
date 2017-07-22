@@ -3170,3 +3170,9 @@
 /processorParam:Quality=Best
 /build:Sounds/Sfx_10.wav
 
+#begin test.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:test.mp3
+

@@ -1413,5 +1413,34 @@ namespace Reluare_priectre
                 }
             }
         }
+
+        static public Nava NAVA(int k)
+        {
+            Nava AUX = new Nava();
+            float ax2, bx, c;
+            ax2 = -Game1.ran.Next(0, 2) / 10f;
+            bx = (4f - Game1.ran.Next(0, 2)) / 10f;
+            c = (4f - Game1.ran.Next(0, 2)) / 10f;
+            AUX.comp = new int[37, 37];
+            for (int j = 18; j >= -18; j--)
+            {
+                int x = (int)(ax2 * j * j + bx * j + c);
+                int smn = MATH.semn(x);
+                if (x > 18)
+                    x = 18;
+                else if (x < -18)
+                    x = -18;
+                x = 18 - x * smn;
+                for (int i = x; i >= -x; i--)
+                {
+                    int ii, jj;
+                    ii = i + 18;
+                    jj = j + 18;
+                    if (ii>=0 && ii<37)
+                        AUX.comp[36 - ii, j + 18] = 3;
+                }
+            }
+            return AUX;
+        }
     }
 }
