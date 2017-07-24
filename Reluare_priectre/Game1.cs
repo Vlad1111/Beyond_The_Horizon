@@ -165,6 +165,7 @@ namespace Reluare_priectre
             if (PLA_S.a[x, y] / 100 == 16)
                 T_c.Enqueue(-PLA_S.a[x, y] % 100 - 1);
             else T_c.Enqueue(PLA_S.apa[x, y] % 100);
+            int nurent_usa = 0;
             while (X.Count != 0)
             {
                 int xx, yy;
@@ -209,6 +210,8 @@ namespace Reluare_priectre
                                             PLA_S.b[dx, dy] = 400;
                                         else PLA_S.b[dx, dy] = 0;
 
+                                        nurent_usa = 1;
+
                                         aux[dx, dy] = 1;
                                         X.Enqueue(dx);
                                         Y.Enqueue(dy);
@@ -217,51 +220,10 @@ namespace Reluare_priectre
                                 }
                     }
             }
+            if (nurent_usa == 1)
+                COMANDA.cmd("play", "Electro_", 3, 1f);
         }
 
-        public int VERIFICARE(Nava AUX)
-        {
-            Vector2[] co = new Vector2[2500];
-            int sf = 1, inc = 0;
-            co[0] = new Vector2(18, 18);
-            int[,] mat = new int[50, 50];
-            mat[18, 18] = 1;
-
-            while (inc <= sf)
-            {
-                int x, y;
-                x = (int)co[inc].X;
-                y = (int)co[inc].Y;
-
-
-                for (int d = 0; d < 4; d++)
-                {
-                    int xx, yy;
-                    xx = d1[d] + x;
-                    yy = d2[d] + y;
-
-                    if (xx >= 0 && xx < 50 && yy >= 0 && yy < 50)
-                        if (AUX.comp[xx, yy] != 0)
-                            if (mat[xx, yy] != 1)
-                            {
-                                co[sf++] = new Vector2(xx, yy);
-                                mat[xx, yy] = 1;
-                            }
-                }
-                inc++;
-            }
-
-            if (MENU == 3)
-                for (int i = 0; i < 50; i++)
-                    for (int j = 0; j < 50; j++)
-                        if (mat[i, j] == 0)
-                        {
-                            AUX.comp[i, j] = 0;
-                            AUX.viata[i, j] = 0;
-                        }
-            return sf;
-        }
-        
         public void ELIMINARE_BLOCK(int i, int j)
         {
             int r;
@@ -301,8 +263,6 @@ namespace Reluare_priectre
                 font[i] = Content.Load<SpriteFont>("FONT_"+i);
             for (int i = 0; i < 10; i++)
                 CHAT[i] = "";
-
-
             comp = new Componenta[NR_comp + 1];
             LAS = new Proiectil[100000];
             for (int i = 0; i < 100000; i++)
@@ -350,23 +310,22 @@ namespace Reluare_priectre
             comp[2].v = 200;            //////// COMPONENTE ATRIBUTE
             comp[3].pow = 70;
             comp[4].eng = 100;
-            comp[5].proi = 100;
+            comp[5].proi = 10;
             comp[6].v = 300;
             comp[7].v = 250;
             comp[8].pow = 90;
             comp[8].v = 150;
             comp[9].eng = 150;
-            comp[10].proi = 200;
-            comp[10].proi = 130;
+            comp[10].proi = 20;
             comp[10].v = 130;
             comp[11].v = 350;
             comp[12].eng = 300;
-            comp[13].proi = 300;
+            comp[13].proi = 30;
             comp[13].v = 160;
             comp[14].pow = 150;
             comp[14].v = 250;
             comp[15].v = 500;
-            comp[16].proi = 400;
+            comp[16].proi = 40;
             comp[16].v = 180;
             #endregion
 
@@ -375,7 +334,7 @@ namespace Reluare_priectre
             PL.comp = new int[50, 50];
             PL.viata = new int[50, 50];
             PL.comp[18, 18] = 1;
-            PL.viata[18, 18] = 100;
+            PL.viata[18, 18] = comp[1].v;
             PL.rot = 0;
             PL.pow = PL.eng = PL.eng = 0;
             PL.eng_m = 10;
@@ -391,7 +350,7 @@ namespace Reluare_priectre
             PL_P.max_viata = 1000;
             #endregion
 
-            for (int i = 1; i <= 8; i++)
+            for (int i = 1; i <= 9; i++)
                 LAS_T[i] = Content.Load<Texture2D>("P" + i);
 
             PLA_T = new Texture2D[NR_elem + 1, NR_subs];
@@ -411,20 +370,8 @@ namespace Reluare_priectre
                 PLA_TEX[i] = Content.Load<Texture2D>("PLANETA" + i);
             for (int i = 1; i <= 3; i++)
                 MOONS[i] = Content.Load<Texture2D>("MOON" + i);
-
-
-            NR_NPC = 50;
-            int last_orb = 0;
-            for(int i=0;i<NR_NPC;i++)
-            {
-                NPC[i] = CREARE.NAVA(i, last_orb);
-                if(i==last_orb)
-                    NPC[i].poz = PL.poz + new Vector2(ran.Next(-5000, 5000), ran.Next(-5000, 5000));
-                else
-                    NPC[i].poz = NPC[last_orb].poz + new Vector2(ran.Next(-500, 500), ran.Next(-500, 500));
-               //// if (ran.Next(0, 15) == 2)
-               ////     last_orb = i + 1;
-            }
+            
+            NR_NPC = 0;
 
             base.Initialize();
         }
@@ -455,7 +402,9 @@ namespace Reluare_priectre
             inventar[NR_comp + NR_elem * NR_subs + 12] = 1;
             inventar[NR_comp + NR_elem * NR_subs + 13] = 1;
             inventar[NR_comp + NR_elem * NR_subs + 14] = 1;
-            COMANDA.cmd("set_menu", "", 1, 0);
+            for (int i = 1; i < NR_comp; i++)
+                inventar[i] = 100;
+            COMANDA.cmd("set_menu", "", 3, 0);
         }
 
         protected override void UnloadContent(){}
@@ -802,6 +751,8 @@ namespace Reluare_priectre
             else if (MENU == 3) // MENIUL DE JOC SPATIU
             {
                 #region MENIU_3    
+                if (ran.Next(0, 10000) * ran.Next(0, 1000) == 30)
+                    CREARE.PIRATI(1);
 
                 if (PL.auto_pilot == 0)
                 {
@@ -809,7 +760,10 @@ namespace Reluare_priectre
                     if (PL_P_E.X >= MOUSE_P.X)
                         PL.rot += 3.1415f;
                 }
-                else PL.rot = 3.1515f / 2 - MATH.ung(L_PLA[PL.auto_pilot].poz, PL.poz);
+                else if (PL.auto_pilot > 0)
+                    PL.rot = 3.1515f / 2 - MATH.ung(L_PLA[PL.auto_pilot].poz, PL.poz);
+                else
+                    PL.rot = -3.1515f / 2 - MATH.ung(NPC[-PL.auto_pilot + 1].poz, PL.poz);
 
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
@@ -820,9 +774,13 @@ namespace Reluare_priectre
                 else if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
                     PL.F -= 0.005f;
-                    if (PL.F < 0)
-                        PL.F = 0;
+                    if (PL.F < -0.5f)
+                        PL.F = -0.5f;
                 }
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    PL.rot -= 3.1415926f / 5f;
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    PL.rot += 3.1415926f / 5f;
                 PL.poz.X += PL.F * PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c;
                 PL.poz.Y += PL.F * PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c;
 
@@ -874,7 +832,8 @@ namespace Reluare_priectre
                     if (TIME % 5 == 0)
                     {
                         LAS_A = true;
-                        COMANDA.cmd("play", "Laser_", 3, 1);
+                        if (PL.eng > 0)
+                            COMANDA.cmd("play", "Laser_", 3, 1);
                     }
                     else LAS_A = false;
                 }
@@ -931,6 +890,54 @@ namespace Reluare_priectre
                     BUTON_A_3 = true;
                 }
                 else BUTON_A_3 = false;
+
+                for (int i = 0; i < NR_PRO - 1; i++)
+                    if (LAS[i].tip_p == 1)
+                    {
+                        for(int j=0;j<NR_NPC;j++)
+                        {
+                            float dist = MATH.dis(NPC[j].poz, LAS[i].poz);
+                            if (dist <= 20 * 18)
+                            {
+                                NPC[j] = VERIFICARE.LASER_NAVA(NPC[j], LAS[i]);
+                                if (NPC[j].comp[18, 18] == 0)
+                                {
+                                    for (int k = j + 1; k < NR_NPC; k++)
+                                    {
+                                        if (NPC[k].auto_pilot == j)
+                                            NPC[k].auto_pilot = k;
+                                        NPC[k - 1] = NPC[k];
+                                    }
+                                    NPC[NR_NPC - 1] = null;
+                                    NR_NPC--;
+                                }
+                            }
+                        }
+                    }
+                    else if (LAS[i].tip_p == 9)
+                    {
+                        float dist = MATH.dis(PL.poz, LAS[i].poz);
+                        if(dist <= 20 * 18)
+                        {
+                            ADD_CHAT_LINE(PL.poz.X + " " + PL.poz.Y);
+                            PL = VERIFICARE.LASER_NAVA(PL, LAS[i]);
+                            if(PL.comp[18,18] == 0)
+                            {
+                                PL.poz = Vector2.Zero;
+                                for (int k = 0; k < 37; k++)
+                                    for (int l = 0; l < 37; l++)
+                                        PL.comp[k, l] = PL.viata[k, l] = 0;
+                                PL.pow = 0;
+                                PL.eng_m = PL.eng = 0;
+                                PL.auto_pilot = 0;
+                                PL.F = 0f;
+                                PL.nr_c = 1;
+                                PL.comp[18, 18] = 1;
+                                PL.viata[18, 18] = comp[1].v;
+                            }
+                        }
+                    }
+
                 #endregion
             }
             else if (MENU == 4)  // MENIUL DE CONSTRUCTIE A NAVEI
@@ -950,7 +957,7 @@ namespace Reluare_priectre
                 {
                     if (BUTON_A_1 == false)
                     {
-                        if (VERIFICARE(PL) == PL.nr_c)
+                        if (VERIFICARE.NAVA(PL) == PL.nr_c)
                         {
                             COMANDA.cmd("set_menu", "", 3, 0);
                             base.Update(gameTime);
@@ -1081,7 +1088,10 @@ namespace Reluare_priectre
                     PL_P.poz.X -= 3;
                     PL_P.mers++;
                     if (PL_P.mers >= 20)
+                    {
                         PL_P.mers = -19;
+                        COMANDA.cmd("play", "Electro_", 1, 0.3f);
+                    }
                     PL_P.fata = SpriteEffects.None;
 
                     PL_P.Y = (int)(PL_P.poz.X + 5) / 20;
@@ -1100,7 +1110,10 @@ namespace Reluare_priectre
                     PL_P.poz.X += 3;
                     PL_P.mers--;
                     if (PL_P.mers <= -20)
+                    {
                         PL_P.mers = 19;
+                        COMANDA.cmd("play", "Electro_", 1, 0.3f);
+                    }
                     PL_P.fata = SpriteEffects.FlipHorizontally;
 
                     PL_P.Y = (int)(PL_P.poz.X + 15) / 20;
@@ -1669,9 +1682,11 @@ namespace Reluare_priectre
                     NR_PRO++;
 
                     PL_P.fata = SpriteEffects.FlipHorizontally;
-                    COMANDA.cmd("play", "Sfx_", 10, 0.1f);
-                    if (TIME % 30 == 0)
-                        COMANDA.cmd("play", "Sfx_", 9, 0.1f);
+                    if (TIME % 15 == 0)
+                    {
+                        COMANDA.cmd("play", "Sfx_", 10, 0.03f);
+                        COMANDA.cmd("play", "Sfx_", 9, 0.3f);
+                    }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.D))
                 {
@@ -1686,9 +1701,11 @@ namespace Reluare_priectre
                     NR_PRO++;
 
                     PL_P.fata = SpriteEffects.None;
-                    COMANDA.cmd("play", "Sfx_", 10, 0.1f);
-                    if (TIME % 30 == 0)
-                        COMANDA.cmd("play", "Sfx_", 9, 0.1f);
+                    if (TIME % 15 == 0)
+                    {
+                        COMANDA.cmd("play", "Sfx_", 10, 0.03f);
+                        COMANDA.cmd("play", "Sfx_", 9, 0.3f);
+                    }
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
@@ -1701,9 +1718,11 @@ namespace Reluare_priectre
                     LAS[NR_PRO].fy = 3f;
                     LAS[NR_PRO].t = 2 + ran.Next(2);
                     NR_PRO++;
-                    COMANDA.cmd("play", "Sfx_", 10, 0.1f);
-                    if (TIME % 30 == 0)
-                        COMANDA.cmd("play", "Sfx_", 9, 0.1f);
+                    if (TIME % 15 == 0)
+                    {
+                        COMANDA.cmd("play", "Sfx_", 10, 0.03f);
+                        COMANDA.cmd("play", "Sfx_", 9, 0.3f);
+                    }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
@@ -1716,9 +1735,11 @@ namespace Reluare_priectre
                     LAS[NR_PRO].fy = -3f;
                     LAS[NR_PRO].t = 2 + ran.Next(2);
                     NR_PRO++;
-                    COMANDA.cmd("play", "Sfx_", 10, 0.1f);
-                    if (TIME % 30 == 0)
-                        COMANDA.cmd("play", "Sfx_", 9, 0.1f);
+                    if (TIME % 15 == 0)
+                    {
+                        COMANDA.cmd("play", "Sfx_", 10, 0.03f);
+                        COMANDA.cmd("play", "Sfx_", 9, 0.3f);
+                    }
                 }
 
 

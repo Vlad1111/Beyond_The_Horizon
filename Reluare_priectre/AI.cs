@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Reluare_priectre
 {
@@ -120,21 +121,24 @@ namespace Reluare_priectre
 
         static public Nava NPC(Nava aux)
         {
+            if (aux.eng < aux.eng_m)
+                aux.eng++;
             float rot;
             float dif_rot;
-            if (aux.auto_pilot < 0)
+            if (aux.auto_pilot == -1)
             {
                 rot = -MATH.ung(Game1.PL.poz, aux.poz);
                 rot = MATH.prim_cadran(rot);
+                float fractie = 0.001f * (float)aux.pow / aux.nr_c;
+                dif_rot = MATH.prim_cadran(rot - aux.rot);
+                if (dif_rot > 3.1415926f)
+                    dif_rot -= 2f * 3.1415926f;
+                if (fractie > 1)
+                    fractie = 1;
+
+
                 if (MATH.dis_prt(Game1.PL.poz, aux.poz) > 500 * 500)
                 {
-                    dif_rot = MATH.prim_cadran(rot - aux.rot);
-                    if (dif_rot > 3.1415926f)
-                        dif_rot -= 2f * 3.1415926f;
-
-                    float fractie = 0.001f * (float)aux.pow / aux.nr_c;
-                    if (fractie > 1)
-                        fractie = 1;
                     aux.rot += (dif_rot + 3.1415926f / 2f) * fractie;
 
                     aux.F += 0.005f;
@@ -143,12 +147,13 @@ namespace Reluare_priectre
                 }
                 else
                 {
+                    aux.rot += 0.01f * dif_rot * fractie * MATH.semn((float)(10 - Game1.ran.Next(0, 20)));
                     aux.F -= 0.005f;
                     if (aux.F < 0)
                         aux.F = 0;
                 }
             }
-            else
+            else if (Game1.NPC[aux.auto_pilot] != null)
             {
                 rot = -MATH.ung(Game1.NPC[aux.auto_pilot].poz, aux.poz);
                 rot = MATH.prim_cadran(rot);
@@ -169,11 +174,42 @@ namespace Reluare_priectre
                 else
                 {
                     aux.rot += 0.01f * dif_rot * fractie * MATH.semn((float)(10 - Game1.ran.Next(0, 20)));
-                    /**/
                     aux.F -= 0.005f;
                     if (aux.F < 0.5f)
                         aux.F = 0.5f;
                 }
+
+                if (aux.eng > 0)
+                    if (Game1.TIME % 5 == 0)
+                    {
+                        rot = -MATH.ung(Game1.PL.poz, aux.poz);
+                        rot = MATH.prim_cadran(rot);
+                        dif_rot = MATH.prim_cadran(rot - aux.rot);
+                        if (dif_rot > 3.1415926f)
+                            dif_rot -= 2f * 3.1415926f;
+                        if (MATH.prim_cadran(Math.Abs(dif_rot + 3.1415926f / 2f)) < 3.1415926f / 10f)
+                        {
+                            Vector2 poz = Game1.PL_P_E;
+                            for (int i = 0; i < 37; i++)
+                                for (int j = 0; j < 37; j++)
+                                    if (Game1.comp[aux.comp[i, j]].proi != 0)
+                                    {
+                                        poz = Game1.PL_P_E + aux.poz - Game1.PL_P_E;
+                                        poz.X += ((float)((i - 18) * Math.Cos(aux.rot) - (j - 18) * Math.Sin(aux.rot))) * 20;
+                                        poz.Y += ((float)((j - 18) * Math.Cos(aux.rot) + (i - 18) * Math.Sin(aux.rot))) * 20;
+
+                                        Game1.LAS[Game1.NR_PRO].poz = poz;
+                                        Game1.LAS[Game1.NR_PRO].tip_p = 9;
+                                        Game1.LAS[Game1.NR_PRO].fx = (float)Math.Cos(aux.rot) * 40;
+                                        Game1.LAS[Game1.NR_PRO].fy = (float)Math.Sin(aux.rot) * 40;
+                                        Game1.LAS[Game1.NR_PRO].pow = Game1.comp[aux.comp[i, j]].proi;
+                                        Game1.LAS[Game1.NR_PRO].t = 100;
+                                        Game1.NR_PRO++;
+
+                                        aux.eng--;
+                                    }
+                        }
+                    }
             }
             aux.poz.X += aux.F * aux.pow * (float)Math.Cos(aux.rot) / aux.nr_c;
             aux.poz.Y += aux.F * aux.pow * (float)Math.Sin(aux.rot) / aux.nr_c;

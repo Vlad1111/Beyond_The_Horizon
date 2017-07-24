@@ -1456,22 +1456,23 @@ namespace Reluare_priectre
                     }
                 }
                 for (int j = 0; j < 18; j++)
-                {
-                    int i = 35;
-                    while (i >= 0 && AUX.comp[i, j] == 0)
-                        i--;
-                    if (i != 0 && Game1.ran.Next(0, 4) != 3)
+                    if ((float)AUX.pow / AUX.nr_c < 10)
                     {
-                        while (i > 4 && AUX.comp[i - 2, j] != 0)
+                        int i = 35;
+                        while (i >= 0 && AUX.comp[i, j] == 0)
                             i--;
-                        for (; i >= 0 && AUX.comp[i + 5, j] != 14; i--)
+                        if (i != 0 && Game1.ran.Next(0, 4) != 3)
                         {
-                            AUX.comp[i, j] = 14;
-                            AUX.comp[i, 36 - j] = 14;
-                            AUX.pow += 2 * Game1.comp[14].pow;
+                            while (i > 4 && AUX.comp[i - 2, j] != 0)
+                                i--;
+                            for (; i >= 0 && AUX.comp[i + 5, j] != 14; i--)
+                            {
+                                AUX.comp[i, j] = 14;
+                                AUX.comp[i, 36 - j] = 14;
+                                AUX.pow += 2 * Game1.comp[14].pow;
+                            }
                         }
                     }
-                }
             }
             else
             {
@@ -1483,58 +1484,81 @@ namespace Reluare_priectre
                     AUX.comp[18, 18 - 1] = 12;
                     AUX.viata[18, 18 - 1] = Game1.comp[12].v;
                     AUX.pow += Game1.comp[12].pow;
+                    AUX.eng_m += Game1.comp[12].eng;
                     AUX.nr_c++;
 
                     AUX.comp[18, 18 + 1] = 12;
                     AUX.viata[18, 18 + 1] = Game1.comp[12].v;
                     AUX.pow += Game1.comp[12].pow;
+                    AUX.eng_m += Game1.comp[12].eng;
                     AUX.nr_c++;
 
 
                     AUX.comp[18, 18 - 2] = 7;
                     AUX.viata[18, 18 - 2] = Game1.comp[7].v;
                     AUX.pow += Game1.comp[7].pow;
+                    AUX.eng_m += Game1.comp[7].eng;
                     AUX.nr_c++;
 
                     AUX.comp[18, 18 + 2] = 7;
                     AUX.viata[18, 18 + 2] = Game1.comp[7].v;
                     AUX.pow += Game1.comp[7].pow;
+                    AUX.eng_m += Game1.comp[7].eng;
                     AUX.nr_c++;
 
 
                     AUX.comp[18 - 1, 18 - 2] = 14;
                     AUX.viata[18 - 1, 18 - 2] = Game1.comp[14].v;
                     AUX.pow += Game1.comp[14].pow;
+                    AUX.eng_m += Game1.comp[14].eng;
                     AUX.nr_c++;
 
                     AUX.comp[18 - 1, 18 + 2] = 14;
                     AUX.viata[18 - 1, 18 + 2] = Game1.comp[14].v;
                     AUX.pow += Game1.comp[14].pow;
+                    AUX.eng_m += Game1.comp[14].eng;
                     AUX.nr_c++;
 
                     AUX.comp[18 - 2, 18 - 2] = 14;
                     AUX.viata[18 - 2, 18 - 2] = Game1.comp[14].v;
                     AUX.pow += Game1.comp[14].pow;
+                    AUX.eng_m += Game1.comp[14].eng;
                     AUX.nr_c++;
 
                     AUX.comp[18 - 2, 18 + 2] = 14;
                     AUX.viata[18 - 2, 18 + 2] = Game1.comp[14].v;
                     AUX.pow += Game1.comp[14].pow;
+                    AUX.eng_m += Game1.comp[14].eng;
                     AUX.nr_c++;
 
 
                     AUX.comp[18 + 1, 18 - 2] = 13;
                     AUX.viata[18 + 1, 18 - 2] = Game1.comp[13].v;
                     AUX.pow += Game1.comp[13].pow;
+                    AUX.eng_m += Game1.comp[13].eng;
                     AUX.nr_c++;
 
                     AUX.comp[18 + 1, 18 + 2] = 13;
                     AUX.viata[18 + 1, 18 + 2] = Game1.comp[13].v;
                     AUX.pow += Game1.comp[13].pow;
+                    AUX.eng_m += Game1.comp[13].eng;
                     AUX.nr_c++;
                 }
             }
             return AUX;
+        }
+        static public void PIRATI(int nivel)
+        {
+            int last_orb = 0;
+            for (int i = 0; i < 50; i++)
+            {
+                Game1.NPC[Game1.NR_NPC] = NAVA(i, last_orb);
+                if (i == last_orb)
+                    Game1.NPC[Game1.NR_NPC].poz = Game1.PL.poz + new Vector2(Game1.ran.Next((int)(-5000 * Game1.ZOOM), (int)(5000 * Game1.ZOOM)), Game1.ran.Next((int)(-5000 * Game1.ZOOM), (int)(5000 * Game1.ZOOM)));
+                else
+                    Game1.NPC[Game1.NR_NPC].poz = Game1.NPC[last_orb].poz + new Vector2(Game1.ran.Next(-1000, 1000), Game1.ran.Next(-1000, 1000));
+                Game1.NR_NPC++;
+            }
         }
     }
 }
