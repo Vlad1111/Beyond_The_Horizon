@@ -267,7 +267,7 @@ namespace Reluare_priectre
                 else
                 {
                     SoundEffect sound = Game1.game.Content.Load<SoundEffect>("Sounds/" + a2 + (int)v1);
-                    sound.Play(v2, 0f, 0f);
+                    sound.Play(v2 * Game1.OBTIUNI[6] / 100, 0f, 0f);
                 }
             }
         }

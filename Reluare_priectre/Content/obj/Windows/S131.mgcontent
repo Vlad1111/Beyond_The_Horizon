@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S131.png</SourceFile>
+  <SourceFile>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S131.png</SourceFile>
   <SourceTime>2016-11-23T10:59:26.1107236+02:00</SourceTime>
-  <DestFile>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/bin/Windows/S131.xnb</DestFile>
-  <DestTime>2017-07-22T17:17:52.1052447+03:00</DestTime>
+  <DestFile>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/bin/Windows/S131.xnb</DestFile>
+  <DestTime>2017-07-23T14:52:16.4712212+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T17:05:36+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

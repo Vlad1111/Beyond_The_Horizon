@@ -31,6 +31,14 @@ namespace Reluare_priectre
         {
             return (float)Math.Atan2(A.X - B.X, A.Y - B.Y);
         }
+        static public float prim_cadran(float x)
+        {
+            while (x > 3.1415962f * 2f)
+                x -= 3.1415962f * 2f;
+            while (x < 0)
+                x += 3.1415962f * 2f;
+            return x;
+        }
 
         static public float sqrt(float x)
         {

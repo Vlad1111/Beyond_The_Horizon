@@ -117,5 +117,67 @@ namespace Reluare_priectre
 
             return aux;
         }
+
+        static public Nava NPC(Nava aux)
+        {
+            float rot;
+            float dif_rot;
+            if (aux.auto_pilot < 0)
+            {
+                rot = -MATH.ung(Game1.PL.poz, aux.poz);
+                rot = MATH.prim_cadran(rot);
+                if (MATH.dis_prt(Game1.PL.poz, aux.poz) > 500 * 500)
+                {
+                    dif_rot = MATH.prim_cadran(rot - aux.rot);
+                    if (dif_rot > 3.1415926f)
+                        dif_rot -= 2f * 3.1415926f;
+
+                    float fractie = 0.001f * (float)aux.pow / aux.nr_c;
+                    if (fractie > 1)
+                        fractie = 1;
+                    aux.rot += (dif_rot + 3.1415926f / 2f) * fractie;
+
+                    aux.F += 0.005f;
+                    if (aux.F > 1)
+                        aux.F = 1;
+                }
+                else
+                {
+                    aux.F -= 0.005f;
+                    if (aux.F < 0)
+                        aux.F = 0;
+                }
+            }
+            else
+            {
+                rot = -MATH.ung(Game1.NPC[aux.auto_pilot].poz, aux.poz);
+                rot = MATH.prim_cadran(rot);
+                dif_rot = MATH.prim_cadran(rot - aux.rot);
+                if (dif_rot > 3.1415926f)
+                    dif_rot -= 2f * 3.1415926f;
+
+                float fractie = 0.001f * (float)aux.pow / aux.nr_c;
+                if (fractie > 1)
+                    fractie = 1;
+                if (MATH.dis_prt(Game1.NPC[aux.auto_pilot].poz, aux.poz) > 500 * 500)
+                {
+                    aux.rot += (dif_rot + 3.1415926f / 2f) * fractie;
+                    aux.F += 0.005f;
+                    if (aux.F > 1)
+                        aux.F = 1;
+                }
+                else
+                {
+                    aux.rot += 0.01f * dif_rot * fractie * MATH.semn((float)(10 - Game1.ran.Next(0, 20)));
+                    /**/
+                    aux.F -= 0.005f;
+                    if (aux.F < 0.5f)
+                        aux.F = 0.5f;
+                }
+            }
+            aux.poz.X += aux.F * aux.pow * (float)Math.Cos(aux.rot) / aux.nr_c;
+            aux.poz.Y += aux.F * aux.pow * (float)Math.Sin(aux.rot) / aux.nr_c;
+            return aux;
+        }
     }
 }

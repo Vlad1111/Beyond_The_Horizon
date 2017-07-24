@@ -39,7 +39,7 @@ namespace Reluare_priectre
         static public int MENU = 3;
         static public int MENU_AUX;
         static public int[] d1 = { 0, 1, 0, -1, 1, 1, -1, -1 }, d2 = { -1, 0, 1, 0, 1, -1, 1, -1 };//SA NU SCHIMB DIRECTIILE!
-        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1 };
+        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1 , 100, 100};
         static public int TIME = 0;
         static public Vector2 PL_P_E;
         static public Vector2 MOUSE_P;
@@ -413,11 +413,17 @@ namespace Reluare_priectre
                 MOONS[i] = Content.Load<Texture2D>("MOON" + i);
 
 
-            NR_NPC = 10;
+            NR_NPC = 50;
+            int last_orb = 0;
             for(int i=0;i<NR_NPC;i++)
             {
-                NPC[i] = CREARE.NAVA(i);
-                NPC[i].poz = PL.poz + new Vector2(ran.Next(-5000, 5000), ran.Next(-5000, 5000));
+                NPC[i] = CREARE.NAVA(i, last_orb);
+                if(i==last_orb)
+                    NPC[i].poz = PL.poz + new Vector2(ran.Next(-5000, 5000), ran.Next(-5000, 5000));
+                else
+                    NPC[i].poz = NPC[last_orb].poz + new Vector2(ran.Next(-500, 500), ran.Next(-500, 500));
+               //// if (ran.Next(0, 15) == 2)
+               ////     last_orb = i + 1;
             }
 
             base.Initialize();
@@ -447,15 +453,12 @@ namespace Reluare_priectre
                 PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_" + (PLA_A - 1)));
             }
             inventar[NR_comp + NR_elem * NR_subs + 12] = 1;
-            COMANDA.cmd("set_menu", "", 3, 0);
-            ///Song testMusic = Content.Load<Song>("test");
-            ///MediaPlayer.Play(testMusic);
+            inventar[NR_comp + NR_elem * NR_subs + 13] = 1;
+            inventar[NR_comp + NR_elem * NR_subs + 14] = 1;
+            COMANDA.cmd("set_menu", "", 1, 0);
         }
 
-        protected override void UnloadContent()
-        {
-
-        }
+        protected override void UnloadContent(){}
 
         protected override void Update(GameTime gameTime)
         {
@@ -578,6 +581,7 @@ namespace Reluare_priectre
                         {
                             COMANDA.cmd("play", "Sfx_", 4, 1);
                             COMANDA.cmd("set_menu", "", 2, 0);
+                            BUTON_A_2 = true;
                         }
                         else if (y > 200 && y <= 300)
                         {
@@ -618,13 +622,36 @@ namespace Reluare_priectre
 
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                 {
+                    int x, y;
+                    x = ((int)PL_P_E.X - Mouse.GetState().X + 250);
+                    y = ((int)PL_P_E.Y - Mouse.GetState().Y + 250);
+                    if (y >= 125 && y <= 150)
+                    {
+                        if (x > 475)
+                        {
+                            OBTIUNI[5] = 0;
+                            MediaPlayer.Volume = OBTIUNI[5] / 100f;
+                        }
+                        else if (x >= 275 && x <= 475)
+                        {
+                            OBTIUNI[5] = (475 - x) * 100 / 200;
+                            MediaPlayer.Volume = OBTIUNI[5] / 100f;
+                        }
+                        else if (x >= 250 && x < 275)
+                        {
+                            OBTIUNI[5] = 100;
+                            MediaPlayer.Volume = OBTIUNI[5] / 100f;
+                        }
+                        else if (x > 225 && x < 250)
+                            OBTIUNI[6] = 0;
+                        else if (x >= 25 && x <= 225)
+                            OBTIUNI[6] = (225 - x) * 100 / 200;
+                        else OBTIUNI[6] = 100;
+                    }
+
                     if (BUTON_A_2 == false)
                     {
-                        int x, y;
-                        x = ((int)PL_P_E.X - Mouse.GetState().X + 250);
-                        y = ((int)PL_P_E.Y - Mouse.GetState().Y + 250);
                         TIME = 0;
-
                         if (x >= 475 && x <= 500)
                         {
                             if (y >= 375 && y <= 400)
@@ -653,7 +680,7 @@ namespace Reluare_priectre
                                 COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                             }
                         }
-                        else if (y >= 125 && y <= 150)
+                        else if (y >= 250 && y <= 275)
                         {
                             if (x >= 275 && x <= 475)
                             {
@@ -684,7 +711,7 @@ namespace Reluare_priectre
                                 COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                             }
                         }
-                        else if (y >= 100 && y <= 150)
+                        else if (y >= 225 && y <= 250)
                         {
                             if (x > 250)
                                 TIME = 40;
@@ -722,7 +749,8 @@ namespace Reluare_priectre
                     }
                     BUTON_A_2 = true;
                 }
-                else BUTON_A_2 = false;
+                else
+                    BUTON_A_2 = false;
 
                 if (TIME != 0)
                 {
@@ -738,7 +766,6 @@ namespace Reluare_priectre
                         if (BUTON_A_1 == false)
                         {
                             var keyValue = keys[0].ToString()[keys[0].ToString().Length - 1];
-                            BUTON_A_1 = true;
                             if (keys[0].ToString() == "Back")
                             {
                                 if (TIME < 0)
@@ -746,6 +773,7 @@ namespace Reluare_priectre
                                 else
                                     OBTIUNI[2] /= 10;
                                 COMANDA.cmd("play", "Sfx_", 5, 0.3f);
+                                BUTON_A_1 = true;
                             }
                             else if (keyValue >= '0' && keyValue <= '9' && keys[0].ToString()[0] != 'F')
                             {
@@ -762,6 +790,7 @@ namespace Reluare_priectre
                                         OBTIUNI[2] = GraphicsDevice.DisplayMode.Width;
                                 }
                                 COMANDA.cmd("play", "Sfx_", 5, 0.3f);
+                                BUTON_A_1 = true;
                             }
                         }
                     }
@@ -770,7 +799,7 @@ namespace Reluare_priectre
 
                 #endregion
             }
-            else if (MENU == 3) // MENIUL DE JOC
+            else if (MENU == 3) // MENIUL DE JOC SPATIU
             {
                 #region MENIU_3    
 
@@ -781,7 +810,7 @@ namespace Reluare_priectre
                         PL.rot += 3.1415f;
                 }
                 else PL.rot = 3.1515f / 2 - MATH.ung(L_PLA[PL.auto_pilot].poz, PL.poz);
-                
+
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     PL.F += 0.005f;
@@ -892,6 +921,8 @@ namespace Reluare_priectre
                         else BUTON_A_2 = false;
                     }
 
+                for (int i = 0; i < NR_NPC; i++)
+                    NPC[i] = AI.NPC(NPC[i]);
 
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
@@ -1497,6 +1528,9 @@ namespace Reluare_priectre
                                             PL_P.max_viata += (COMP_A - (NR_comp + NR_elem * NR_subs + 9) + 1) * 100;
                                         COMP_A = 0;
                                         COMANDA.cmd("play", "Sfx_", 1, 0.7f);
+                                        if (p_aleasa == 2)
+                                            if (PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11 > 0)
+                                                COMANDA.cmd("play", "B_music_", PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11, 0.5f);
                                     }
                                     else
                                     {
@@ -1506,10 +1540,10 @@ namespace Reluare_priectre
                                             PL_P.max_viata -= (COMP_A - (NR_comp + NR_elem * NR_subs + 9) + 1) * 100;
                                         PL_P.parti[p_aleasa] = 0;
                                         COMANDA.cmd("play", "Sfx_", 2, 0.7f);
+                                        if (p_aleasa == 2)
+                                            if (COMP_A > 0)
+                                                MediaPlayer.Stop();
                                     }
-                                    if (p_aleasa == 2)
-                                        if (PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11 > 0)
-                                            COMANDA.cmd("play", "B_music_", PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11, 0.5f);
                                 }
                             }
                         }
@@ -2323,15 +2357,19 @@ namespace Reluare_priectre
                     spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(476, 102)), null, Color.White, 0f, Vector2.Zero, ZOOM * 1.5f, SpriteEffects.None, 0f);
 
 
-                spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(25, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (2000f / (OBTIUNI[2] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font[3], OBTIUNI[2] + "", PL_P_E - MENIU_VECTOR + (new Vector2(25, 375)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(25, 225)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (2000f / (OBTIUNI[2] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font[3], OBTIUNI[2] + "", PL_P_E - MENIU_VECTOR + (new Vector2(25, 250)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
 
-                spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(275, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (1500f / (OBTIUNI[1] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font[3], OBTIUNI[1] + "", PL_P_E - MENIU_VECTOR + (new Vector2(275, 375)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(275, 225)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (1500f / (OBTIUNI[1] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font[3], OBTIUNI[1] + "", PL_P_E - MENIU_VECTOR + (new Vector2(275, 250)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
 
                 if ((TIME / 40) % 2 != 0)
-                    spriteBatch.DrawString(font[1], ">", PL_P_E - MENIU_VECTOR + (new Vector2(12 + (1 - MATH.semn(TIME)) * 125, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-
+                    spriteBatch.DrawString(font[1], ">", PL_P_E - MENIU_VECTOR + (new Vector2(12 + (1 - MATH.semn(TIME)) * 125, 245)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                
+                spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(25, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (100f / (OBTIUNI[5] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font[3], OBTIUNI[5] + "%", PL_P_E - MENIU_VECTOR + (new Vector2(25, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(275, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (100f / (OBTIUNI[6] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font[3], OBTIUNI[6] + "%", PL_P_E - MENIU_VECTOR + (new Vector2(275, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
 
                 spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
 
@@ -2443,6 +2481,31 @@ namespace Reluare_priectre
                     }
                 #endregion
 
+                #region AFISARE_NPC
+                for (int nr = 0; nr < NR_NPC; nr++)
+                    for (int i = 18; i >= -18; i--)
+                        for (int j = 18; j >= -18; j--)
+                            if (NPC[nr].comp[i + 18, j + 18] != 0)
+                            {
+                                Vector2 poz = PL_P_E + (NPC[nr].poz - PL.poz) * ZOOM;
+                                poz.X += ((float)(i * Math.Cos(NPC[nr].rot) - j * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
+                                poz.Y += ((float)(j * Math.Cos(NPC[nr].rot) + i * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
+
+                                spriteBatch.Draw(comp[NPC[nr].comp[i + 18, j + 18]].T, poz, null, Color.White, NPC[nr].rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+                                
+                                /*if (comp[NPC[nr].comp[i + 18, j + 18]].pow != 0)
+                                    if (ran.Next(1, 5) == 2)
+                                    {
+                                        LAS[NR_PRO].poz = new Vector2((poz.X - NPC[nr].poz.X + PL.poz.X) / ZOOM + PL.poz.X + ran.Next(-15, 10), (poz.Y - PL_P_E.Y) / ZOOM + PL.poz.Y + ran.Next(-15, 10));
+                                        LAS[NR_PRO].tip_p = 3;
+                                        LAS[NR_PRO].fx = ran.Next(-2, 2);
+                                        LAS[NR_PRO].fy = ran.Next(-2, 2);
+                                        LAS[NR_PRO].pow = 1;
+                                        LAS[NR_PRO].t = 10;
+                                        NR_PRO++;
+                                    }*/
+                            }
+                #endregion
                 #region AFISARE_NAVA
                 for (int i = 18; i >= -18; i--)
                     for (int j = 18; j >= -18; j--)
@@ -2484,32 +2547,6 @@ namespace Reluare_priectre
                         }
 
                 #endregion
-                #region AFISARE_NPC
-                for (int nr = 0; nr < NR_NPC; nr++)
-                    for (int i = 18; i >= -18; i--)
-                        for (int j = 18; j >= -18; j--)
-                            if (NPC[nr].comp[i + 18, j + 18] != 0)
-                            {
-                                Vector2 poz = PL_P_E + (NPC[nr].poz - PL.poz) * ZOOM;
-                                poz.X += ((float)(i * Math.Cos(NPC[nr].rot) - j * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
-                                poz.Y += ((float)(j * Math.Cos(NPC[nr].rot) + i * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
-
-                                spriteBatch.Draw(comp[NPC[nr].comp[i + 18, j + 18]].T, poz, null, Color.White, NPC[nr].rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
-                                
-                                /*if (comp[NPC[nr].comp[i + 18, j + 18]].pow != 0)
-                                    if (ran.Next(1, 5) == 2)
-                                    {
-                                        LAS[NR_PRO].poz = new Vector2((poz.X - NPC[nr].poz.X + PL.poz.X) / ZOOM + PL.poz.X + ran.Next(-15, 10), (poz.Y - PL_P_E.Y) / ZOOM + PL.poz.Y + ran.Next(-15, 10));
-                                        LAS[NR_PRO].tip_p = 3;
-                                        LAS[NR_PRO].fx = ran.Next(-2, 2);
-                                        LAS[NR_PRO].fy = ran.Next(-2, 2);
-                                        LAS[NR_PRO].pow = 1;
-                                        LAS[NR_PRO].t = 10;
-                                        NR_PRO++;
-                                    }*/
-                            }
-                #endregion
-
                 #region INVENTAR COMPONENTE NAVA
                 if (MENU == 4)
                 {
@@ -3715,23 +3752,6 @@ namespace Reluare_priectre
     }
 }
 
-/* TOATE COMPONENTELE "RETETA"
-
- 2. Placaj 1 - 10 fer + 5 carbon
- 3. Propulsoare 1 - 10 fer + 10 carbon + 20 uraniu + 5 sulfur
- 4. Generatoare 1 - 10 fer + 10 uraniu + 10 sulfir
- 5. Tureta 1 - 10 fer + 10 carbon + 2 uraniu
-6. Depozit 1 - 30 fer + 10 carbon
-7. Placaj 2 - 1 Placaj1 + 5 fer + 10 carbon
- 8. Propulsoare 2 - 3 Propulsoare1 + 10 fer + 10 carbon
- 9. Generatoare 2 - 2 Generatoare1 + 5 fer + 10 carbon + 10 uraniu
- 10.Tureta 2 - 1 Tureta1 + 10 fer + 5 carbon + 5 uraniu
- 11.Placaj 3 - 4 Placaj2 + 10 fer + 10 sulfur + 5 carbon
- 12.Generatoare 3 - 4 Generatoare2 + 5 fer + 10 uraniu
- 13.Tureta 3 - 2 Tureta2 + 5 uraniu + 5 carbon + 5 fer
- 14.Propulsoare 3 - 4 Propulsoare2 + 10 uraniu + 10 fer + 10 sulf
-
-*/
 /*     TOATE MENIURILE  -INTELES
  * menu 1  - Meniu principal
  * menu 2  - Meniu de optiuni

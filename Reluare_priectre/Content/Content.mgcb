@@ -3170,9 +3170,15 @@
 /processorParam:Quality=Best
 /build:Sounds/Sfx_10.wav
 
-#begin test.mp3
+#begin Sounds/B_music_2.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:test.mp3
+/build:Sounds/B_music_2.mp3
+
+#begin Sounds/B_music_3.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/B_music_3.mp3
 

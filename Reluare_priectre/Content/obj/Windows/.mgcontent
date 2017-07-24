@@ -4,279 +4,280 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I0.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK4.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK5.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK6.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK7.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK8.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK9.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK10.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK11.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK12.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK13.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK14.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK15.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK16.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK17.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK18.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK19.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK20.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK21.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK22.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK23.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK24.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK25.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK26.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK27.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK28.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK29.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK30.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK31.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK32.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK33.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK34.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK35.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK36.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY01.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY02.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY03.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY04.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY05.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY06.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY11.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY12.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY13.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY14.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY15.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY21.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY22.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY23.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY24.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY25.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY31.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY32.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY33.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY34.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY35.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY41.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY42.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY43.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY44.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY45.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY50.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY60.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY70.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY80.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY90.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY100.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C0.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C4.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C5.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C6.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C7.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C8.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C9.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C10.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C11.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C12.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C13.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C14.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C15.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/C16.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU11.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU12.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU21.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU22.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU31.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU32.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU41.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU42.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU51.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU52.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU61.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MENIU62.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MOON1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MOON2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MOON3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P4.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P5.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P6.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P7.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA0.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA4.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA5.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA6.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA7.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA8.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S10.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S11.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S12.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S13.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S14.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S20.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S21.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S22.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S23.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S24.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S30.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S31.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S32.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S33.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S34.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S40.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S41.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S42.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S43.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S44.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S50.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S51.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S52.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S53.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S54.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S60.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S61.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S62.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S63.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S64.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S70.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S71.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S72.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S73.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S74.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S80.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S81.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S82.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S83.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S84.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S90.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S91.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S92.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S93.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S94.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S100.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S101.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S102.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S103.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S104.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S110.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S111.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S112.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S113.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S114.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S120.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S121.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S122.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S123.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S124.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S130.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S131.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S132.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S133.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S134.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S140.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S141.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S142.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S143.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S144.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BACK2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I4.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I5.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I6.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I7.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I8.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_1.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_2.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MOUSE1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/MOUSE2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_3.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_4.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/P8.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_5.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S150.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S151.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S152.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S153.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S154.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S164.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S160.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S161.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S162.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S163.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S180.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S181.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S182.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S183.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S184.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S190.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S191.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S192.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S193.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S194.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S170.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S171.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S172.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S173.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S174.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S203.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S200.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S204.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S201.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S202.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA_1.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S221.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S220.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S214.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S213.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S212.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S211.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S210.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S224.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S223.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/S222.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY110.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY120.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_6.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA9.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA_2.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/BODY130.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/PLANETA_3.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/FONT_7.spritefont</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I9.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I10.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I12.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I13.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I14.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I15.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/I11.png</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Laser_1.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Laser_2.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_1.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_2.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_3.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_4.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_5.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/B_music_1.mp3</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Laser_3.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_6.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_7.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_8.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_9.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_10.wav</File>
-    <File>D:/hiden folder/programe C#/Reluare_priectre/Reluare_priectre/Content/test.mp3</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I0.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK4.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK5.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK6.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK7.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK8.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK9.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK10.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK11.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK12.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK13.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK14.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK15.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK16.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK17.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK18.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK19.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK20.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK21.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK22.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK23.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK24.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK25.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK26.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK27.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK28.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK29.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK30.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK31.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK32.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK33.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK34.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK35.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK36.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY01.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY02.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY03.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY04.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY05.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY06.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY11.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY12.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY13.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY14.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY15.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY21.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY22.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY23.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY24.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY25.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY31.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY32.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY33.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY34.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY35.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY41.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY42.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY43.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY44.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY45.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY50.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY60.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY70.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY80.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY90.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY100.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C0.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C4.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C5.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C6.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C7.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C8.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C9.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C10.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C11.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C12.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C13.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C14.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C15.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/C16.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU11.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU12.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU21.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU22.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU31.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU32.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU41.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU42.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU51.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU52.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU61.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MENIU62.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MOON1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MOON2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MOON3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P4.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P5.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P6.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P7.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA0.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA4.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA5.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA6.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA7.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA8.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S10.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S11.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S12.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S13.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S14.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S20.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S21.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S22.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S23.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S24.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S30.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S31.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S32.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S33.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S34.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S40.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S41.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S42.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S43.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S44.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S50.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S51.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S52.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S53.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S54.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S60.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S61.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S62.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S63.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S64.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S70.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S71.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S72.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S73.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S74.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S80.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S81.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S82.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S83.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S84.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S90.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S91.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S92.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S93.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S94.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S100.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S101.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S102.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S103.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S104.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S110.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S111.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S112.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S113.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S114.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S120.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S121.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S122.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S123.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S124.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S130.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S131.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S132.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S133.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S134.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S140.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S141.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S142.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S143.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S144.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BACK2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I4.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I5.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I6.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I7.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I8.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_1.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_2.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MOUSE1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/MOUSE2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_3.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_4.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/P8.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_5.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S150.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S151.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S152.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S153.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S154.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S164.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S160.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S161.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S162.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S163.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S180.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S181.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S182.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S183.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S184.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S190.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S191.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S192.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S193.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S194.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S170.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S171.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S172.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S173.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S174.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S203.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S200.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S204.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S201.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S202.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA_1.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S221.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S220.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S214.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S213.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S212.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S211.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S210.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S224.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S223.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/S222.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY110.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY120.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_6.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA9.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA_2.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/BODY130.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/PLANETA_3.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/FONT_7.spritefont</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I9.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I10.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I12.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I13.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I14.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I15.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/I11.png</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Laser_1.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Laser_2.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_1.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_2.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_3.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_4.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_5.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/B_music_1.mp3</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Laser_3.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_6.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_7.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_8.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_9.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/Sfx_10.wav</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/B_music_2.mp3</File>
+    <File>C:/Users/sbeng/Downloads/Reluare_priectre/Reluare_priectre/Content/Sounds/B_music_3.mp3</File>
   </SourceFiles>
 </SourceFileCollection>
