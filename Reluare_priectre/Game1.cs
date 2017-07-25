@@ -39,7 +39,7 @@ namespace Reluare_priectre
         static public int MENU = 3;
         static public int MENU_AUX;
         static public int[] d1 = { 0, 1, 0, -1, 1, 1, -1, -1 }, d2 = { -1, 0, 1, 0, 1, -1, 1, -1 };//SA NU SCHIMB DIRECTIILE!
-        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1 , 100, 100};
+        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1, 100, 100, 400, 800, 1 };
         static public int TIME = 0;
         static public Vector2 PL_P_E;
         static public Vector2 MOUSE_P;
@@ -49,6 +49,7 @@ namespace Reluare_priectre
         static public bool BUTON_A_2 = false;
         static public bool BUTON_A_3 = false;
         static public string[] CHAT = new string[10];
+        static public int pl_scrie_CHAT = 0;
         static public Random ran = new Random();
 
         static public SpriteFont[] font = new SpriteFont[10];
@@ -210,7 +211,7 @@ namespace Reluare_priectre
                                             PLA_S.b[dx, dy] = 400;
                                         else PLA_S.b[dx, dy] = 0;
 
-                                        nurent_usa = 1;
+                                        nurent_usa ++;
 
                                         aux[dx, dy] = 1;
                                         X.Enqueue(dx);
@@ -220,8 +221,11 @@ namespace Reluare_priectre
                                 }
                     }
             }
-            if (nurent_usa == 1)
-                COMANDA.cmd("play", "Electro_", 3, 1f);
+            if (nurent_usa > 0)
+            {
+                for (int i = 0; i <= nurent_usa; i += 10)
+                    COMANDA.cmd("play", "Electro_", 3, 1f);
+            }
         }
 
         public void ELIMINARE_BLOCK(int i, int j)
@@ -258,7 +262,7 @@ namespace Reluare_priectre
             OBTIUNI[2] = (int)WINDOW_REZ.Y;
             graphics.ApplyChanges();
 
-            nr_FOTNTS = 7;
+            nr_FOTNTS = 8;
             for(int i=1;i<=nr_FOTNTS;i++)
                 font[i] = Content.Load<SpriteFont>("FONT_"+i);
             for (int i = 0; i < 10; i++)
@@ -404,7 +408,7 @@ namespace Reluare_priectre
             inventar[NR_comp + NR_elem * NR_subs + 14] = 1;
             for (int i = 1; i < NR_comp; i++)
                 inventar[i] = 100;
-            COMANDA.cmd("set_menu", "", 3, 0);
+            COMANDA.cmd("set_menu", "", 1, 0);
         }
 
         protected override void UnloadContent(){}
@@ -430,6 +434,54 @@ namespace Reluare_priectre
                 MOUSE_P.Y = PL_P_E.Y * 2;
             else if (MOUSE_P.Y < 0)
                 MOUSE_P.Y = 0;
+
+            if (pl_scrie_CHAT > 0)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    pl_scrie_CHAT = 0;
+
+                var keyboardState = Keyboard.GetState();
+                var keys = keyboardState.GetPressedKeys();
+                if (keys.Length > 0)
+                {
+                    int sift, back;
+                    sift = back = 0;
+                    for (int i = 0; i < keys.Length; i++)
+                        if (keys[i].ToString() == "Back")
+                            back = 1;
+                        else if (keys[i].ToString() == "LeftShift" || keys[i].ToString() == "RightShift")
+                            sift = 1;
+                    if (keys.Length == 1 && sift != 0)
+                        pl_scrie_CHAT = 2;
+                    // ADD_CHAT_LINE(keys[0].ToString());
+                    if (pl_scrie_CHAT - 1 != keys.Length)
+                    {
+                        if (back != 0)
+                        {
+                            string chat_line = "";
+                            for (int i = 0; i < CHAT[0].Length - 1; i++)
+                                chat_line += CHAT[0].ToCharArray()[i] + "";
+                            CHAT[0] = chat_line;
+                            COMANDA.cmd("play", "Sfx_", 5, 0.3f);
+                        }
+                        else
+                        {
+                            /*if (sift == 0 && cara >= 'A' && cara <= 'Z')
+                                CHAT[0] += (char)(cara - 'A' + 'a') + "";
+                            else CHAT[0] += cara + "";*/
+                            CHAT[0] += keys[0].ToString();
+                            COMANDA.cmd("play", "Sfx_", 5, 0.3f);
+                        }
+                        pl_scrie_CHAT = keys.Length + 1;
+                    }
+                }
+                else pl_scrie_CHAT = 1;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.T))
+            {
+                pl_scrie_CHAT = 1;
+                ADD_CHAT_LINE("");
+            }
 
 
             if (MENU == 1)   // FIRST MENIU
@@ -572,135 +624,157 @@ namespace Reluare_priectre
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                 {
                     int x, y;
-                    x = ((int)PL_P_E.X - Mouse.GetState().X + 250);
-                    y = ((int)PL_P_E.Y - Mouse.GetState().Y + 250);
-                    if (y >= 125 && y <= 150)
+                    x = Mouse.GetState().X;
+                    y = Mouse.GetState().Y;
+                    if (pl_scrie_CHAT == 1)
                     {
-                        if (x > 475)
-                        {
-                            OBTIUNI[5] = 0;
-                            MediaPlayer.Volume = OBTIUNI[5] / 100f;
-                        }
-                        else if (x >= 275 && x <= 475)
-                        {
-                            OBTIUNI[5] = (475 - x) * 100 / 200;
-                            MediaPlayer.Volume = OBTIUNI[5] / 100f;
-                        }
-                        else if (x >= 250 && x < 275)
-                        {
-                            OBTIUNI[5] = 100;
-                            MediaPlayer.Volume = OBTIUNI[5] / 100f;
-                        }
-                        else if (x > 225 && x < 250)
-                            OBTIUNI[6] = 0;
-                        else if (x >= 25 && x <= 225)
-                            OBTIUNI[6] = (225 - x) * 100 / 200;
-                        else OBTIUNI[6] = 100;
+                        OBTIUNI[7] = (int)(x / PL_P_E.X * 2000f);
+                        OBTIUNI[8] = (int)(y / PL_P_E.Y * 2000f);
                     }
-
-                    if (BUTON_A_2 == false)
+                    else if (x >= PL_P_E.X * OBTIUNI[7] / 2000f - 15 && x <= PL_P_E.X * OBTIUNI[7] / 2000f + 15 &&
+                        y >= PL_P_E.Y * OBTIUNI[8] / 2000f - 15 && y <= PL_P_E.Y * OBTIUNI[8] / 2000f + 15)
+                        pl_scrie_CHAT = 1;
+                    else if (x >= PL_P_E.X * OBTIUNI[7] / 2000f + 160 && x <= PL_P_E.X * OBTIUNI[7] / 2000f + 240 &&
+                        y >= PL_P_E.Y * OBTIUNI[8] / 2000f - 12 && y <= PL_P_E.Y * OBTIUNI[8] / 2000f + 12)
                     {
-                        TIME = 0;
-                        if (x >= 475 && x <= 500)
+                        if (pl_scrie_CHAT == 0)
+                            OBTIUNI[9] = (OBTIUNI[9] + 1) % 2;
+                        pl_scrie_CHAT = -1;
+                    }
+                    else
+                    {
+                        x = ((int)PL_P_E.X - Mouse.GetState().X + 250);
+                        y = ((int)PL_P_E.Y - Mouse.GetState().Y + 250);
+                        if (y >= 125 && y <= 150)
                         {
-                            if (y >= 375 && y <= 400)
+                            if (x > 475)
                             {
-                                if (OBTIUNI[0] == 0)
+                                OBTIUNI[5] = 0;
+                                MediaPlayer.Volume = OBTIUNI[5] / 100f;
+                            }
+                            else if (x >= 275 && x <= 475)
+                            {
+                                OBTIUNI[5] = (475 - x) * 100 / 200;
+                                MediaPlayer.Volume = OBTIUNI[5] / 100f;
+                            }
+                            else if (x >= 250 && x < 275)
+                            {
+                                OBTIUNI[5] = 100;
+                                MediaPlayer.Volume = OBTIUNI[5] / 100f;
+                            }
+                            else if (x > 225 && x < 250)
+                                OBTIUNI[6] = 0;
+                            else if (x >= 25 && x <= 225)
+                                OBTIUNI[6] = (225 - x) * 100 / 200;
+                            else OBTIUNI[6] = 100;
+                        }
+
+                        if (BUTON_A_2 == false)
+                        {
+                            TIME = 0;
+                            if (x >= 475 && x <= 500)
+                            {
+                                if (y >= 375 && y <= 400)
                                 {
+                                    if (OBTIUNI[0] == 0)
+                                    {
+                                        COMANDA.cmd("play", "Sfx_", 4, 0.3f);
+                                        OBTIUNI[0] = 1;
+                                        graphics.IsFullScreen = true;
+                                        graphics.ApplyChanges();
+                                    }
+                                    else
+                                    {
+                                        COMANDA.cmd("play", "Sfx_", 4, 0.3f);
+                                        graphics.IsFullScreen = false;
+                                        graphics.ApplyChanges();
+                                        OBTIUNI[0] = 0;
+                                    }
+                                }
+                            }
+                            else if (x >= 0 && x <= 25)
+                            {
+                                if (y >= 375 && y <= 400)
+                                {
+                                    OBTIUNI[3] = (OBTIUNI[3] + 1) % 2;
                                     COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                                    OBTIUNI[0] = 1;
-                                    graphics.IsFullScreen = true;
+                                }
+                            }
+                            else if (y >= 250 && y <= 275)
+                            {
+                                if (x >= 275 && x <= 475)
+                                {
+                                    OBTIUNI[2] = (475 - x) * 2000 / 200;
+                                    if (OBTIUNI[2] < 700)
+                                        OBTIUNI[2] = 700;
+                                    if (OBTIUNI[2] >= GraphicsDevice.DisplayMode.Width)
+                                        OBTIUNI[2] = GraphicsDevice.DisplayMode.Width;
+                                    //WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                    PL_P_E = new Vector2(OBTIUNI[2] / 2, OBTIUNI[1] / 2);
+                                    graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                                    graphics.PreferredBackBufferWidth = OBTIUNI[2];
                                     graphics.ApplyChanges();
+                                    COMANDA.cmd("play", "Sfx_", 4, 0.3f);
+                                }
+                                else if (x >= 25 && x <= 225)
+                                {
+                                    OBTIUNI[1] = (225 - x) * 1500 / 200;
+                                    if (OBTIUNI[1] < 460)
+                                        OBTIUNI[1] = 460;
+                                    if (OBTIUNI[1] >= GraphicsDevice.DisplayMode.Height)
+                                        OBTIUNI[1] = GraphicsDevice.DisplayMode.Height;
+                                    // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                    PL_P_E = new Vector2(OBTIUNI[2] / 2, OBTIUNI[1] / 2);
+                                    graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                                    graphics.PreferredBackBufferWidth = OBTIUNI[2];
+                                    graphics.ApplyChanges();
+                                    COMANDA.cmd("play", "Sfx_", 4, 0.3f);
+                                }
+                            }
+                            else if (y >= 225 && y <= 250 && x>=0 && x<=500)
+                            {
+                                if (x > 250)
+                                    TIME = 40;
+                                else TIME = -40;
+                                COMANDA.cmd("play", "Sfx_", 3, 0.3f);
+                            }
+                            else if (y >= 0 && y <= 35)
+                            {
+                                if (x < 250)
+                                {
+                                    if (OBTIUNI[1] < 460)
+                                        OBTIUNI[1] = 460;
+                                    if (OBTIUNI[2] < 700)
+                                        OBTIUNI[2] = 700;
+                                    WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                    PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
+                                    graphics.PreferredBackBufferHeight = (int)WINDOW_REZ.X;
+                                    graphics.PreferredBackBufferWidth = (int)WINDOW_REZ.Y;
+                                    graphics.ApplyChanges();
+                                    COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                                 }
                                 else
                                 {
-                                    COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                                    graphics.IsFullScreen = false;
+                                    // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                                    OBTIUNI[1] = (int)WINDOW_REZ.X;
+                                    OBTIUNI[2] = (int)WINDOW_REZ.Y;
+                                    PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
+                                    graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                                    graphics.PreferredBackBufferWidth = OBTIUNI[2];
                                     graphics.ApplyChanges();
-                                    OBTIUNI[0] = 0;
+                                    COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                                 }
+                                COMANDA.cmd("set_menu", "", 1, 0);
                             }
                         }
-                        else if (x >= 0 && x <= 25)
-                        {
-                            if (y >= 375 && y <= 400)
-                            {
-                                OBTIUNI[3] = (OBTIUNI[3] + 1) % 2;
-                                COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                            }
-                        }
-                        else if (y >= 250 && y <= 275)
-                        {
-                            if (x >= 275 && x <= 475)
-                            {
-                                OBTIUNI[2] = (475 - x) * 2000 / 200;
-                                if (OBTIUNI[2] < 700)
-                                    OBTIUNI[2] = 700;
-                                if (OBTIUNI[2] >= GraphicsDevice.DisplayMode.Width)
-                                    OBTIUNI[2] = GraphicsDevice.DisplayMode.Width;
-                                //WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
-                                PL_P_E = new Vector2(OBTIUNI[2] / 2, OBTIUNI[1] / 2);
-                                graphics.PreferredBackBufferHeight = OBTIUNI[1];
-                                graphics.PreferredBackBufferWidth = OBTIUNI[2];
-                                graphics.ApplyChanges();
-                                COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                            }
-                            else if (x >= 25 && x <= 225)
-                            {
-                                OBTIUNI[1] = (225 - x) * 1500 / 200;
-                                if (OBTIUNI[1] < 460)
-                                    OBTIUNI[1] = 460;
-                                if (OBTIUNI[1] >= GraphicsDevice.DisplayMode.Height)
-                                    OBTIUNI[1] = GraphicsDevice.DisplayMode.Height;
-                                // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
-                                PL_P_E = new Vector2(OBTIUNI[2] / 2, OBTIUNI[1] / 2);
-                                graphics.PreferredBackBufferHeight = OBTIUNI[1];
-                                graphics.PreferredBackBufferWidth = OBTIUNI[2];
-                                graphics.ApplyChanges();
-                                COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                            }
-                        }
-                        else if (y >= 225 && y <= 250)
-                        {
-                            if (x > 250)
-                                TIME = 40;
-                            else TIME = -40;
-                            COMANDA.cmd("play", "Sfx_", 3, 0.3f);
-                        }
-                        else if (y >= 0 && y <= 35)
-                        {
-                            if (x < 250)
-                            {
-                                if (OBTIUNI[1] < 460)
-                                    OBTIUNI[1] = 460;
-                                if (OBTIUNI[2] < 700)
-                                    OBTIUNI[2] = 700;
-                                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
-                                PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
-                                graphics.PreferredBackBufferHeight = (int)WINDOW_REZ.X;
-                                graphics.PreferredBackBufferWidth = (int)WINDOW_REZ.Y;
-                                graphics.ApplyChanges();
-                                COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                            }
-                            else
-                            {
-                                // WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
-                                OBTIUNI[1] = (int)WINDOW_REZ.X;
-                                OBTIUNI[2] = (int)WINDOW_REZ.Y;
-                                PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
-                                graphics.PreferredBackBufferHeight = OBTIUNI[1];
-                                graphics.PreferredBackBufferWidth = OBTIUNI[2];
-                                graphics.ApplyChanges();
-                                COMANDA.cmd("play", "Sfx_", 4, 0.3f);
-                            }
-                            COMANDA.cmd("set_menu", "", 1, 0);
-                        }
+                        BUTON_A_2 = true;
                     }
-                    BUTON_A_2 = true;
                 }
                 else
+                {
                     BUTON_A_2 = false;
-
+                    pl_scrie_CHAT = 0;
+                }
                 if (TIME != 0)
                 {
                     if (TIME < 0)
@@ -751,7 +825,7 @@ namespace Reluare_priectre
             else if (MENU == 3) // MENIUL DE JOC SPATIU
             {
                 #region MENIU_3    
-                if (ran.Next(0, (1600 - PL.nr_c) * 1) == 10)
+                if (ran.Next(0, (1600 - PL.nr_c) * 5) == 10)
                     CREARE.PIRATI((int)(8 * (float)PL.nr_c / 1600f) + 1);
 
                 if (PL.auto_pilot == 0)
@@ -1072,7 +1146,10 @@ namespace Reluare_priectre
                     if (PL_P.X > 0 && PL_P.X < 300)
                         if (PL_P.Y > 0 && PL_P.Y < 300)
                             if (PLA_S.b[PL_P.X, PL_P.Y] != 0)
+                            {
                                 PL_P.fx = 6;
+                                COMANDA.cmd("play", "Electro_", 4, 0.3f);
+                            }
                 int x, y;
 
                 PL_P.poz.Y -= PL_P.fx;
@@ -1111,7 +1188,10 @@ namespace Reluare_priectre
                     if (PL_P.mers >= 20)
                     {
                         PL_P.mers = -19;
-                        COMANDA.cmd("play", "Electro_", 1, 0.3f);
+                        if (PL_P.X > 0 && PL_P.X + 1 < 300)
+                            if (PL_P.Y > 0 && PL_P.Y < 300)
+                                if (PLA_S.b[PL_P.X, PL_P.Y] != 0 || PLA_S.b[PL_P.X + 1, PL_P.Y] != 0)
+                                    COMANDA.cmd("play", "Electro_", 1, 0.3f);
                     }
                     PL_P.fata = SpriteEffects.None;
 
@@ -1133,7 +1213,10 @@ namespace Reluare_priectre
                     if (PL_P.mers <= -20)
                     {
                         PL_P.mers = 19;
-                        COMANDA.cmd("play", "Electro_", 1, 0.3f);
+                        if (PL_P.X > 0 && PL_P.X + 1 < 300)
+                            if (PL_P.Y > 0 && PL_P.Y < 300)
+                                if (PLA_S.b[PL_P.X, PL_P.Y] != 0 || PLA_S.b[PL_P.X + 1, PL_P.Y] != 0)
+                                    COMANDA.cmd("play", "Electro_", 1, 0.3f);
                     }
                     PL_P.fata = SpriteEffects.FlipHorizontally;
 
@@ -2412,8 +2495,17 @@ namespace Reluare_priectre
                 spriteBatch.DrawString(font[3], OBTIUNI[5] + "%", PL_P_E - MENIU_VECTOR + (new Vector2(25, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
                 spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(275, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (100f / (OBTIUNI[6] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font[3], OBTIUNI[6] + "%", PL_P_E - MENIU_VECTOR + (new Vector2(275, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                
 
                 spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
+
+
+                spriteBatch.Draw(LAS_T[1], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f - 15, PL_P_E.Y * OBTIUNI[8] / 2000f - 15), null, Color.White, 0f, Vector2.Zero, ZOOM * 1.8f, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font[3], "CONSOLE:  ", new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f + 15, PL_P_E.Y * OBTIUNI[8] / 2000f - 12), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                if (OBTIUNI[9] == 1)
+                    spriteBatch.DrawString(font[3], "ON", new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f + 160, PL_P_E.Y * OBTIUNI[8] / 2000f - 12), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                else
+                    spriteBatch.DrawString(font[3], "OFF", new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f + 160, PL_P_E.Y * OBTIUNI[8] / 2000f - 12), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
 
                 #endregion
             }
@@ -2558,6 +2650,9 @@ namespace Reluare_priectre
                             poz.Y += ((float)(j * Math.Cos(PL.rot) + i * Math.Sin(PL.rot))) * ZOOM * 20;
 
                             spriteBatch.Draw(comp[PL.comp[i + 18, j + 18]].T, poz, null, Color.White, PL.rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+                            if(PL.viata[i+18,j+18]!= comp[PL.comp[i + 18, j + 18]].v)
+                                spriteBatch.Draw(comp[0].T, poz, null, Color.White, PL.rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+
 
                             if (LAS_A)
                                 if (PL.eng > 0)
@@ -3781,12 +3876,13 @@ namespace Reluare_priectre
                 #endregion
             }
 
-            for (int i = 0; i < 10; i++)
-            {
-                spriteBatch.DrawString(font[7], CHAT[i], new Vector2(17, 100 + 20 * i), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font[7], CHAT[i], new Vector2(13, 100 + 20 * i), Color.Blue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-                spriteBatch.DrawString(font[7], CHAT[i], new Vector2(15, 100 + 20 * i), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-            }
+            if (OBTIUNI[9] == 1)
+                for (int i = 0; i < 10; i++)
+                {
+                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f + 2, PL_P_E.Y * OBTIUNI[8] / 2000f + 20 * i), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f - 2, PL_P_E.Y * OBTIUNI[8] / 2000f + 20 * i), Color.Blue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f, PL_P_E.Y * OBTIUNI[8] / 2000f + 20 * i), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                }
             if (MENU != 10 && MENU < 20)
                 spriteBatch.Draw(MOUSE_T, MOUSE_P, null, Color.White, PL.rot, new Vector2(40, 40), 1f, SpriteEffects.None, 0f);
 
