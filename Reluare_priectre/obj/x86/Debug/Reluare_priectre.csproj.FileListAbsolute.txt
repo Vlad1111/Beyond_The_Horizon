@@ -623,3 +623,4 @@ C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug
 C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Electro_1.xnb
 C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Electro_3.xnb
 C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\P9.xnb
+C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Laser_4.xnb

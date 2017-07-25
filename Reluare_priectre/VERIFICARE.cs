@@ -9,7 +9,7 @@ namespace Reluare_priectre
 {
     class VERIFICARE
     {
-        static public int NAVA(Nava AUX)
+        static public int NAVA(Nava AUX, int verificare)
         {
             Vector2[] co = new Vector2[2500];
             int sf = 1, inc = 0;
@@ -41,7 +41,7 @@ namespace Reluare_priectre
                 inc++;
             }
 
-           // if (Game1.MENU == 3)
+            if (verificare != 0)
                 for (int i = 0; i < 37; i++)
                     for (int j = 0; j < 37; j++)
                         if (mat[i, j] == 0 && AUX.comp[i, j] != 0)
@@ -63,20 +63,21 @@ namespace Reluare_priectre
             int x, y;
             y = -(int)(Math.Cos(ung) * dist / 20) + 18;
             x = -(int)(Math.Sin(ung) * dist / 20) + 18;
-            if (aux.comp[x, y] != 0)
-            {
-                P.t = 0;
-                aux.viata[x, y] -= P.pow;
-                if (aux.viata[x, y] <= 0)
+            if (x >= 0 && x < 37 && y >= 0 && y < 37)
+                if (aux.comp[x, y] != 0)
                 {
-                    aux.eng_m -= Game1.comp[aux.comp[x, y]].eng;
-                    aux.pow -= Game1.comp[aux.comp[x, y]].pow;
-                    aux.viata[x, y] = 0;
-                    aux.comp[x, y] = 0;
-                    aux.nr_c--;
-                    NAVA(aux);
+                    P.t = 0;
+                    aux.viata[x, y] -= P.pow;
+                    if (aux.viata[x, y] <= 0)
+                    {
+                        aux.eng_m -= Game1.comp[aux.comp[x, y]].eng;
+                        aux.pow -= Game1.comp[aux.comp[x, y]].pow;
+                        aux.viata[x, y] = 0;
+                        aux.comp[x, y] = 0;
+                        aux.nr_c--;
+                        NAVA(aux, 1);
+                    }
                 }
-            }
             return aux;
         }
     }

@@ -751,8 +751,8 @@ namespace Reluare_priectre
             else if (MENU == 3) // MENIUL DE JOC SPATIU
             {
                 #region MENIU_3    
-                if (ran.Next(0, 10000) * ran.Next(0, 1000) == 30)
-                    CREARE.PIRATI(1);
+                if (ran.Next(0, (1600 - PL.nr_c) * 1) == 10)
+                    CREARE.PIRATI((int)(8 * (float)PL.nr_c / 1600f) + 1);
 
                 if (PL.auto_pilot == 0)
                 {
@@ -831,6 +831,16 @@ namespace Reluare_priectre
                 {
                     if (TIME % 5 == 0)
                     {
+                        if (PL.auto_pilot == 0)
+                        {
+                            PL.rot = (float)Math.Atan((PL_P_E.Y - MOUSE_P.Y) / (PL_P_E.X - MOUSE_P.X));
+                            if (PL_P_E.X >= MOUSE_P.X)
+                                PL.rot += 3.1415f;
+                        }
+                        else if (PL.auto_pilot > 0)
+                            PL.rot = 3.1515f / 2 - MATH.ung(L_PLA[PL.auto_pilot].poz, PL.poz);
+                        else
+                            PL.rot = -3.1515f / 2 - MATH.ung(NPC[-PL.auto_pilot + 1].poz, PL.poz);
                         LAS_A = true;
                         if (PL.eng > 0)
                             COMANDA.cmd("play", "Laser_", 3, 1);
@@ -881,7 +891,17 @@ namespace Reluare_priectre
                     }
 
                 for (int i = 0; i < NR_NPC; i++)
+                {
                     NPC[i] = AI.NPC(NPC[i]);
+                    if (MATH.dis(NPC[i].poz, PL.poz) > 1.14f * 10000f / Game1.ZOOM)
+                    {
+                        for (int j = i; j < NR_NPC - 1; j++)
+                            NPC[j] = NPC[j + 1];
+                        NPC[NR_NPC - 1] = null;
+                        NR_NPC--;
+                        i--;
+                    }
+                }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
@@ -891,13 +911,14 @@ namespace Reluare_priectre
                 }
                 else BUTON_A_3 = false;
 
+
                 for (int i = 0; i < NR_PRO - 1; i++)
                     if (LAS[i].tip_p == 1)
                     {
-                        for(int j=0;j<NR_NPC;j++)
+                        for (int j = 0; j < NR_NPC; j++)
                         {
                             float dist = MATH.dis(NPC[j].poz, LAS[i].poz);
-                            if (dist <= 20 * 18)
+                            if (dist <= 20 * 30)
                             {
                                 NPC[j] = VERIFICARE.LASER_NAVA(NPC[j], LAS[i]);
                                 if (NPC[j].comp[18, 18] == 0)
@@ -917,11 +938,11 @@ namespace Reluare_priectre
                     else if (LAS[i].tip_p == 9)
                     {
                         float dist = MATH.dis(PL.poz, LAS[i].poz);
-                        if(dist <= 20 * 18)
+                        if (dist <= 20 * 30)
                         {
                             ADD_CHAT_LINE(PL.poz.X + " " + PL.poz.Y);
                             PL = VERIFICARE.LASER_NAVA(PL, LAS[i]);
-                            if(PL.comp[18,18] == 0)
+                            if (PL.comp[18, 18] == 0)
                             {
                                 PL.poz = Vector2.Zero;
                                 for (int k = 0; k < 37; k++)
@@ -957,7 +978,7 @@ namespace Reluare_priectre
                 {
                     if (BUTON_A_1 == false)
                     {
-                        if (VERIFICARE.NAVA(PL) == PL.nr_c)
+                        if (VERIFICARE.NAVA(PL, 0) == PL.nr_c)
                         {
                             COMANDA.cmd("set_menu", "", 3, 0);
                             base.Update(gameTime);
@@ -1859,7 +1880,7 @@ namespace Reluare_priectre
                     }
                     BUTON_A_3 = true;
                 }
-                else if(Keyboard.GetState().IsKeyDown(Keys.A))
+                else if (Keyboard.GetState().IsKeyDown(Keys.A))
                 {
                     if (BUTON_A_3 == false)
                         if (PL.auto_pilot != 0)
@@ -2540,20 +2561,22 @@ namespace Reluare_priectre
 
                             if (LAS_A)
                                 if (PL.eng > 0)
-                                {
                                     if (comp[PL.comp[i + 18, j + 18]].proi != 0)
-                                    {
-                                        LAS[NR_PRO].poz = new Vector2((poz.X - PL_P_E.X) / ZOOM + PL.poz.X, (poz.Y - PL_P_E.Y) / ZOOM + PL.poz.Y);
-                                        LAS[NR_PRO].tip_p = 1;
-                                        LAS[NR_PRO].fx = (float)Math.Cos(PL.rot) * 40;
-                                        LAS[NR_PRO].fy = (float)Math.Sin(PL.rot) * 40;
-                                        LAS[NR_PRO].pow = comp[PL.comp[i + 18, j + 18]].proi;
-                                        LAS[NR_PRO].t = 100;
-                                        NR_PRO++;
+                                        for (int k = 0; k < 2; k++)
+                                        {
+                                            poz = PL_P_E;
+                                            poz.X += ((float)((i + k)* Math.Cos(PL.rot) - j * Math.Sin(PL.rot))) * ZOOM * 20;
+                                            poz.Y += ((float)(j * Math.Cos(PL.rot) + (i + k) * Math.Sin(PL.rot))) * ZOOM * 20;
+                                            LAS[NR_PRO].poz = new Vector2((poz.X - PL_P_E.X) / ZOOM + PL.poz.X, (poz.Y - PL_P_E.Y) / ZOOM + PL.poz.Y);
+                                            LAS[NR_PRO].tip_p = 1;
+                                            LAS[NR_PRO].fx = (float)Math.Cos(PL.rot) * 40;
+                                            LAS[NR_PRO].fy = (float)Math.Sin(PL.rot) * 40;
+                                            LAS[NR_PRO].pow = comp[PL.comp[i + 18, j + 18]].proi;
+                                            LAS[NR_PRO].t = 100;
+                                            NR_PRO++;
 
-                                        PL.eng--;
-                                    }
-                                }
+                                            PL.eng--;
+                                        }
                             if (comp[PL.comp[i + 18, j + 18]].pow != 0)
                                 if (ran.Next(1, 5) == 2)
                                 {

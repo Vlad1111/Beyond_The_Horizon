@@ -1414,150 +1414,656 @@ namespace Reluare_priectre
             }
         }
 
-        static public Nava NAVA(int nr, int orb)
+        static public Nava NAVA(int nr, int orb, int nivel)
         {
             Nava AUX = new Nava();
-            float ax2, bx, c;
-            int impartitor = Game1.ran.Next(1, 15);
-            ax2 = -(float)Game1.ran.Next(0, 2) / impartitor;
-            bx = (4f - (float)Game1.ran.Next(0, 2)) / impartitor;
-            c = (4f - (float)Game1.ran.Next(0, 2)) / impartitor;
             AUX.comp = new int[37, 37];
             AUX.viata = new int[37, 37];
             AUX.nr_c = 1;
             AUX.comp[18, 18] = 1;
             AUX.viata[18, 18] = Game1.comp[1].v;
-
-            if (nr == orb)
+            if (nivel == 1)
             {
-                AUX.auto_pilot = -1;
+                if (nr == orb)
+                    AUX.auto_pilot = -1;
+                else
+                    AUX.auto_pilot = orb;
+                int forma = Game1.ran.Next(0, 100) % 6;
+                int orint = 1 - 2 * (forma % 2);
+                int k, l;
 
-                for (int j = 18; j >= -18; j--)
+                if (forma / 2 == 0)
                 {
-                    int x = (int)(ax2 * j * j + bx * j + c);
-                    int smn = MATH.semn(x);
-                    if (x > 18)
-                        x = 18;
-                    else if (x < -18)
-                        x = -18;
-                    x = 18 - x * smn;
-                    for (int i = x; i >= -x; i--)
+                    k = Game1.ran.Next(2, 5);
+                    l = Game1.ran.Next(3, 7);
+                    for (int i = -k; i <= k; i++)
+                        for (int j = -l; j <= l; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[jj, ii] = 2;
+                                        AUX.viata[jj, ii] = Game1.comp[2].v;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                    for (int i = -k - k / 2; i <= -k + 1; i++)
+                        for (int j = -l - l / 2; j <= -l; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[jj, ii] = 3;
+                                        AUX.viata[jj, ii] = Game1.comp[3].v;
+                                        AUX.pow += Game1.comp[3].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[jj, 36 - ii] = 3;
+                                        AUX.viata[jj, 36 - ii] = Game1.comp[3].v;
+                                        AUX.pow += Game1.comp[3].pow;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                    for (int i = k + 1; i <= k + 3; i++)
+                        for (int j = l; j <= l + 2; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[jj, ii] = 4;
+                                        AUX.viata[jj, ii] = Game1.comp[4].v;
+                                        AUX.eng_m += Game1.comp[4].eng;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[jj, 36 - ii] = 4;
+                                        AUX.viata[jj, 36 - ii] = Game1.comp[4].v;
+                                        AUX.eng_m += Game1.comp[4].eng;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                    for (int i = k + 1; i <= k + 3; i++)
+                        for (int j = l + 3; j <= l + 3; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (i != 0 || j != 0)
+                                {
+                                    AUX.comp[jj, ii] = 5;
+                                    AUX.viata[jj, ii] = Game1.comp[5].v;
+                                    AUX.eng_m += Game1.comp[5].eng;
+                                    AUX.nr_c++;
+
+                                    AUX.comp[jj, 36 - ii] = 5;
+                                    AUX.viata[jj, 36 - ii] = Game1.comp[5].v;
+                                    AUX.eng_m += Game1.comp[5].eng;
+                                    AUX.nr_c++;
+                                }
+                        }
+                }
+                else if (forma / 2 == 1)
+                {
+                    k = Game1.ran.Next(8, 13);
+                    l = Game1.ran.Next(5, 9);
+                    for (int i = -k; i <= k; i++)
                     {
                         int ii, jj;
                         ii = i + 18;
-                        jj = j + 18;
-                        if (ii >= 0 && ii < 37)
-                            if (i != 0 || j != 0)
-                            {
-                                AUX.comp[jj, 36 - ii] = 15;
-                                AUX.viata[jj, 36 - ii] = Game1.comp[15].v;
-                                AUX.nr_c++;
-                            }
-                    }
-                }
-                for (int j = 0; j < 18; j++)
-                    if ((float)AUX.pow / AUX.nr_c < 10)
-                    {
-                        int i = 35;
-                        while (i >= 0 && AUX.comp[i, j] == 0)
-                            i--;
-                        if (i != 0 && Game1.ran.Next(0, 4) != 3)
+                        for (int j = (int)(-(float)l * (k - i) / (float)(2 * k)); j <= (int)((float)l * (k - i) / (float)(2 * k)); j++)
                         {
-                            while (i > 4 && AUX.comp[i - 2, j] != 0)
-                                i--;
-                            for (; i >= 0 && AUX.comp[i + 5, j] != 14; i--)
-                            {
-                                AUX.comp[i, j] = 14;
-                                AUX.comp[i, 36 - j] = 14;
-                                AUX.pow += 2 * Game1.comp[14].pow;
-                            }
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[ii, jj] = 2;
+                                        AUX.viata[ii, jj] = Game1.comp[2].v;
+                                        AUX.nr_c++;
+                                    }
+
                         }
                     }
+                    for (int j = -l; j <= 0; j += 2)
+                        for (int q = -1; q <= 1; q += 2)
+                        {
+                            int ii, jj;
+                            jj = j * q * orint + 18;
+                            ii = -k + 18 + 1;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (ii != 18 || jj != 18)
+                                    {
+                                        AUX.comp[ii - 3, jj] = 3;
+                                        AUX.viata[ii - 3, jj] = Game1.comp[3].v;
+                                        AUX.pow += Game1.comp[3].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii - 2, jj] = 3;
+                                        AUX.viata[ii - 2, jj] = Game1.comp[3].v;
+                                        AUX.pow += Game1.comp[3].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii - 1, jj] = 3;
+                                        AUX.viata[ii - 1, jj] = Game1.comp[3].v;
+                                        AUX.pow += Game1.comp[3].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii, jj] = 4;
+                                        AUX.viata[ii, jj] = Game1.comp[4].v;
+                                        AUX.eng_m += Game1.comp[4].eng;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii + 1, jj] = 4;
+                                        AUX.viata[ii + 1, jj] = Game1.comp[4].v;
+                                        AUX.eng_m += Game1.comp[4].eng;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii + 2, jj] = 5;
+                                        AUX.viata[ii + 2, jj] = Game1.comp[5].v;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                }
+                else
+                {
+                    k = Game1.ran.Next(5, 10);
+                    l = Game1.ran.Next(5, 10);
+                    int ii, jj;
+
+                    for (int i = -18; i <= 18; i++)
+                        for (int j = -18; j <= 18; j++)
+                        {
+                            ii = i * orint + 18;
+                            jj = j + 18;
+                            if (MATH.dis_prt(new Vector2(i * k, j * l), Vector2.Zero) < 1000)
+                                if (ii >= 0 && ii < 37)
+                                    if (jj >= 0 && jj < 37)
+                                        if (i != 0 || j != 0)
+                                        {
+                                            AUX.comp[ii, jj] = 2;
+                                            AUX.viata[ii, jj] = Game1.comp[2].v;
+                                            AUX.nr_c++;
+                                        }
+                        }
+                    for (int j = -4; j < 0; j++)
+                    {
+                        int i = 0;
+                        ii = i * orint + 18;
+                        jj = j + 18;
+                        while (AUX.comp[ii, jj] != 0 && i>=-19 && i<=19)
+                        {
+                            i -= orint;
+                            ii = i * orint + 18;
+                        }
+                        if (i >= -18 && i <= 18)
+                        {
+                            for (int q = -1; q <= 1; q += 2)
+                                for (int qq = -1; qq <= 1; qq++)
+                                {
+                                    ii = (i + qq) * orint + 18;
+                                    jj = q * j + 18;
+                                    AUX.comp[ii, jj] = 3;
+                                    AUX.viata[ii, jj] = Game1.comp[3].v;
+                                    AUX.pow += Game1.comp[3].pow;
+                                    AUX.nr_c++;
+                                }
+                        }
+                    }
+                    jj = 1;
+                    while (AUX.comp[18, jj - 1] == 0)
+                        jj++;
+                    for (int q = -2; q <= 0; q++)
+                    {
+                        if (AUX.comp[18, jj + q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18, jj + q]].eng;
+                        AUX.comp[18, jj + q] = 4;
+                        AUX.viata[18, jj + q] = Game1.comp[4].v;
+                        AUX.eng_m += Game1.comp[4].eng;
+
+
+                        if (AUX.comp[18, 36 - jj - q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18, 36 - jj - q]].eng;
+                        AUX.comp[18, 36 - jj - q] = 4;
+                        AUX.viata[18, 36 - jj - q] = Game1.comp[4].v;
+                        AUX.eng_m += Game1.comp[4].eng;
+
+
+                        if (AUX.comp[18 + orint, jj + q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18 + orint, jj + q]].eng;
+                        AUX.comp[18 + orint, jj + q] = 5;
+                        AUX.viata[18 + orint, jj + q] = Game1.comp[5].v;
+
+
+                        if (AUX.comp[18 + orint, 36 - jj - q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18, 36 - jj - q]].eng;
+                        AUX.comp[18 + orint, 36 - jj - q] = 5;
+                        AUX.viata[18 + orint, 36 - jj - q] = Game1.comp[5].v;
+                    }
+                }
+            }
+            else if(nivel == 2)
+            {
+                if (nr == orb)
+                    AUX.auto_pilot = -1;
+                else
+                    AUX.auto_pilot = orb;
+                int forma = Game1.ran.Next(0, 100) % 6;
+                int orint = 1 - 2 * (forma % 2);
+                int k, l;
+
+                if (forma / 2 == 0)
+                {
+                    k = Game1.ran.Next(2, 5);
+                    l = Game1.ran.Next(3, 7);
+                    for (int i = -k; i <= k; i++)
+                        for (int j = -l; j <= l; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[jj, ii] = 7;
+                                        AUX.viata[jj, ii] = Game1.comp[7].v;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                    for (int i = -k - k / 2; i <= -k + 1; i++)
+                        for (int j = -l - l / 2; j <= -l; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[jj, ii] = 8;
+                                        AUX.viata[jj, ii] = Game1.comp[8].v;
+                                        AUX.pow += Game1.comp[8].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[jj, 36 - ii] = 8;
+                                        AUX.viata[jj, 36 - ii] = Game1.comp[8].v;
+                                        AUX.pow += Game1.comp[8].pow;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                    for (int i = k + 1; i <= k + 3; i++)
+                        for (int j = l; j <= l + 2; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[jj, ii] = 9;
+                                        AUX.viata[jj, ii] = Game1.comp[9].v;
+                                        AUX.eng_m += Game1.comp[9].eng;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[jj, 36 - ii] = 9;
+                                        AUX.viata[jj, 36 - ii] = Game1.comp[9].v;
+                                        AUX.eng_m += Game1.comp[9].eng;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                    for (int i = k + 1; i <= k + 3; i++)
+                        for (int j = l + 3; j <= l + 3; j++)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (i != 0 || j != 0)
+                                {
+                                    AUX.comp[jj, ii] = 10;
+                                    AUX.viata[jj, ii] = Game1.comp[10].v;
+                                    AUX.eng_m += Game1.comp[10].eng;
+                                    AUX.nr_c++;
+
+                                    AUX.comp[jj, 36 - ii] = 10;
+                                    AUX.viata[jj, 36 - ii] = Game1.comp[10].v;
+                                    AUX.eng_m += Game1.comp[10].eng;
+                                    AUX.nr_c++;
+                                }
+                        }
+                }
+                else if (forma / 2 == 1)
+                {
+                    k = Game1.ran.Next(8, 13);
+                    l = Game1.ran.Next(5, 9);
+                    for (int i = -k; i <= k; i++)
+                    {
+                        int ii, jj;
+                        ii = i + 18;
+                        for (int j = (int)(-(float)l * (k - i) / (float)(2 * k)); j <= (int)((float)l * (k - i) / (float)(2 * k)); j++)
+                        {
+                            jj = j * orint + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (i != 0 || j != 0)
+                                    {
+                                        AUX.comp[ii, jj] = 7;
+                                        AUX.viata[ii, jj] = Game1.comp[7].v;
+                                        AUX.nr_c++;
+                                    }
+
+                        }
+                    }
+                    for (int j = -l; j <= 0; j += 2)
+                        for (int q = -1; q <= 1; q += 2)
+                        {
+                            int ii, jj;
+                            jj = j * q * orint + 18;
+                            ii = -k + 18 + 1;
+                            if (ii >= 0 && ii < 37)
+                                if (jj >= 0 && jj < 37)
+                                    if (ii != 18 || jj != 18)
+                                    {
+                                        AUX.comp[ii - 3, jj] = 8;
+                                        AUX.viata[ii - 3, jj] = Game1.comp[8].v;
+                                        AUX.pow += Game1.comp[8].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii - 2, jj] = 8;
+                                        AUX.viata[ii - 2, jj] = Game1.comp[8].v;
+                                        AUX.pow += Game1.comp[8].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii - 1, jj] = 8;
+                                        AUX.viata[ii - 1, jj] = Game1.comp[8].v;
+                                        AUX.pow += Game1.comp[8].pow;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii, jj] = 9;
+                                        AUX.viata[ii, jj] = Game1.comp[9].v;
+                                        AUX.eng_m += Game1.comp[9].eng;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii + 1, jj] = 9;
+                                        AUX.viata[ii + 1, jj] = Game1.comp[9].v;
+                                        AUX.eng_m += Game1.comp[9].eng;
+                                        AUX.nr_c++;
+
+                                        AUX.comp[ii + 2, jj] = 10;
+                                        AUX.viata[ii + 2, jj] = Game1.comp[10].v;
+                                        AUX.nr_c++;
+                                    }
+                        }
+                }
+                else
+                {
+                    k = Game1.ran.Next(5, 10);
+                    l = Game1.ran.Next(5, 10);
+                    int ii, jj;
+
+                    for (int i = -18; i <= 18; i++)
+                        for (int j = -18; j <= 18; j++)
+                        {
+                            ii = i * orint + 18;
+                            jj = j + 18;
+                            if (MATH.dis_prt(new Vector2(i * k, j * l), Vector2.Zero) < 1000)
+                                if (ii >= 0 && ii < 37)
+                                    if (jj >= 0 && jj < 37)
+                                        if (i != 0 || j != 0)
+                                        {
+                                            AUX.comp[ii, jj] = 7;
+                                            AUX.viata[ii, jj] = Game1.comp[7].v;
+                                            AUX.nr_c++;
+                                        }
+                        }
+                    for (int j = -4; j < 0; j++)
+                    {
+                        int i = 0;
+                        ii = i * orint + 18;
+                        jj = j + 18;
+                        while (AUX.comp[ii, jj] != 0 && i >= -19 && i <= 19)
+                        {
+                            i -= orint;
+                            ii = i * orint + 18;
+                        }
+                        if (i >= -18 && i <= 18)
+                        {
+                            for (int q = -1; q <= 1; q += 2)
+                                for (int qq = -1; qq <= 1; qq++)
+                                {
+                                    ii = (i + qq) * orint + 18;
+                                    jj = q * j + 18;
+                                    AUX.comp[ii, jj] = 8;
+                                    AUX.viata[ii, jj] = Game1.comp[8].v;
+                                    AUX.pow += Game1.comp[8].pow;
+                                    AUX.nr_c++;
+                                }
+                        }
+                    }
+                    jj = 1;
+                    while (AUX.comp[18, jj - 1] == 0)
+                        jj++;
+                    for (int q = -2; q <= 0; q++)
+                    {
+                        if (AUX.comp[18, jj + q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18, jj + q]].eng;
+                        AUX.comp[18, jj + q] = 9;
+                        AUX.viata[18, jj + q] = Game1.comp[9].v;
+                        AUX.eng_m += Game1.comp[9].eng;
+
+
+                        if (AUX.comp[18, 36 - jj - q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18, 36 - jj - q]].eng;
+                        AUX.comp[18, 36 - jj - q] = 9;
+                        AUX.viata[18, 36 - jj - q] = Game1.comp[9].v;
+                        AUX.eng_m += Game1.comp[9].eng;
+
+
+                        if (AUX.comp[18 + orint, jj + q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18 + orint, jj + q]].eng;
+                        AUX.comp[18 + orint, jj + q] = 10;
+                        AUX.viata[18 + orint, jj + q] = Game1.comp[10].v;
+
+
+                        if (AUX.comp[18 + orint, 36 - jj - q] == 0)
+                            AUX.nr_c++;
+                        else
+                            AUX.eng_m -= Game1.comp[AUX.comp[18, 36 - jj - q]].eng;
+                        AUX.comp[18 + orint, 36 - jj - q] = 10;
+                        AUX.viata[18 + orint, 36 - jj - q] = Game1.comp[10].v;
+                    }
+                }
             }
             else
             {
-                AUX.auto_pilot = orb;
-                int ran = Game1.ran.Next(0, 100);
-                ran %= 1;
-                if(ran == 0)
+                float ax2, bx, c;
+                int impartitor = Game1.ran.Next(1, 15);
+                ax2 = -(float)Game1.ran.Next(0, 2) / (float)impartitor;
+                bx = (4f - Game1.ran.Next(0, 2)) / (float)impartitor;
+                c = (4f - Game1.ran.Next(0, 2)) / (float)impartitor;
+
+                if (nr == orb)
                 {
-                    AUX.comp[18, 18 - 1] = 12;
-                    AUX.viata[18, 18 - 1] = Game1.comp[12].v;
-                    AUX.pow += Game1.comp[12].pow;
-                    AUX.eng_m += Game1.comp[12].eng;
-                    AUX.nr_c++;
+                    AUX.auto_pilot = -1;
 
-                    AUX.comp[18, 18 + 1] = 12;
-                    AUX.viata[18, 18 + 1] = Game1.comp[12].v;
-                    AUX.pow += Game1.comp[12].pow;
-                    AUX.eng_m += Game1.comp[12].eng;
-                    AUX.nr_c++;
+                    for (int j = 18; j >= -18; j--)
+                    {
+                        int x = (int)(ax2 * j * j + bx * j + c);
+                        int smn = MATH.semn(x);
+                        if (x > 18)
+                            x = 18;
+                        else if (x < -18)
+                            x = -18;
+                        x = 18 - x * smn;
+                        for (int i = x; i >= -x; i--)
+                        {
+                            int ii, jj;
+                            ii = i + 18;
+                            jj = j + 18;
+                            if (ii >= 0 && ii < 37)
+                                if (i != 0 || j != 0)
+                                {
+                                    AUX.comp[jj, 36 - ii] = 15;
+                                    AUX.viata[jj, 36 - ii] = Game1.comp[15].v;
+                                    AUX.nr_c++;
+                                }
+                        }
+                    }
+                    for (int j = 0; j < 18; j++)
+                        if ((float)AUX.pow / AUX.nr_c < 10)
+                        {
+                            int i = 35;
+                            while (i >= 0 && AUX.comp[i, j] == 0)
+                                i--;
+                            if (i != 0 && Game1.ran.Next(0, 4) != 3)
+                            {
+                                while (i > 4 && AUX.comp[i - 2, j] != 0)
+                                    i--;
+                                for (; i >= 0 && AUX.comp[i + 5, j] != 14; i--)
+                                {
+                                    AUX.comp[i, j] = 14;
+                                    AUX.comp[i, 36 - j] = 14;
+                                    AUX.pow += 2 * Game1.comp[14].pow;
+                                }
+                            }
+                        }
+                }
+                else
+                {
+                    AUX.auto_pilot = orb;
+                    int ran = Game1.ran.Next(0, 100);
+                    ran %= 1;
+                    if (ran == 0)
+                    {
+                        AUX.comp[18, 18 - 1] = 12;
+                        AUX.viata[18, 18 - 1] = Game1.comp[12].v;
+                        AUX.pow += Game1.comp[12].pow;
+                        AUX.eng_m += Game1.comp[12].eng;
+                        AUX.nr_c++;
+
+                        AUX.comp[18, 18 + 1] = 12;
+                        AUX.viata[18, 18 + 1] = Game1.comp[12].v;
+                        AUX.pow += Game1.comp[12].pow;
+                        AUX.eng_m += Game1.comp[12].eng;
+                        AUX.nr_c++;
 
 
-                    AUX.comp[18, 18 - 2] = 7;
-                    AUX.viata[18, 18 - 2] = Game1.comp[7].v;
-                    AUX.pow += Game1.comp[7].pow;
-                    AUX.eng_m += Game1.comp[7].eng;
-                    AUX.nr_c++;
+                        AUX.comp[18, 18 - 2] = 7;
+                        AUX.viata[18, 18 - 2] = Game1.comp[7].v;
+                        AUX.pow += Game1.comp[7].pow;
+                        AUX.eng_m += Game1.comp[7].eng;
+                        AUX.nr_c++;
 
-                    AUX.comp[18, 18 + 2] = 7;
-                    AUX.viata[18, 18 + 2] = Game1.comp[7].v;
-                    AUX.pow += Game1.comp[7].pow;
-                    AUX.eng_m += Game1.comp[7].eng;
-                    AUX.nr_c++;
-
-
-                    AUX.comp[18 - 1, 18 - 2] = 14;
-                    AUX.viata[18 - 1, 18 - 2] = Game1.comp[14].v;
-                    AUX.pow += Game1.comp[14].pow;
-                    AUX.eng_m += Game1.comp[14].eng;
-                    AUX.nr_c++;
-
-                    AUX.comp[18 - 1, 18 + 2] = 14;
-                    AUX.viata[18 - 1, 18 + 2] = Game1.comp[14].v;
-                    AUX.pow += Game1.comp[14].pow;
-                    AUX.eng_m += Game1.comp[14].eng;
-                    AUX.nr_c++;
-
-                    AUX.comp[18 - 2, 18 - 2] = 14;
-                    AUX.viata[18 - 2, 18 - 2] = Game1.comp[14].v;
-                    AUX.pow += Game1.comp[14].pow;
-                    AUX.eng_m += Game1.comp[14].eng;
-                    AUX.nr_c++;
-
-                    AUX.comp[18 - 2, 18 + 2] = 14;
-                    AUX.viata[18 - 2, 18 + 2] = Game1.comp[14].v;
-                    AUX.pow += Game1.comp[14].pow;
-                    AUX.eng_m += Game1.comp[14].eng;
-                    AUX.nr_c++;
+                        AUX.comp[18, 18 + 2] = 7;
+                        AUX.viata[18, 18 + 2] = Game1.comp[7].v;
+                        AUX.pow += Game1.comp[7].pow;
+                        AUX.eng_m += Game1.comp[7].eng;
+                        AUX.nr_c++;
 
 
-                    AUX.comp[18 + 1, 18 - 2] = 13;
-                    AUX.viata[18 + 1, 18 - 2] = Game1.comp[13].v;
-                    AUX.pow += Game1.comp[13].pow;
-                    AUX.eng_m += Game1.comp[13].eng;
-                    AUX.nr_c++;
+                        AUX.comp[18 - 1, 18 - 2] = 14;
+                        AUX.viata[18 - 1, 18 - 2] = Game1.comp[14].v;
+                        AUX.pow += Game1.comp[14].pow;
+                        AUX.eng_m += Game1.comp[14].eng;
+                        AUX.nr_c++;
 
-                    AUX.comp[18 + 1, 18 + 2] = 13;
-                    AUX.viata[18 + 1, 18 + 2] = Game1.comp[13].v;
-                    AUX.pow += Game1.comp[13].pow;
-                    AUX.eng_m += Game1.comp[13].eng;
-                    AUX.nr_c++;
+                        AUX.comp[18 - 1, 18 + 2] = 14;
+                        AUX.viata[18 - 1, 18 + 2] = Game1.comp[14].v;
+                        AUX.pow += Game1.comp[14].pow;
+                        AUX.eng_m += Game1.comp[14].eng;
+                        AUX.nr_c++;
+
+                        AUX.comp[18 - 2, 18 - 2] = 14;
+                        AUX.viata[18 - 2, 18 - 2] = Game1.comp[14].v;
+                        AUX.pow += Game1.comp[14].pow;
+                        AUX.eng_m += Game1.comp[14].eng;
+                        AUX.nr_c++;
+
+                        AUX.comp[18 - 2, 18 + 2] = 14;
+                        AUX.viata[18 - 2, 18 + 2] = Game1.comp[14].v;
+                        AUX.pow += Game1.comp[14].pow;
+                        AUX.eng_m += Game1.comp[14].eng;
+                        AUX.nr_c++;
+
+
+                        AUX.comp[18 + 1, 18 - 2] = 13;
+                        AUX.viata[18 + 1, 18 - 2] = Game1.comp[13].v;
+                        AUX.pow += Game1.comp[13].pow;
+                        AUX.eng_m += Game1.comp[13].eng;
+                        AUX.nr_c++;
+
+                        AUX.comp[18 + 1, 18 + 2] = 13;
+                        AUX.viata[18 + 1, 18 + 2] = Game1.comp[13].v;
+                        AUX.pow += Game1.comp[13].pow;
+                        AUX.eng_m += Game1.comp[13].eng;
+                        AUX.nr_c++;
+                    }
                 }
             }
             return AUX;
         }
         static public void PIRATI(int nivel)
         {
-            int last_orb = 0;
-            for (int i = 0; i < 50; i++)
+            if (nivel == 1 || nivel == 2)
             {
-                Game1.NPC[Game1.NR_NPC] = NAVA(i, last_orb);
-                if (i == last_orb)
-                    Game1.NPC[Game1.NR_NPC].poz = Game1.PL.poz + new Vector2(Game1.ran.Next((int)(-5000 * Game1.ZOOM), (int)(5000 * Game1.ZOOM)), Game1.ran.Next((int)(-5000 * Game1.ZOOM), (int)(5000 * Game1.ZOOM)));
-                else
-                    Game1.NPC[Game1.NR_NPC].poz = Game1.NPC[last_orb].poz + new Vector2(Game1.ran.Next(-1000, 1000), Game1.ran.Next(-1000, 1000));
-                Game1.NR_NPC++;
+                int last_orb = Game1.NR_NPC;
+                for (int i = last_orb; i <= last_orb + 3 && i <= 119; i++, Game1.NR_NPC++)
+                {
+                    Game1.NPC[i] = NAVA(i, last_orb, nivel);
+                    do
+                    {
+                        Game1.NPC[i].poz = Game1.PL.poz + new Vector2(Game1.ran.Next((int)(-5000 / Game1.ZOOM),
+                           (int)(5000 / Game1.ZOOM)), Game1.ran.Next((int)(-5000 / Game1.ZOOM), (int)(5000 / Game1.ZOOM)));
+                    }
+                    while (MATH.dis(Game1.PL.poz, Game1.NPC[i].poz) < 3000 / Game1.ZOOM);
+                }
+            }
+            else
+            {
+                int last_orb = Game1.NR_NPC;
+                for (int i = last_orb; i < last_orb + 50; i++)
+                    if (Game1.NR_NPC <= 119)
+                    {
+                        Game1.NPC[i] = NAVA(i, last_orb, nivel);
+                        if (i == last_orb)
+                            do
+                            {
+                                Game1.NPC[i].poz = Game1.PL.poz + new Vector2(Game1.ran.Next((int)(-5000 / Game1.ZOOM),
+                                   (int)(5000 / Game1.ZOOM)), Game1.ran.Next((int)(-5000 / Game1.ZOOM), (int)(5000 / Game1.ZOOM)));
+                            }
+                            while (MATH.dis(Game1.PL.poz, Game1.NPC[i].poz) < 3000 / Game1.ZOOM);
+                        else
+                            Game1.NPC[i].poz = Game1.NPC[last_orb].poz + new Vector2(Game1.ran.Next(-1000, 1000), Game1.ran.Next(-1000, 1000));
+                        Game1.NR_NPC++;
+                    }
             }
         }
     }

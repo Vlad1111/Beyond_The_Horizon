@@ -3206,3 +3206,9 @@
 /processorParam:TextureFormat=Color
 /build:P9.png
 
+#begin Sounds/Laser_4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Laser_4.wav
+

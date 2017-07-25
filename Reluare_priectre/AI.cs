@@ -125,11 +125,12 @@ namespace Reluare_priectre
                 aux.eng++;
             float rot;
             float dif_rot;
+            float fractie;
             if (aux.auto_pilot == -1)
             {
                 rot = -MATH.ung(Game1.PL.poz, aux.poz);
                 rot = MATH.prim_cadran(rot);
-                float fractie = 0.001f * (float)aux.pow / aux.nr_c;
+                fractie = 0.001f * (float)aux.pow / aux.nr_c;
                 dif_rot = MATH.prim_cadran(rot - aux.rot);
                 if (dif_rot > 3.1415926f)
                     dif_rot -= 2f * 3.1415926f;
@@ -153,7 +154,7 @@ namespace Reluare_priectre
                         aux.F = 0;
                 }
             }
-            else if (Game1.NPC[aux.auto_pilot] != null)
+            else if (Game1.NPC[aux.auto_pilot] != null && aux.auto_pilot >= 0)
             {
                 rot = -MATH.ung(Game1.NPC[aux.auto_pilot].poz, aux.poz);
                 rot = MATH.prim_cadran(rot);
@@ -161,7 +162,7 @@ namespace Reluare_priectre
                 if (dif_rot > 3.1415926f)
                     dif_rot -= 2f * 3.1415926f;
 
-                float fractie = 0.001f * (float)aux.pow / aux.nr_c;
+                fractie = 0.001f * (float)aux.pow / aux.nr_c;
                 if (fractie > 1)
                     fractie = 1;
                 if (MATH.dis_prt(Game1.NPC[aux.auto_pilot].poz, aux.poz) > 500 * 500)
@@ -178,25 +179,27 @@ namespace Reluare_priectre
                     if (aux.F < 0.5f)
                         aux.F = 0.5f;
                 }
+            }
 
-                if (aux.eng > 0)
-                    if (Game1.TIME % 5 == 0)
+            if (aux.eng > 0)
+                if (Game1.TIME % 5 == 0)
+                {
+                    rot = -MATH.ung(Game1.PL.poz, aux.poz);
+                    rot = MATH.prim_cadran(rot);
+                    dif_rot = MATH.prim_cadran(rot - aux.rot);
+                    if (dif_rot > 3.1415926f)
+                        dif_rot -= 2f * 3.1415926f;
+                    if (MATH.prim_cadran(Math.Abs(dif_rot + 3.1415926f / 2f)) < 3.1415926f / 10f)
                     {
-                        rot = -MATH.ung(Game1.PL.poz, aux.poz);
-                        rot = MATH.prim_cadran(rot);
-                        dif_rot = MATH.prim_cadran(rot - aux.rot);
-                        if (dif_rot > 3.1415926f)
-                            dif_rot -= 2f * 3.1415926f;
-                        if (MATH.prim_cadran(Math.Abs(dif_rot + 3.1415926f / 2f)) < 3.1415926f / 10f)
-                        {
-                            Vector2 poz = Game1.PL_P_E;
-                            for (int i = 0; i < 37; i++)
-                                for (int j = 0; j < 37; j++)
-                                    if (Game1.comp[aux.comp[i, j]].proi != 0)
+                        Vector2 poz = Game1.PL_P_E;
+                        for (int i = 0; i < 37; i++)
+                            for (int j = 0; j < 37; j++)
+                                if (Game1.comp[aux.comp[i, j]].proi != 0)
+                                    for (int k = 0; k < 2; k++)
                                     {
                                         poz = Game1.PL_P_E + aux.poz - Game1.PL_P_E;
-                                        poz.X += ((float)((i - 18) * Math.Cos(aux.rot) - (j - 18) * Math.Sin(aux.rot))) * 20;
-                                        poz.Y += ((float)((j - 18) * Math.Cos(aux.rot) + (i - 18) * Math.Sin(aux.rot))) * 20;
+                                        poz.X += ((float)((i + k - 18) * Math.Cos(aux.rot) - (j - 18) * Math.Sin(aux.rot))) * 20;
+                                        poz.Y += ((float)((j - 18) * Math.Cos(aux.rot) + (i + k - 18) * Math.Sin(aux.rot))) * 20;
 
                                         Game1.LAS[Game1.NR_PRO].poz = poz;
                                         Game1.LAS[Game1.NR_PRO].tip_p = 9;
@@ -208,9 +211,12 @@ namespace Reluare_priectre
 
                                         aux.eng--;
                                     }
-                        }
+                        fractie = 2000f / MATH.dis(Game1.PL.poz, aux.poz);
+                        if (fractie > 1)
+                            fractie = 1;
+                        COMANDA.cmd("play", "Laser_", 4, fractie);
                     }
-            }
+                }
             aux.poz.X += aux.F * aux.pow * (float)Math.Cos(aux.rot) / aux.nr_c;
             aux.poz.Y += aux.F * aux.pow * (float)Math.Sin(aux.rot) / aux.nr_c;
             return aux;
