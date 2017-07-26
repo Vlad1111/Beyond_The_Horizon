@@ -39,7 +39,7 @@ namespace Reluare_priectre
         static public int MENU = 3;
         static public int MENU_AUX;
         static public int[] d1 = { 0, 1, 0, -1, 1, 1, -1, -1 }, d2 = { -1, 0, 1, 0, 1, -1, 1, -1 };//SA NU SCHIMB DIRECTIILE!
-        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1, 100, 100, 400, 800, 1 };
+        static public int[] OBTIUNI = { 0, 768, 1366, 0, 1, 100, 100, 1600, 0, 1 };
         static public int TIME = 0;
         static public Vector2 PL_P_E;
         static public Vector2 MOUSE_P;
@@ -50,6 +50,7 @@ namespace Reluare_priectre
         static public bool BUTON_A_3 = false;
         static public string[] CHAT = new string[10];
         static public int pl_scrie_CHAT = 0;
+        static public int[] keys_pressed = new int[45];
         static public Random ran = new Random();
 
         static public SpriteFont[] font = new SpriteFont[10];
@@ -98,13 +99,6 @@ namespace Reluare_priectre
         static public int NR_JOC;
         #endregion
 
-        public void ADD_CHAT_LINE(string s)
-        {
-            for (int j = 9; j > 0; j--)
-                CHAT[j] = CHAT[j - 1];
-            CHAT[0] = s;
-        }
-        
         public void SAVE()
         {
             string[] planete_id = new string[nr_PLA_S+1];
@@ -118,7 +112,7 @@ namespace Reluare_priectre
             MaxiFun.IO.Save<string[]>(planete_id, saveDir, "PLANETE_ID");
             
             MaxiFun.IO.Save<Nava>(PL, saveDir, "NAVA_PLAYER");
-            if (PLA_A != 0)
+            if (PLA_A > 0)
                 MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + PLA_A);
             MaxiFun.IO.Save<int[]>(inventar, saveDir, "INVENTAR");
         }
@@ -408,7 +402,9 @@ namespace Reluare_priectre
             inventar[NR_comp + NR_elem * NR_subs + 14] = 1;
             for (int i = 1; i < NR_comp; i++)
                 inventar[i] = 100;
-            COMANDA.cmd("set_menu", "", 1, 0);
+
+            SELECTARE.INTERIOR_NAVA(CREARE.NAVA(1, 1, 1));
+            COMANDA.cmd("set_menu", "", 11, 0);
         }
 
         protected override void UnloadContent(){}
@@ -437,50 +433,19 @@ namespace Reluare_priectre
 
             if (pl_scrie_CHAT > 0)
             {
+                COMANDA.WRITE_CHAT_LINE(); Keyboard.GetState();
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-                    pl_scrie_CHAT = 0;
-
-                var keyboardState = Keyboard.GetState();
-                var keys = keyboardState.GetPressedKeys();
-                if (keys.Length > 0)
                 {
-                    int sift, back;
-                    sift = back = 0;
-                    for (int i = 0; i < keys.Length; i++)
-                        if (keys[i].ToString() == "Back")
-                            back = 1;
-                        else if (keys[i].ToString() == "LeftShift" || keys[i].ToString() == "RightShift")
-                            sift = 1;
-                    if (keys.Length == 1 && sift != 0)
-                        pl_scrie_CHAT = 2;
-                    // ADD_CHAT_LINE(keys[0].ToString());
-                    if (pl_scrie_CHAT - 1 != keys.Length)
-                    {
-                        if (back != 0)
-                        {
-                            string chat_line = "";
-                            for (int i = 0; i < CHAT[0].Length - 1; i++)
-                                chat_line += CHAT[0].ToCharArray()[i] + "";
-                            CHAT[0] = chat_line;
-                            COMANDA.cmd("play", "Sfx_", 5, 0.3f);
-                        }
-                        else
-                        {
-                            /*if (sift == 0 && cara >= 'A' && cara <= 'Z')
-                                CHAT[0] += (char)(cara - 'A' + 'a') + "";
-                            else CHAT[0] += cara + "";*/
-                            CHAT[0] += keys[0].ToString();
-                            COMANDA.cmd("play", "Sfx_", 5, 0.3f);
-                        }
-                        pl_scrie_CHAT = keys.Length + 1;
-                    }
+                    COMANDA.comanda(CHAT[0]);
+                    COMANDA.cmd("play", "Sfx_", 5, 0.3f);
+                    pl_scrie_CHAT = 0;
                 }
-                else pl_scrie_CHAT = 1;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
                 pl_scrie_CHAT = 1;
-                ADD_CHAT_LINE("");
+                keys_pressed['t' - 'a'] = 1;
+                COMANDA.ADD_CHAT_LINE("");
             }
 
 
@@ -576,7 +541,7 @@ namespace Reluare_priectre
                             string filePath = saveDir + "/PLANETA2.dat";
                             if (File.Exists(filePath))
                                 SAVE();
-                            this.Exit();
+                            Exit();
                         }
                         else if (y > 100 && y <= 200)
                         {
@@ -587,9 +552,12 @@ namespace Reluare_priectre
                         else if (y > 200 && y <= 300)
                         {
                             COMANDA.cmd("play", "Sfx_", 4, 1);
-                            if (PLA_A < 0)
+                            if (PLA_A == 0)
                                 COMANDA.cmd("set_menu", "", 3, 0);
-                            else COMANDA.cmd("set_menu", "", 5, 0);
+                            else if (PLA_A > 0)
+                                COMANDA.cmd("set_menu", "", 5, 0);
+                            else if (PLA_A < 0)
+                                COMANDA.cmd("set_menu", "", 11, 0);
                         }
                     }
                 }
@@ -624,8 +592,8 @@ namespace Reluare_priectre
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                 {
                     int x, y;
-                    x = Mouse.GetState().X;
-                    y = Mouse.GetState().Y;
+                    x = (int)MOUSE_P.X;
+                    y = (int)MOUSE_P.Y;
                     if (pl_scrie_CHAT == 1)
                     {
                         OBTIUNI[7] = (int)(x / PL_P_E.X * 2000f);
@@ -731,7 +699,7 @@ namespace Reluare_priectre
                                     COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                                 }
                             }
-                            else if (y >= 225 && y <= 250 && x>=0 && x<=500)
+                            else if (y >= 225 && y <= 250 && x >= 0 && x <= 500)
                             {
                                 if (x > 250)
                                     TIME = 40;
@@ -825,7 +793,7 @@ namespace Reluare_priectre
             else if (MENU == 3) // MENIUL DE JOC SPATIU
             {
                 #region MENIU_3    
-                if (ran.Next(0, (1600 - PL.nr_c) * 5) == 10)
+                if (ran.Next(0, (1600 - PL.nr_c) * 20) == 10)
                     CREARE.PIRATI((int)(8 * (float)PL.nr_c / 1600f) + 1);
 
                 if (PL.auto_pilot == 0)
@@ -869,6 +837,41 @@ namespace Reluare_priectre
                     ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
                 }
 
+                int ales = 0;
+                float dist = 1.14f * 10000f / ZOOM;
+                for (int i = 1; i <= nr_PLA_S; i++)
+                    if (L_PLA[i].p_orb != 0)
+                    {
+                        L_PLA[i].poz = L_PLA[L_PLA[i].p_orb].poz;
+                        L_PLA[i].ung += (float)Math.Sqrt(L_PLA[i].R) / 200 * 0.0001f;
+                        L_PLA[i].poz.X += (float)Math.Sin(L_PLA[i].ung) * L_PLA[i].R;
+                        L_PLA[i].poz.Y += (float)Math.Cos(L_PLA[i].ung) * L_PLA[i].R;
+                        float r = MATH.dis(L_PLA[i].poz, PL.poz);
+                        if (r < dist)
+                        {
+                            dist = r;
+                            ales = i;
+                        }
+                    }
+
+                for (int i = 0; i < NR_NPC; i++)
+                {
+                    NPC[i] = AI.NPC(NPC[i]);
+                    float r = MATH.dis(NPC[i].poz, PL.poz);
+                    if (r < dist)
+                    {
+                        r = dist;
+                        ales = -i - 1;
+                    }
+                    else if (MATH.dis(NPC[i].poz, PL.poz) > 1.14f * 10000f / ZOOM)
+                    {
+                        for (int j = i; j < NR_NPC - 1; j++)
+                            NPC[j] = NPC[j + 1];
+                        NPC[NR_NPC - 1] = null;
+                        NR_NPC--;
+                        i--;
+                    }
+                }
 
 
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
@@ -878,6 +881,38 @@ namespace Reluare_priectre
                         COMANDA.cmd("set_menu", "", 4, 0);
                         base.Update(gameTime);
                         return;
+                    }
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.E))
+                {
+                    if (BUTON_A_1 == false)
+                    {
+                        BUTON_A_1 = true;
+                        if (dist < 400)
+                        {
+                            if (ales > 0 && L_PLA[ales].ord_elm[NR_subs + 1] != 8)
+                            {
+                                //if (L_PLA[ales].ID != 1)
+                                {
+                                    PLA_A = ales;
+                                    SELECTARE.PLANETA();
+                                    if (L_PLA[PLA_A].ord_elm[NR_subs + 1] != 7)
+                                        COMANDA.cmd("set_menu", "", 5, 0);
+                                    else
+                                        COMANDA.cmd("set_menu", "", 8, 0);
+                                    base.Update(gameTime);
+                                    return;
+                                }
+                            }
+                            else if (ales < 0 && NPC[-ales - 1].pow < 70)
+                            {
+                                PLA_A = ales;
+                                SELECTARE.INTERIOR_NAVA(NPC[-ales - 1]);
+                                COMANDA.cmd("set_menu", "", 11, 0);
+                                base.Update(gameTime);
+                                return;
+                            }
+                        }
                     }
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.M))
@@ -932,51 +967,6 @@ namespace Reluare_priectre
                         PL.eng = PL.eng_m;
                 }
 
-                // if(TIME%20==0)
-                for (int i = 1; i <= nr_PLA_S; i++)
-                    if (L_PLA[i].p_orb != 0)
-                    {
-                        L_PLA[i].poz = L_PLA[L_PLA[i].p_orb].poz;
-                        L_PLA[i].ung += (float)Math.Sqrt(L_PLA[i].R) / 200 * 0.0001f;
-                        L_PLA[i].poz.X += (float)Math.Sin(L_PLA[i].ung) * L_PLA[i].R;
-                        L_PLA[i].poz.Y += (float)Math.Cos(L_PLA[i].ung) * L_PLA[i].R;
-                        float xx, yy, r;
-                        xx = PL.poz.X - L_PLA[i].poz.X;
-                        yy = PL.poz.Y - L_PLA[i].poz.Y;
-                        r = (float)Math.Sqrt(xx * xx + yy * yy);
-                        if (r < 400 && Keyboard.GetState().IsKeyDown(Keys.E))
-                        {
-                            if (BUTON_A_2 == false)
-                            {
-                                BUTON_A_2 = true;
-                                if (L_PLA[i].p_orb != i)
-                                {
-                                    PLA_A = i;
-                                    SELECTARE.PLANETA();
-                                    if (L_PLA[PLA_A].ord_elm[NR_subs + 1] != 7)
-                                        COMANDA.cmd("set_menu", "", 5, 0);
-                                    else
-                                        COMANDA.cmd("set_menu", "", 8, 0);
-                                    break;
-                                }
-                            }
-                        }
-                        else BUTON_A_2 = false;
-                    }
-
-                for (int i = 0; i < NR_NPC; i++)
-                {
-                    NPC[i] = AI.NPC(NPC[i]);
-                    if (MATH.dis(NPC[i].poz, PL.poz) > 1.14f * 10000f / Game1.ZOOM)
-                    {
-                        for (int j = i; j < NR_NPC - 1; j++)
-                            NPC[j] = NPC[j + 1];
-                        NPC[NR_NPC - 1] = null;
-                        NR_NPC--;
-                        i--;
-                    }
-                }
-
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     if (BUTON_A_3 == false)
@@ -991,7 +981,7 @@ namespace Reluare_priectre
                     {
                         for (int j = 0; j < NR_NPC; j++)
                         {
-                            float dist = MATH.dis(NPC[j].poz, LAS[i].poz);
+                            dist = MATH.dis(NPC[j].poz, LAS[i].poz);
                             if (dist <= 20 * 30)
                             {
                                 NPC[j] = VERIFICARE.LASER_NAVA(NPC[j], LAS[i]);
@@ -1011,10 +1001,9 @@ namespace Reluare_priectre
                     }
                     else if (LAS[i].tip_p == 9)
                     {
-                        float dist = MATH.dis(PL.poz, LAS[i].poz);
+                        dist = MATH.dis(PL.poz, LAS[i].poz);
                         if (dist <= 20 * 30)
                         {
-                            ADD_CHAT_LINE(PL.poz.X + " " + PL.poz.Y);
                             PL = VERIFICARE.LASER_NAVA(PL, LAS[i]);
                             if (PL.comp[18, 18] == 0)
                             {
@@ -1431,7 +1420,7 @@ namespace Reluare_priectre
                                     if (PLA_S.creaturi[i].inteligenta == -1)
                                     {
                                         MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + L_PLA[PLA_A].ID);
-                                        PLA_A = -1;
+                                        PLA_A = 0;
                                         COMANDA.cmd("set_menu", "", 3, 0);
                                         BUTON_A_2 = false;
                                         break;
@@ -1873,6 +1862,7 @@ namespace Reluare_priectre
                     if (BUTON_A_3 == false)
                     {
                         MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + L_PLA[PLA_A].ID);
+                        PLA_A = 0;
                         COMANDA.cmd("set_menu", "", 3, 0);
                     }
                     BUTON_A_3 = true;
@@ -1922,8 +1912,10 @@ namespace Reluare_priectre
                     {
                         if (PLA_A > 0)
                             COMANDA.cmd("set_menu", "", 5, 0);
-                        else
+                        else if (PLA_A == 0)
                             COMANDA.cmd("set_menu", "", 3, 0);
+                        else if (PLA_A < 0)
+                            COMANDA.cmd("set_menu", "", 11, 0);
                     }
                     BUTON_A_1 = true;
                 }
@@ -2079,6 +2071,80 @@ namespace Reluare_priectre
                     BUTON_A_3 = true;
                 }
                 else BUTON_A_3 = false;
+
+                #endregion
+            }
+            else if (MENU == 11)  // PE NAVA
+            {
+                #region MENIU_11
+                if (ZOOM_VAL < Mouse.GetState().ScrollWheelValue)
+                {
+                    ZOOM += ZOOM / 10;
+                    ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
+                }
+                else if (ZOOM_VAL > Mouse.GetState().ScrollWheelValue)
+                {
+                    ZOOM -= ZOOM / 10;
+                    ZOOM_VAL = Mouse.GetState().ScrollWheelValue;
+                }
+
+
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    PL_P.fx += 0.5f;
+                    if (PL_P.fx > 5)
+                        PL_P.fx = 5f;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                {
+                    PL_P.fx -= 0.5f;
+                    if (PL_P.fx < -5)
+                        PL_P.fx = -5f;
+                }
+                else PL_P.fx -= PL_P.fx / 4;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    PL_P.fy += 0.5f;
+                    if (PL_P.fy > 5)
+                        PL_P.fy = 5f;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    PL_P.fy -= 0.5f;
+                    if (PL_P.fy < -5)
+                        PL_P.fy = -5f;
+                }
+                else PL_P.fy -= PL_P.fy / 4;
+
+                PL_P.poz += new Vector2((float)Math.Sin(3.1415926f - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fx, 
+                                        (float)Math.Cos(3.1415926f - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fx);
+
+                PL_P.poz += new Vector2((float)Math.Sin(3.1415926f / 2 - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fy,
+                                        (float)Math.Cos(3.1415926f / 2 - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fy);
+
+                for (int d = 0; d < 4; d++)
+                {
+                    PL_P.X = (int)((PL_P.poz.Y + 10 + 7 * d1[d]) / 20);
+                    PL_P.Y = (int)((PL_P.poz.X + 10 + 7 * d2[d]) / 20);
+                    if (PLA_S.b[PL_P.X, PL_P.Y] != 0)
+                    {
+                      //  if (d % 2 == 0)
+                        {
+                            PL_P.poz.X -= (float)Math.Sin(3.1415926f - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fx;
+                            PL_P.poz.X -= (float)Math.Sin(3.1415926f / 2 - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fy;
+                           // PL_P.poz.Y -= (PL_P.poz.Y) % 20;
+                        }
+                      //  else
+                        {
+                            PL_P.poz.Y -= (float)Math.Cos(3.1415926f - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fx;
+                            PL_P.poz.Y -= (float)Math.Cos(3.1415926f / 2 - MATH.ung(PL_P_E, MOUSE_P)) * PL_P.fy;
+                           // PL_P.poz.X -= (PL_P.poz.X) % 20;
+                        }
+                       // PL_P.fx = 0;
+                       // PL_P.fx = 0;
+                    }
+                }
 
                 #endregion
             }
@@ -2490,12 +2556,12 @@ namespace Reluare_priectre
 
                 if ((TIME / 40) % 2 != 0)
                     spriteBatch.DrawString(font[1], ">", PL_P_E - MENIU_VECTOR + (new Vector2(12 + (1 - MATH.semn(TIME)) * 125, 245)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-                
+
                 spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(25, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (100f / (OBTIUNI[5] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font[3], OBTIUNI[5] + "%", PL_P_E - MENIU_VECTOR + (new Vector2(25, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
                 spriteBatch.Draw(LAS_T[1], PL_P_E - MENIU_VECTOR + (new Vector2(275, 350)), null, Color.White, 0f, Vector2.Zero, new Vector2(200 / (100f / (OBTIUNI[6] / 15f)), ZOOM * 1.5f), SpriteEffects.None, 0f);
                 spriteBatch.DrawString(font[3], OBTIUNI[6] + "%", PL_P_E - MENIU_VECTOR + (new Vector2(275, 370)), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-                
+
 
                 spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
 
@@ -2561,25 +2627,6 @@ namespace Reluare_priectre
                     r = (float)Math.Sqrt(xx * xx + yy * yy);
                     if (r < (WINDOW_REZ.Y * 5) / ZOOM)
                     {
-                        /**if (r < 400 && Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.E))
-                        {
-                            if (BUTON_A_2 == false)
-                            {
-                                BUTON_A_2 = true;
-                                if (L_PLA[i].p_orb != 0)
-                                {
-                                    PLA_A = i;
-                                    SELECTEAZA_PLANETA();
-                                    ZOOM = 1.5f;
-                                    PL.rot = 0;
-                                    MENU = 5;
-                                    COMP_A = 0;
-                                    MENIU_VECTOR = new Vector2(MENIU_TEX[1, MENU].Width / 2, MENIU_TEX[1, MENU].Height / 2);
-                                    break;
-                                }
-                            }
-                        }
-                        else BUTON_A_2 = false; */
                         poz.X -= xx * ZOOM;
                         poz.Y -= yy * ZOOM;
 
@@ -2626,7 +2673,7 @@ namespace Reluare_priectre
                                 poz.Y += ((float)(j * Math.Cos(NPC[nr].rot) + i * Math.Sin(NPC[nr].rot))) * ZOOM * 20;
 
                                 spriteBatch.Draw(comp[NPC[nr].comp[i + 18, j + 18]].T, poz, null, Color.White, NPC[nr].rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
-                                
+
                                 /*if (comp[NPC[nr].comp[i + 18, j + 18]].pow != 0)
                                     if (ran.Next(1, 5) == 2)
                                     {
@@ -2650,7 +2697,7 @@ namespace Reluare_priectre
                             poz.Y += ((float)(j * Math.Cos(PL.rot) + i * Math.Sin(PL.rot))) * ZOOM * 20;
 
                             spriteBatch.Draw(comp[PL.comp[i + 18, j + 18]].T, poz, null, Color.White, PL.rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
-                            if(PL.viata[i+18,j+18]!= comp[PL.comp[i + 18, j + 18]].v)
+                            if (PL.viata[i + 18, j + 18] != comp[PL.comp[i + 18, j + 18]].v)
                                 spriteBatch.Draw(comp[0].T, poz, null, Color.White, PL.rot, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
 
 
@@ -2660,7 +2707,7 @@ namespace Reluare_priectre
                                         for (int k = 0; k < 2; k++)
                                         {
                                             poz = PL_P_E;
-                                            poz.X += ((float)((i + k)* Math.Cos(PL.rot) - j * Math.Sin(PL.rot))) * ZOOM * 20;
+                                            poz.X += ((float)((i + k) * Math.Cos(PL.rot) - j * Math.Sin(PL.rot))) * ZOOM * 20;
                                             poz.Y += ((float)(j * Math.Cos(PL.rot) + (i + k) * Math.Sin(PL.rot))) * ZOOM * 20;
                                             LAS[NR_PRO].poz = new Vector2((poz.X - PL_P_E.X) / ZOOM + PL.poz.X, (poz.Y - PL_P_E.Y) / ZOOM + PL.poz.Y);
                                             LAS[NR_PRO].tip_p = 1;
@@ -2808,26 +2855,6 @@ namespace Reluare_priectre
                                             spriteBatch.Draw(PLA_T[PLA_S.a[i, j] / 100, PLA_S.a[i, j] % 100], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
                                         }
                                     }
-                                    if (PLA_S.apa[i, j] / 1000 == 6)
-                                    {
-                                        Vector2 poz;
-                                        poz = PL_P_E;
-
-                                        poz.X += (PL_P.poz.X - j * 20) * ZOOM;
-                                        poz.Y -= (PL_P.poz.Y - i * 20) * ZOOM;
-                                        spriteBatch.Draw(PLA_T[PLA_S.apa[i, j] / 1000, PLA_S.apa[i, j] % 10], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
-
-                                    }
-                                    else if (PLA_S.apa[i, j] / 1000 == 7 || PLA_S.apa[i, j] / 1000 == 12 || PLA_S.apa[i, j] / 1000 == 13)
-                                    {
-                                        Vector2 poz;
-                                        poz = PL_P_E;
-
-                                        poz.X += (PL_P.poz.X - j * 20) * ZOOM;
-                                        poz.Y -= (PL_P.poz.Y - i * 20) * ZOOM;
-                                        spriteBatch.Draw(PLA_T[PLA_S.apa[i, j] / 1000, PLA_S.apa[i, j] % 10], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
-
-                                    }
                                 }
                     }
                 #endregion
@@ -2867,7 +2894,7 @@ namespace Reluare_priectre
                                         inventar[NR_comp + (PLA_S.a[x, y] / 100 - 1) * NR_subs + PLA_S.a[x, y] % 100 + 1]++;
                                     PLA_S.b[x, y] = 0;
                                     ELIMINARE_APA(x - 1, y);
-                                    if (PLA_S.a[x, y] / 100 == 3 || PLA_S.a[x, y] / 100 == 4)
+                                    if (PLA_S.a[x, y] / 100 == 3 || PLA_S.a[x, y] / 100 == 4 || PLA_S.a[x, y] / 100 == 13)
                                         PLA_S.a[x, y] = 0;
                                     if (PLA_S.a[x - 1, y] / 100 == 5)
                                     {
@@ -3085,6 +3112,41 @@ namespace Reluare_priectre
                 spriteBatch.Draw(PAR_C[0, 4], oz, null, Color.White, PL_P.rot[6], new Vector2(16, 16), ZOOM / 2, PL_P.fata, 1f);  //CAP                            
                 spriteBatch.Draw(PAR_C[0, 3], oz, null, Color.White, PL_P.rot[4] + Rot, new Vector2(8, 0), ZOOM / 2, PL_P.fata, 1f);  //MANA DREPT
 
+                #region AFISARE_FRONT_LAYER
+                MM = (int)((WINDOW_REZ.X / 40) / ZOOM) + 2;
+                NN = (int)((WINDOW_REZ.Y / 40) / ZOOM) + 2;
+                for (int ii = (int)(-MM * 1); ii <= (int)(MM * 1); ii++)
+                    if (y + ii > 0 && y + ii < 300)
+                    {
+                        int i = y + ii;
+                        for (int jj = -NN; jj <= NN; jj++)
+                            if (x + jj > 0 && x + jj < 300)
+                                if (afisare_harta[i, x + jj] == OBTIUNI[3])
+                                {
+                                    int j = x + jj;
+                                    if (PLA_S.apa[i, j] / 1000 == 6)
+                                    {
+                                        Vector2 poz;
+                                        poz = PL_P_E;
+
+                                        poz.X += (PL_P.poz.X - j * 20) * ZOOM;
+                                        poz.Y -= (PL_P.poz.Y - i * 20) * ZOOM;
+                                        spriteBatch.Draw(PLA_T[PLA_S.apa[i, j] / 1000, PLA_S.apa[i, j] % 10], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+
+                                    }
+                                    else if (PLA_S.apa[i, j] / 1000 == 7 || PLA_S.apa[i, j] / 1000 == 12 || PLA_S.apa[i, j] / 1000 == 13)
+                                    {
+                                        Vector2 poz;
+                                        poz = PL_P_E;
+
+                                        poz.X += (PL_P.poz.X - j * 20) * ZOOM;
+                                        poz.Y -= (PL_P.poz.Y - i * 20) * ZOOM;
+                                        spriteBatch.Draw(PLA_T[PLA_S.apa[i, j] / 1000, PLA_S.apa[i, j] % 10], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+
+                                    }
+                                }
+                    }
+                #endregion
 
                 spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font[1], PL_P.viata + "", new Vector2(30, 0), new Color(255 - (int)PLA_S.SKY.X, 255 - (int)PLA_S.SKY.Y, 255 - (int)PLA_S.SKY.Z));
@@ -3599,6 +3661,91 @@ namespace Reluare_priectre
                 poz.Y -= yy * ZOOM;
 
                 spriteBatch.Draw(MOUSE_T, poz, null, Color.White, 3.927f, new Vector2(MOUSE_T.Height / 2, MOUSE_T.Height / 2), 1f, SpriteEffects.None, 1f);
+
+                #endregion
+            }
+            else if (MENU == 11)
+            {
+                #region MENIU_11
+                GraphicsDevice.Clear(new Color(5, 5, 15));
+
+                int x, y;
+                int[,] afisare_harta = new int[300, 300];
+                if (OBTIUNI[3] != 0)
+                {
+                    #region AFISARE_PLANETA_2
+                    float xxx, yyy;
+                    for (int U = 0; U < 360; U += 1)
+                    {
+                        xxx = PL_P.poz.Y;
+                        yyy = PL_P.poz.X + 10;
+                        int nrr = 0;
+                        for (int nr = 1; nr < 36 / ZOOM; nr++)
+                        {
+                            x = (int)xxx / 20;
+                            y = (int)yyy / 20;
+
+                            if (x > 0 && x < 300 && y > 0 && y < 300)
+                            {
+                                afisare_harta[x, y] = OBTIUNI[3];
+                                if (PLA_S.b[x, y] != 0)
+                                {
+                                    nrr++;
+                                    if (nrr > 4 || ran.Next(100) == 1)
+                                        break;
+                                }
+                            }
+                            else break;
+                            xxx += (float)Math.Sin(3.14159 / 180 * U) * 18;
+                            yyy += (float)Math.Cos(3.14159 / 180 * U) * 18;
+                        }
+                    }
+
+                    #endregion
+                }
+                #region AFISARE_HARTA_PLANETEI
+
+                x = (int)PL_P.poz.X / 20;
+                y = (int)PL_P.poz.Y / 20;
+
+                int MM = (int)((WINDOW_REZ.X / 40) / ZOOM) + 2;
+                int NN = (int)((WINDOW_REZ.Y / 40) / ZOOM) + 2;
+                for (int ii = (int)(-MM * 1); ii <= (int)(MM * 1); ii++)
+                    if (y + ii > 0 && y + ii < 300)
+                    {
+                        int i = y + ii;
+                        for (int jj = -NN; jj <= NN; jj++)
+                            if (x + jj > 0 && x + jj < 300)
+                                if (afisare_harta[i, x + jj] == OBTIUNI[3])
+                                {
+                                    int j = x + jj;
+                                    if (PLA_S.a[i, j] != 0)
+                                    {
+                                        Vector2 poz;
+                                        poz = PL_P_E;
+
+                                        poz.X += (PL_P.poz.X - j * 20) * ZOOM;
+                                        poz.Y -= (PL_P.poz.Y - i * 20) * ZOOM;
+                                        if (PLA_S.b[i, j] == 0)
+                                        {
+                                            /*if (PLA_S.a[i, j] / 100 != 3 && PLA_S.a[i, j] / 100 != 4 && PLA_S.a[i, j] / 100 != 5 && PLA_S.a[i, j] / 100 != 10 && PLA_S.a[i, j] / 100 != 13)
+                                                spriteBatch.Draw(PLA_T[PLA_S.a[i, j] / 100, 0], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+                                            else */
+                                            spriteBatch.Draw(PLA_T[PLA_S.a[i, j] / 100, PLA_S.a[i, j] % 100], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+
+                                            if (PLA_S.a[i, j] / 100 != 5)
+                                                spriteBatch.Draw(comp[0].T, poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+                                        }
+                                        else
+                                        {
+                                            spriteBatch.Draw(PLA_T[PLA_S.a[i, j] / 100, PLA_S.a[i, j] % 100], poz, null, Color.White, 0f, new Vector2(10, 10), ZOOM, SpriteEffects.None, 0f);
+                                        }
+                                    }
+                                }
+                    }
+                #endregion
+
+                spriteBatch.Draw(PAR_C[0, 5], PL_P_E, null, Color.White, -3.1415926f / 2 - MATH.ung(PL_P_E, MOUSE_P), new Vector2(20, 20), ZOOM / 2.3f, SpriteEffects.None, 0f);
 
                 #endregion
             }

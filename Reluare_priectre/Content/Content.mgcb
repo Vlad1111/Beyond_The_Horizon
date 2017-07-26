@@ -3225,3 +3225,9 @@
 /processorParam:TextureFormat=Compressed
 /build:FONT_8.spritefont
 
+#begin Sounds/Sfx_11.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Sfx_11.wav
+

@@ -2032,6 +2032,7 @@ namespace Reluare_priectre
         }
         static public void PIRATI(int nivel)
         {
+            COMANDA.ADD_CHAT_LINE("WARNING: Pirates of level " + nivel + " have been spotted");
             if (nivel == 1 || nivel == 2)
             {
                 int last_orb = Game1.NR_NPC;

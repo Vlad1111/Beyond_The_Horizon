@@ -8,11 +8,270 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 
 namespace Reluare_priectre
 {
     public class COMANDA
     {
+        static public void ADD_CHAT_LINE(string s)
+        {
+            for (int j = 9; j > 0; j--)
+                Game1.CHAT[j] = Game1.CHAT[j - 1];
+            Game1.CHAT[0] = s;
+            cmd("play", "Sfx_", 11, 1f);
+        }
+
+        static public void WRITE_CHAT_LINE()
+        {
+            var keyboardState = Keyboard.GetState();
+            var keys = keyboardState.GetPressedKeys();
+
+            int shift, back;
+            shift = back = 0;
+
+            for (int i = 0; i < keys.Length; i++)
+                if (keys[i].ToString() == "Back")
+                    back = 1;
+                else if (keys[i].ToString() == "LeftShift" || keys[i].ToString() == "RightShift")
+                    shift = 1;
+                else
+                {
+                    char key = keys[i].ToString()[0];
+                    if (keys[i].ToString().Length == 1)
+                    {
+                        if (key >= 'A' && key <= 'Z')
+                            Game1.keys_pressed[key - 'A'] += 2;
+                    }
+                    else
+                    {
+                        key = keys[i].ToString()[keys[i].ToString().Length - 1];
+                        if (key >= '0' && key <= '9' && keys[i].ToString()[0] != 'F')
+                            Game1.keys_pressed[key - '0' + 'z' - 'a' + 1] += 2;
+                        else if (keys[i].ToString() == "Space")
+                            Game1.keys_pressed['Z' - 'A' + 11] += 2;
+                        else if (keys[i].ToString() == "OemPeriod")
+                            Game1.keys_pressed['Z' - 'A' + 12] += 2;
+                        else if (keys[i].ToString() == "OemComma")
+                            Game1.keys_pressed['Z' - 'A' + 13] += 2;
+                        else if (keys[i].ToString() == "OemOpenBrackets")
+                            Game1.keys_pressed['Z' - 'A' + 14] += 2;
+                        else if (keys[i].ToString() == "OemCloseBrackets")
+                            Game1.keys_pressed['Z' - 'A' + 15] += 2;
+                        else if (keys[i].ToString() == "OemPipe")
+                            Game1.keys_pressed['Z' - 'A' + 16] += 2;
+                        else if (keys[i].ToString() == "OemQuestion")
+                            Game1.keys_pressed['Z' - 'A' + 17] += 2;
+                        else if (keys[i].ToString() == "OemPlus")
+                            Game1.keys_pressed['Z' - 'A' + 18] += 2;
+                        else if (keys[i].ToString() == "OemMinus")
+                            Game1.keys_pressed['Z' - 'A' + 19] += 2;
+                    }
+                }
+
+            if (keys.Length > 0)
+            {
+                if (keys.Length == 1 && shift != 0)
+                    Game1.pl_scrie_CHAT = 2;
+                if (Game1.pl_scrie_CHAT - 1 != keys.Length)
+                {
+                    if (back != 0)
+                    {
+                        string chat_line = "";
+                        for (int i = 0; i < Game1.CHAT[0].Length - 1; i++)
+                            chat_line += Game1.CHAT[0].ToCharArray()[i] + "";
+                        Game1.CHAT[0] = chat_line;
+                        cmd("play", "Sfx_", 5, 0.3f);
+                    }
+                    Game1.pl_scrie_CHAT = keys.Length + 1;
+                }
+            }
+            else Game1.pl_scrie_CHAT = 1;
+
+
+            for (int i = 0; i <= 'Z' - 'A' + 19; i++)
+                if (Game1.keys_pressed[i] == 1)
+                    Game1.keys_pressed[i] = 0;
+                else if (Game1.keys_pressed[i] == 2)
+                {
+                    if (i <= 'Z' - 'A')
+                    {
+                        if (shift == 1)
+                            Game1.CHAT[0] += (char)(i + 'A') + "";
+                        else
+                            Game1.CHAT[0] += (char)(i + 'a') + "";
+                    }
+                    else if (i > 'Z' - 'A' && i <= 'Z' - 'A' + 10)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += (char)('0' + i - 'Z' + 'A' - 1) + "";
+                        else
+                        {
+                            if (i == 'Z' - 'A' + 0 + 1)
+                                Game1.CHAT[0] += ")";
+                            else if (i == 'Z' - 'A' + 1 + 1)
+                                Game1.CHAT[0] += "!";
+                            else if (i == 'Z' - 'A' + 2 + 1)
+                                Game1.CHAT[0] += "@";
+                            else if (i == 'Z' - 'A' + 3 + 1)
+                                Game1.CHAT[0] += "#";
+                            else if (i == 'Z' - 'A' + 4 + 1)
+                                Game1.CHAT[0] += "$";
+                            else if (i == 'Z' - 'A' + 5 + 1)
+                                Game1.CHAT[0] += "%";
+                            else if (i == 'Z' - 'A' + 6 + 1)
+                                Game1.CHAT[0] += "^";
+                            else if (i == 'Z' - 'A' + 7 + 1)
+                                Game1.CHAT[0] += "&";
+                            else if (i == 'Z' - 'A' + 8 + 1)
+                                Game1.CHAT[0] += "*";
+                            else Game1.CHAT[0] += "(";
+                        }
+                    }
+                    else if (i == 'Z' - 'A' + 11)
+                        Game1.CHAT[0] += " ";
+                    else if (i == 'Z' - 'A' + 12)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += ".";
+                        else Game1.CHAT[0] += ">";
+                    }
+                    else if (i == 'Z' - 'A' + 13)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += ",";
+                        else Game1.CHAT[0] += "<";
+                    }
+                    else if (i == 'Z' - 'A' + 14)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += "[";
+                        else Game1.CHAT[0] += "{";
+                    }
+                    else if (i == 'Z' - 'A' + 15)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += "]";
+                        else Game1.CHAT[0] += "}";
+                    }
+                    else if (i == 'Z' - 'A' + 16)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += "\\";
+                        else Game1.CHAT[0] += "|";
+                    }
+                    else if (i == 'Z' - 'A' + 17)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += "/";
+                        else Game1.CHAT[0] += "?";
+                    }
+                    else if (i == 'Z' - 'A' + 18)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += "=";
+                        else Game1.CHAT[0] += "+";
+                    }
+                    else if (i == 'Z' - 'A' + 19)
+                    {
+                        if (shift == 0)
+                            Game1.CHAT[0] += "-";
+                        else Game1.CHAT[0] += "_";
+                    }
+
+                    cmd("play", "Sfx_", 5, 0.3f);
+                    Game1.keys_pressed[i] = 1;
+                }
+                else if (Game1.keys_pressed[i] == 3)
+                    Game1.keys_pressed[i] = 1;
+        }
+
+        static public void comanda(string x)
+        {
+            string c1 = "";
+            if(x.Length>=5)
+            {
+                for (int i = 0; i <= 4; i++)
+                    c1 += x.ToCharArray()[i] + "";
+                if (c1 == "[cmd]")
+                {
+                    char[] a = x.ToCharArray();
+                    int i = 0;
+                    string c2;
+                    c1 = c2 = "";
+                    float v1, v2;
+                    v1 = v2 = 0f;
+                    while (i < a.Length && a[i] != '<')
+                        i++;
+                    i++;
+                    while (i < a.Length && a[i] != '>')
+                    {
+                        c1 += a[i] + "";
+                        i++;
+                    }
+
+                    while (i < a.Length && a[i] != '<')
+                        i++;
+                    i++;
+                    while (i < a.Length && a[i] != '>')
+                    {
+                        c2 += a[i] + "";
+                        i++;
+                    }
+
+                    int aux = 1;
+                    while (i < a.Length && a[i] != '<')
+                        i++;
+                    i++;
+                    while (i < a.Length && a[i] != '>')
+                    {
+                        if (a[i] == '.' || a[i] == ',')
+                        {
+                            if (aux == 1)
+                                aux = 10;
+                        }
+                        else if (a[i] >= '0' && a[i] <= '9')
+                        {
+                            if (aux == 1)
+                                v1 = v1 * 10 + a[i] - '0';
+                            else
+                            {
+                                v1 += (a[i] - '0') / aux;
+                                aux *= 10;
+                            }
+                        }
+                        i++;
+                    }
+
+                    aux = 1;
+                    while (i < a.Length && a[i] != '<')
+                        i++;
+                    i++;
+                    while (i < a.Length && a[i] != '>')
+                    {
+                        if (a[i] == '.' || a[i] == ',')
+                        {
+                            if (aux == 1)
+                                aux = 10;
+                        }
+                        else if (a[i] >= '0' && a[i] <= '9')
+                        {
+                            if (aux == 1)
+                                v2 = v2 * 10 + a[i] - '0';
+                            else
+                            {
+                                v2 += (a[i] - '0') / aux;
+                                aux *= 10;
+                            }
+                        }
+                        i++;
+                    }
+                    cmd(c1, c2, v1, v2);
+                    ADD_CHAT_LINE(c1 + "  |   " + c2);
+                }
+            }
+        }
+
         static public void cmd(string a1, string a2, float v1, float v2)
         {
             Random ran = new Random();
@@ -20,9 +279,11 @@ namespace Reluare_priectre
             {
                 Game1.ZOOM = 1;
                 Game1.PL.rot = 0f;
+                if ((int)v1 == 5 && Game1.MENU!=6 && Game1.MENU!= 7 && Game1.MENU != 9)
+                    Game1.PL_P.viata = Game1.PL_P.max_viata;
                 Game1.MENU = (int)v1;
 
-                if(Game1.MENU == 4)
+                if (Game1.MENU == 4)
                     if (Game1.WINDOW_REZ.X < 700)
                         Game1.ZOOM = Game1.WINDOW_REZ.X / 700;
 
@@ -30,8 +291,6 @@ namespace Reluare_priectre
                     Game1.MOUSE_T = Game1.game.Content.Load<Texture2D>("MOUSE1");
                 else
                     Game1.MOUSE_T = Game1.game.Content.Load<Texture2D>("MOUSE2");
-                if (Game1.MENU == 5)
-                    Game1.PL_P.viata = Game1.PL_P.max_viata;
                 Game1.TIME = 0;
                 Game1.COMP_A = 0;
                 if (Game1.MENU == 1)
@@ -223,7 +482,7 @@ namespace Reluare_priectre
                 if (a2 == "item")
                 {
                     Game1.inventar[(int)v1] += (int)v2;
-                   // ADD_CHAT_LINE("ADDED  ITEM " + (int)v1 + "; quantity  " + (int)v2);
+                    // ADD_CHAT_LINE("ADDED  ITEM " + (int)v1 + "; quantity  " + (int)v2);
                 }
                 else if (a2 == "planet")
                 {
@@ -231,7 +490,7 @@ namespace Reluare_priectre
                     {
                         Game1.L_PLA[Game1.nr_PLA_S].ID = (int)v1;
                         Game1.nr_PLA_S++;
-                      ///  ADD_CHAT_LINE("ADDED  PLANET  with  ID  " + (int)v1);
+                        ///  ADD_CHAT_LINE("ADDED  PLANET  with  ID  " + (int)v1);
                     }
                 }
             }
@@ -240,7 +499,7 @@ namespace Reluare_priectre
                 if (a2 == "item")
                 {
                     Game1.inventar[(int)v1] -= (int)v2;
-                   /// ADD_CHAT_LINE("SUBTRACTED  ITEM  " + (int)v1 + ";  quantity  " + (int)v2);
+                    /// ADD_CHAT_LINE("SUBTRACTED  ITEM  " + (int)v1 + ";  quantity  " + (int)v2);
                 }
                 else if (a2 == "planet")
                 {
@@ -253,13 +512,13 @@ namespace Reluare_priectre
                         for (int i = ok; i < Game1.nr_PLA_S; i++)
                             Game1.L_PLA[i] = Game1.L_PLA[i + 1];
                         Game1.nr_PLA_S--;
-                       /// ADD_CHAT_LINE("SUBTRACTED  PLANET  with  ID  " + (int)v1);
+                        /// ADD_CHAT_LINE("SUBTRACTED  PLANET  with  ID  " + (int)v1);
                     }
                 }
             }
-            else if(a1 == "play")
+            else if (a1 == "play")
             {
-                if(a2 == "B_music_")
+                if (a2 == "B_music_")
                 {
                     Song Backgound_music = Game1.game.Content.Load<Song>("Sounds/" + a2 + (int)v1);
                     MediaPlayer.Play(Backgound_music);
@@ -268,6 +527,25 @@ namespace Reluare_priectre
                 {
                     SoundEffect sound = Game1.game.Content.Load<SoundEffect>("Sounds/" + a2 + (int)v1);
                     sound.Play(v2 * Game1.OBTIUNI[6] / 100, 0f, 0f);
+                }
+            }
+            else if (a1 == "teleport")
+            {
+                if(a2 == "ship_to")
+                    Game1.PL.poz = new Vector2(v1, v2);
+                else if(a2 == "ship_from")
+                {
+                    if (v1 < Game1.NR_NPC)
+                        Game1.NPC[(int)v1].poz = new Vector2(Game1.PL.poz.Y, Game1.PL.poz.X);
+                }
+                else if(a2 == "being_to")
+                {
+                    Game1.PL_P.poz = new Vector2(v1 * 20, v2 * 20);
+                }
+                else if(a2 == "being_from")
+                {
+                    if (Game1.PLA_S.nr_creaturi > v1)
+                        Game1.PLA_S.creaturi[(int)v1].poz = Game1.PL_P.poz;
                 }
             }
         }
