@@ -39,7 +39,7 @@ namespace Reluare_priectre
                     return 400;
                 else if (y == 14)
                     return 100;
-                else if (y == 17 || y == 18 || y == 19 || y == 20)
+                else if (y == 17 || y == 18 || y == 19 || y == 20 || y == 21 || y == 22)
                     return 150;
             }
             return 0;

@@ -85,6 +85,7 @@
     <Compile Include="Proiectil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SELECTARE.cs" />
+    <Compile Include="Unit_Testing.cs" />
     <Compile Include="VALOARE_CUB.cs" />
     <Compile Include="VERIFICARE.cs" />
   </ItemGroup>

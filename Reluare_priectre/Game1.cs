@@ -397,13 +397,8 @@ namespace Reluare_priectre
                 PLA_A = 2;
                 PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_" + (PLA_A - 1)));
             }
-            inventar[NR_comp + NR_elem * NR_subs + 12] = 1;
-            inventar[NR_comp + NR_elem * NR_subs + 13] = 1;
-            inventar[NR_comp + NR_elem * NR_subs + 14] = 1;
-            for (int i = 1; i < NR_comp; i++)
-                inventar[i] = 100;
             
-            COMANDA.cmd("set_menu", "", 11, 0);
+            COMANDA.cmd("set_menu", "", 1, 0);
         }
 
         protected override void UnloadContent(){}
@@ -440,11 +435,11 @@ namespace Reluare_priectre
                     pl_scrie_CHAT = 0;
                 }
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.T))
+            else if (Keyboard.GetState().IsKeyDown(Keys.OemOpenBrackets))
             {
                 pl_scrie_CHAT = 1;
-                keys_pressed['t' - 'a'] = 1;
-                COMANDA.ADD_CHAT_LINE("");
+                keys_pressed['Z' - 'A' + 14] = 1;
+                COMANDA.ADD_CHAT_LINE(">");
             }
 
 
@@ -605,7 +600,10 @@ namespace Reluare_priectre
                         y >= PL_P_E.Y * OBTIUNI[8] / 2000f - 12 && y <= PL_P_E.Y * OBTIUNI[8] / 2000f + 12)
                     {
                         if (pl_scrie_CHAT == 0)
+                        {
                             OBTIUNI[9] = (OBTIUNI[9] + 1) % 2;
+                            COMANDA.cmd("play", "Sfx_", 4, 0.3f);
+                        }
                         pl_scrie_CHAT = -1;
                     }
                     else
@@ -792,7 +790,7 @@ namespace Reluare_priectre
             else if (MENU == 3) // MENIUL DE JOC SPATIU
             {
                 #region MENIU_3    
-                if (ran.Next(0, (1600 - PL.nr_c) * 1) == 10)
+                if (ran.Next(0, (1600 - PL.nr_c) * 20) == 10)
                     CREARE.PIRATI((int)(8 * (float)PL.nr_c / 1600f) + 1);
 
                 if (PL.auto_pilot == 0)
@@ -1302,18 +1300,16 @@ namespace Reluare_priectre
                                     if (x > 0 && x < 300 && y > 0 && y < 300)
                                         if (PLA_S.a[x, y] == 0)
                                         {
-                                            if (PL_P.parti[1] <= NR_comp)
-                                                PLA_S.a[x, y] = PL_P.parti[1];
-                                            else
+                                            if (PL_P.parti[1] > NR_comp && PL_P.parti[1] <= NR_comp + NR_elem * NR_subs)
                                             {
                                                 int aux = PL_P.parti[1] - NR_comp - 1;
                                                 PLA_S.a[x, y] = (int)(aux / NR_subs + 1) * 100 + aux % NR_subs;
+                                                PLA_S.b[x, y] = VALOARE_CUB.val(PL_P.parti[1]);
+                                                ELIMINARE_APA(x, y);
+                                                if (inventar[PL_P.parti[1]] > 0)
+                                                    inventar[PL_P.parti[1]]--;
+                                                else PL_P.parti[1] = 0;
                                             }
-                                            PLA_S.b[x, y] = VALOARE_CUB.val(PL_P.parti[1]);
-                                            ELIMINARE_APA(x, y);
-                                            if (inventar[PL_P.parti[1]] > 0)
-                                                inventar[PL_P.parti[1]]--;
-                                            else PL_P.parti[1] = 0;
                                         }
                                 }
                             }
@@ -2744,7 +2740,7 @@ namespace Reluare_priectre
                     if (i <= NR_PRO - NR_PRO % 20)
                         spriteBatch.Draw(LAS_T[3], LAS[i].poz, null, Color.White, LAS[i].pow / 3.14159265f, new Vector2(10, 10), 1f, SpriteEffects.None, 0f);
                     else
-                        spriteBatch.Draw(PLA_TEX[7], LAS[i].poz, null, Color.White, (float)LAS[i].pow / 50, new Vector2(PLA_TEX[7].Height / 2, PLA_TEX[7].Width / 2), 0.25f, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(PLA_TEX[7], LAS[i].poz, null, Color.White, (float)LAS[i].pow / 50, new Vector2(PLA_TEX[7].Height / 2, PLA_TEX[7].Width / 2), 0.08f, SpriteEffects.None, 0f);
                 }
 
                 spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
@@ -2754,7 +2750,7 @@ namespace Reluare_priectre
             else if (MENU == 2)
             {
                 #region MENIU_2
-                GraphicsDevice.Clear(new Color(15, 15, 50));
+                GraphicsDevice.Clear(Color.Black);
                 Vector2 poz = new Vector2(0, (float)(-MENIU_TEX[0, MENU].Height + PL_P_E.Y * 2) * MOUSE_P.Y / (PL_P_E.Y * 2));
                 spriteBatch.Draw(MENIU_TEX[0, MENU], poz, Color.White);
 
@@ -2857,7 +2853,7 @@ namespace Reluare_priectre
                 #endregion
 
                 #region PROIECTILE/LASERE
-                for (int i = 0; i < NR_PRO - 1; i++)
+                for (int i = 0; i < NR_PRO; i++)
                     if (LAS[i].tip_p != 0)
                     {
                         int xx, yy;
@@ -2869,7 +2865,10 @@ namespace Reluare_priectre
                         LAS[i].poz.Y += LAS[i].fy;
                         LAS[i].t--;
                         if (LAS[i].t <= 0)
+                        {
                             ELIMINARE_LAS(i);
+                            i--;
+                        }
                     }
                     else
                     {
@@ -2903,6 +2902,8 @@ namespace Reluare_priectre
                                     }*/
                             }
                 #endregion
+                spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
+                spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
                 #region AFISARE_NAVA
                 for (int i = 18; i >= -18; i--)
                     for (int j = 18; j >= -18; j--)
@@ -2982,8 +2983,6 @@ namespace Reluare_priectre
                 #endregion
 
 
-                spriteBatch.Draw(MENIU_TEX[1, MENU], PL_P_E, null, Color.White, 0f, MENIU_VECTOR, ZOOM, SpriteEffects.None, 0f);
-                spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
 
                 if (COMP_A < NR_comp && COMP_A > 1)
                     spriteBatch.Draw(comp[COMP_A].T, MOUSE_P, null, Color.White, PL.rot, new Vector2(5, 5), 1f, SpriteEffects.None, 0f);
@@ -3083,136 +3082,6 @@ namespace Reluare_priectre
                 Rot = (float)Math.Atan(Ly / Lx) - 1.570795f;
                 if (PL_P_E.X > MOUSE_P.X)
                     Rot += 3.1415f;
-
-                #region AFIARE_LASER
-                Vector2 po;
-                if (LAS_A)
-                {
-                    for (int i = 10; i <= PL_P.r; i += 1)
-                    {
-                        po = PL_P_E;
-                        po.X += (i * Lx / L) * ZOOM;
-                        po.Y += (i * Ly / L - 8) * ZOOM;
-
-                        x = (int)((PL_P.poz.Y + i * Ly / L + 2) / 20);
-                        y = (int)((PL_P.poz.X - i * Lx / L - 10) / 20) + 1;
-
-                        if (x > 0 && x < 300 && y > 0 && y < 300)
-                        {
-                            if (PLA_S.b[x, y] != 0)
-                            {
-                                PLA_S.b[x, y] -= PL_P.pow;
-
-                                if (PLA_S.b[x, y] <= 0)
-                                {
-                                    ELIMINARE_BLOCK(x, y);
-                                    if (PLA_S.a[x, y] / 100 <= NR_elem && PLA_S.a[x, y] != 0)
-                                        inventar[NR_comp + (PLA_S.a[x, y] / 100 - 1) * NR_subs + PLA_S.a[x, y] % 100 + 1]++;
-                                    PLA_S.b[x, y] = 0;
-                                    ELIMINARE_APA(x - 1, y);
-                                    if (PLA_S.a[x, y] / 100 == 3 || PLA_S.a[x, y] / 100 == 4 || PLA_S.a[x, y] / 100 == 13)
-                                        PLA_S.a[x, y] = 0;
-                                    if (PLA_S.a[x - 1, y] / 100 == 5)
-                                    {
-                                        PLA_S.b[x - 1, y] = 0;
-                                        PLA_S.a[x - 1, y] = 0;
-                                    }
-                                }
-                                break;
-                            }
-                            if (PLA_S.apa[x, y] / 1000 == 7)
-                                ELIMINARE_APA(x, y);
-                        }
-
-                        spriteBatch.Draw(LAS_T[4], po, null, Color.White, Rot, new Vector2(2, 2), ZOOM * 0.35f, SpriteEffects.None, 0f);
-                    }
-                }
-                #endregion
-
-                #region PRIOECTILE
-                for (int i = 0; i < NR_PRO; i++)
-                {
-                    int OKK = 1;
-                    for (int nr = 0; nr < 5 && OKK == 1; nr++)
-                    {
-                        po = PL_P_E;
-                        po.X += (PL_P.poz.X - LAS[i].poz.X) * ZOOM;
-                        po.Y -= (PL_P.poz.Y - LAS[i].poz.Y) * ZOOM;
-                        spriteBatch.Draw(LAS_T[LAS[i].tip_p], po, null, Color.White, 0f, new Vector2(1, 1), ZOOM, SpriteEffects.None, 1f);
-
-                        y = (int)(LAS[i].poz.X + 10) / 20;
-                        x = (int)(LAS[i].poz.Y + 10) / 20;
-
-                        if (x <= 0 || x >= 300 || y <= 0 || y >= 300)
-                        {
-                            ELIMINARE_LAS(i);
-                            OKK = 0;
-                        }
-                        else
-                        {
-                            if (PLA_S.b[x, y] > 0)
-                            {
-                                PLA_S.b[x, y] -= 5;
-                                if (PLA_S.b[x, y] <= 0)
-                                    PLA_S.b[x, y] = 0;
-                                ELIMINARE_LAS(i);
-                                OKK = 0;
-                                i--;
-                                if (i == NR_PRO - 1)
-                                    break;
-                            }
-                            else
-                            {
-                                if (LAS[i].tip_p == 5)
-                                {
-                                    int OK = 0;
-                                    for (int jj = 0; jj < PLA_S.nr_creaturi && OK == 0; jj++)
-                                    {
-                                        x = (int)(PLA_S.creaturi[jj].poz.Y - LAS[i].poz.X) - 10;
-                                        y = (int)(PLA_S.creaturi[jj].poz.X - LAS[i].poz.Y) - 10;
-
-                                        if (x >= -Math.Sin(Math.Abs(PLA_S.creaturi[jj].rot[4])) * 16 - 3 && x <= Math.Sin(Math.Abs(PLA_S.creaturi[jj].rot[4]) * 16 + 30))
-                                            if (y >= -Math.Cos(Math.Abs(PLA_S.creaturi[jj].rot[4])) * 16 - 20 && y <= Math.Cos(Math.Abs(PLA_S.creaturi[jj].rot[4]) * 16 + 30))
-                                            {
-                                                OK = 1;
-                                                if (PLA_S.creaturi[jj].inteligenta >= 0)
-                                                {
-                                                    PLA_S.creaturi[jj].viata -= LAS[i].pow;
-                                                    if (PLA_S.creaturi[jj].agresiune == -1)
-                                                        PLA_S.creaturi[jj].agresiune = 1;
-                                                    PLA_S.creaturi[jj].fx = LAS[i].fy * 3;
-                                                    if (PLA_S.creaturi[jj].viata <= 0)
-                                                    {
-                                                        for (int aui = jj; aui < PLA_S.nr_creaturi - 1; aui++)
-                                                            PLA_S.creaturi[aui] = PLA_S.creaturi[aui + 1];
-                                                        PLA_S.nr_creaturi--;
-                                                        jj--;
-                                                    }
-                                                }
-                                            }
-                                    }
-                                    if (OK == 1)
-                                    {
-                                        ELIMINARE_LAS(i);
-                                        OKK = 0;
-                                        i--;
-                                    }
-                                    else
-                                    {
-                                        LAS[i].poz.X += LAS[i].fx;
-                                        LAS[i].poz.Y += LAS[i].fy;
-                                    }
-                                }
-                                else
-                                {
-                                    LAS[i].poz.X += LAS[i].fx;
-                                    LAS[i].poz.Y += LAS[i].fy;
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
 
                 #region AFISARE_CREATURI
                 Vector2 oz;
@@ -3363,6 +3232,137 @@ namespace Reluare_priectre
                                 }
                     }
                 #endregion
+              
+                #region AFIARE_LASER
+                Vector2 po;
+                if (LAS_A)
+                {
+                    for (int i = 15; i <= PL_P.r; i += 1)
+                    {
+                        po = PL_P_E;
+                        po.X += (i * Lx / L) * ZOOM;
+                        po.Y += (i * Ly / L - 8) * ZOOM;
+
+                        x = (int)((PL_P.poz.Y + i * Ly / L + 2) / 20);
+                        y = (int)((PL_P.poz.X - i * Lx / L - 10) / 20) + 1;
+
+                        if (x > 0 && x < 300 && y > 0 && y < 300)
+                        {
+                            if (PLA_S.b[x, y] != 0)
+                            {
+                                PLA_S.b[x, y] -= PL_P.pow;
+
+                                if (PLA_S.b[x, y] <= 0)
+                                {
+                                    ELIMINARE_BLOCK(x, y);
+                                    if (PLA_S.a[x, y] / 100 <= NR_elem && PLA_S.a[x, y] != 0)
+                                        inventar[NR_comp + (PLA_S.a[x, y] / 100 - 1) * NR_subs + PLA_S.a[x, y] % 100 + 1]++;
+                                    PLA_S.b[x, y] = 0;
+                                    ELIMINARE_APA(x - 1, y);
+                                    if (PLA_S.a[x, y] / 100 == 3 || PLA_S.a[x, y] / 100 == 4 || PLA_S.a[x, y] / 100 == 13)
+                                        PLA_S.a[x, y] = 0;
+                                    if (PLA_S.a[x - 1, y] / 100 == 5)
+                                    {
+                                        PLA_S.b[x - 1, y] = 0;
+                                        PLA_S.a[x - 1, y] = 0;
+                                    }
+                                }
+                                break;
+                            }
+                            if (PLA_S.apa[x, y] / 1000 == 7)
+                                ELIMINARE_APA(x, y);
+                        }
+
+                        spriteBatch.Draw(LAS_T[4], po, null, Color.White, Rot, new Vector2(2, 2), ZOOM * 0.35f, SpriteEffects.None, 0f);
+                    }
+                }
+                #endregion
+                #region PRIOECTILE
+                for (int i = 0; i < NR_PRO; i++)
+                {
+                    int OKK = 1;
+                    for (int nr = 0; nr < 5 && OKK == 1; nr++)
+                    {
+                        po = PL_P_E;
+                        po.X += (PL_P.poz.X - LAS[i].poz.X) * ZOOM;
+                        po.Y -= (PL_P.poz.Y - LAS[i].poz.Y) * ZOOM;
+                        spriteBatch.Draw(LAS_T[LAS[i].tip_p], po, null, Color.White, 0f, new Vector2(1, 1), ZOOM, SpriteEffects.None, 1f);
+
+                        y = (int)(LAS[i].poz.X + 10) / 20;
+                        x = (int)(LAS[i].poz.Y + 10) / 20;
+
+                        if (x <= 0 || x >= 300 || y <= 0 || y >= 300)
+                        {
+                            ELIMINARE_LAS(i);
+                            OKK = 0;
+                        }
+                        else
+                        {
+                            if (PLA_S.b[x, y] > 0)
+                            {
+                                PLA_S.b[x, y] -= 5;
+                                if (PLA_S.b[x, y] <= 0)
+                                    PLA_S.b[x, y] = 0;
+                                ELIMINARE_LAS(i);
+                                OKK = 0;
+                                i--;
+                                if (i == NR_PRO - 1)
+                                    break;
+                            }
+                            else
+                            {
+                                if (LAS[i].tip_p == 5)
+                                {
+                                    int OK = 0;
+                                    for (int jj = 0; jj < PLA_S.nr_creaturi && OK == 0; jj++)
+                                    {
+                                        x = (int)(PLA_S.creaturi[jj].poz.Y - LAS[i].poz.X) - 10;
+                                        y = (int)(PLA_S.creaturi[jj].poz.X - LAS[i].poz.Y) - 10;
+
+                                        if (x >= -Math.Sin(Math.Abs(PLA_S.creaturi[jj].rot[4])) * 16 - 3 && x <= Math.Sin(Math.Abs(PLA_S.creaturi[jj].rot[4]) * 16 + 30))
+                                            if (y >= -Math.Cos(Math.Abs(PLA_S.creaturi[jj].rot[4])) * 16 - 20 && y <= Math.Cos(Math.Abs(PLA_S.creaturi[jj].rot[4]) * 16 + 30))
+                                            {
+                                                OK = 1;
+                                                if (PLA_S.creaturi[jj].inteligenta >= 0)
+                                                {
+                                                    PLA_S.creaturi[jj].viata -= LAS[i].pow;
+                                                    if (PLA_S.creaturi[jj].agresiune == -1)
+                                                        PLA_S.creaturi[jj].agresiune = 1;
+                                                    PLA_S.creaturi[jj].fx = LAS[i].fy * 3;
+                                                    if (PLA_S.creaturi[jj].viata <= 0)
+                                                    {
+                                                        for (int aui = jj; aui < PLA_S.nr_creaturi - 1; aui++)
+                                                            PLA_S.creaturi[aui] = PLA_S.creaturi[aui + 1];
+                                                        PLA_S.nr_creaturi--;
+                                                        jj--;
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    if (OK == 1)
+                                    {
+                                        ELIMINARE_LAS(i);
+                                        OKK = 0;
+                                        i--;
+                                    }
+                                    else
+                                    {
+                                        LAS[i].poz.X += LAS[i].fx;
+                                        LAS[i].poz.Y += LAS[i].fy;
+                                    }
+                                }
+                                else
+                                {
+                                    LAS[i].poz.X += LAS[i].fx;
+                                    LAS[i].poz.Y += LAS[i].fy;
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+
 
                 spriteBatch.Draw(MENIU_TEX[0, MENU], Vector2.Zero, Color.White);
                 spriteBatch.DrawString(font[1], PL_P.viata + "", new Vector2(30, 0), new Color(255 - (int)PLA_S.SKY.X, 255 - (int)PLA_S.SKY.Y, 255 - (int)PLA_S.SKY.Z));

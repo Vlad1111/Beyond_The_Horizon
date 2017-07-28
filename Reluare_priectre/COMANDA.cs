@@ -189,11 +189,11 @@ namespace Reluare_priectre
         static public void comanda(string x)
         {
             string c1 = "";
-            if(x.Length>=5)
+            if(x.Length>=6)
             {
-                for (int i = 0; i <= 4; i++)
+                for (int i = 0; i <= 5; i++)
                     c1 += x.ToCharArray()[i] + "";
-                if (c1 == "[cmd]")
+                if (c1 == ">[cmd]")
                 {
                     char[] a = x.ToCharArray();
                     int i = 0;
@@ -236,7 +236,7 @@ namespace Reluare_priectre
                                 v1 = v1 * 10 + a[i] - '0';
                             else
                             {
-                                v1 += (a[i] - '0') / aux;
+                                v1 += (float)(a[i] - '0') / aux;
                                 aux *= 10;
                             }
                         }
@@ -260,19 +260,19 @@ namespace Reluare_priectre
                                 v2 = v2 * 10 + a[i] - '0';
                             else
                             {
-                                v2 += (a[i] - '0') / aux;
+                                v2 += (float)(a[i] - '0') / aux;
                                 aux *= 10;
                             }
                         }
                         i++;
                     }
+                    ADD_CHAT_LINE(c1 + "  |   " + c2 + "  -  < " + v1 + " , " + v2 + " >");
                     if (c1 == "play")
                     {
                         if (c2 == "B_music_" && v1 <= 3 && v1 > 0)
                             cmd(c1, c2, v1, v2);
                     }
                     else cmd(c1, c2, v1, v2);
-                    ADD_CHAT_LINE(c1 + "  |   " + c2);
                 }
             }
         }
@@ -284,7 +284,7 @@ namespace Reluare_priectre
             {
                 Game1.ZOOM = 1;
                 Game1.PL.rot = 0f;
-                if ((int)v1 == 5 && Game1.MENU!=6 && Game1.MENU!= 7 && Game1.MENU != 9)
+                if ((int)v1 == 5 && Game1.MENU != 6 && Game1.MENU != 7 && Game1.MENU != 9)
                     Game1.PL_P.viata = Game1.PL_P.max_viata;
                 Game1.MENU = (int)v1;
 
@@ -487,7 +487,7 @@ namespace Reluare_priectre
                 if (a2 == "item")
                 {
                     Game1.inventar[(int)v1] += (int)v2;
-                   /// ADD_CHAT_LINE("ITEM ADDED; " + (int)v1 + "; quantity  " + (int)v2);
+                    /// ADD_CHAT_LINE("ITEM ADDED; " + (int)v1 + "; quantity  " + (int)v2);
                 }
                 else if (a2 == "plenet")
                 {
@@ -557,21 +557,75 @@ namespace Reluare_priectre
             }
             else if (a1 == "teleport")
             {
-                if(a2 == "ship_to")
+                if (a2 == "ship_to")
                     Game1.PL.poz = new Vector2(v1, v2);
-                else if(a2 == "ship_from")
+                else if (a2 == "ship_from")
                 {
                     if (v1 < Game1.NR_NPC)
                         Game1.NPC[(int)v1].poz = new Vector2(Game1.PL.poz.Y, Game1.PL.poz.X);
                 }
-                else if(a2 == "being_to")
+                else if (a2 == "being_to")
                 {
                     Game1.PL_P.poz = new Vector2(v1 * 20, v2 * 20);
                 }
-                else if(a2 == "being_from")
+                else if (a2 == "being_from")
                 {
                     if (Game1.PLA_S.nr_creaturi > v1)
                         Game1.PLA_S.creaturi[(int)v1].poz = Game1.PL_P.poz;
+                }
+            }
+            else if (a1 == "get_data")
+            {
+                if (a2 == "ship")
+                {
+                    if ((int)v1 == 0)
+                        ADD_CHAT_LINE("SHIP nr. " + (int)v1 + "; coordinates: " + Game1.PL.poz.X + ", " + Game1.PL.poz.Y 
+                            + "; Trusters level: " + Game1.PL.pow + "; Number of components " + Game1.PL.nr_c);
+                    else if ((int)v1 <= Game1.NR_NPC)
+                    {
+                        v1 -= 1;
+                        ADD_CHAT_LINE("SHIP nr. " + (int)v1 + "; coordinates: " + Game1.NPC[(int)(v1)].poz.X + ", " + Game1.NPC[(int)(v1)].poz.Y 
+                            + "; Trusters level: " + Game1.NPC[(int)(v1)].pow + "; Number of components " + Game1.NPC[(int)v1].nr_c);
+                    }
+                    else ADD_CHAT_LINE("NO SHIP WITH THAT NUMBER");
+                }
+                else if (a2 == "being")
+                {
+                    if ((int)v1 == 0)
+                        ADD_CHAT_LINE("being nr. " + (int)v1 + "; coordinates: " + Game1.PL_P.poz.X + ", " + Game1.PL_P.poz.X + "; Power: " 
+                            + Game1.PL_P.pow + "; Health: " + Game1.PL_P.viata + "; Max Health: " + Game1.PL_P.max_viata);
+                    else if ((int)v1 <= Game1.PLA_S.nr_creaturi)
+                    {
+                        v1 -= 1;
+                        ADD_CHAT_LINE("being nr. " + (int)v1 + "; coordinates: " + Game1.PLA_S.creaturi[(int)v1].poz.X + ", " + Game1.PLA_S.creaturi[(int)v1].poz.X + "; Power: " 
+                            + Game1.PLA_S.creaturi[(int)v1].pow + "; Health: " + Game1.PLA_S.creaturi[(int)v1].viata + "; Max Health: " + Game1.PLA_S.creaturi[(int)v1].max_viata);
+                    }
+                    else ADD_CHAT_LINE("NO BEING WITH THAT NUMBER");
+                }
+            }
+            else if(a1 == "unit_testing")
+            {
+                if(a2 == "viata_bloc")
+                {
+                    if ((int)v1 == 1)
+                        ADD_CHAT_LINE(Unit_Testing.viata_bloc((int)v2) + "");
+                    else if ((int)v1 == 2)
+                        ADD_CHAT_LINE(Unit_Testing.viata_bloc(Game1.NR_comp + (int)v2) + "");
+                    else if ((int)v1 == 3)
+                        ADD_CHAT_LINE(Unit_Testing.viata_bloc(Game1.NR_comp + Game1.NR_subs * Game1.NR_elem + (int)v2 + 1) + "");
+                }
+                else if(a2 == "MATH_dist")
+                {
+                    float dist;
+                    Vector2 vector1, vector2;
+                    vector1 = vector2 = Vector2.Zero;
+                    dist = Unit_Testing.Distanta_Vector2((int)v1, ref vector1, ref vector2);
+
+                    if (Math.Abs(dist - v2) < 0.001f)
+                        ADD_CHAT_LINE("1: (" + vector1.X + " , " + vector1.Y + ") ; 2: (" + vector2.X 
+                            + " , " + vector2.Y + ") -> " + "YES: " + dist + "  with error of " + (dist - v2));
+                    else ADD_CHAT_LINE("1: (" + vector1.X + " , " + vector1.Y + ") ; 2: (" + vector2.X 
+                        + " , " + vector2.Y + ") -> " + "No: " + dist + "  with error of " + (dist - v2));
                 }
             }
         }

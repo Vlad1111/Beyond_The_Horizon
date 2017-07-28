@@ -212,7 +212,7 @@ namespace Reluare_priectre
                             being.viata = 100;
                             being.inteligenta = Game1.ran.Next(0, 100) % 4 + 1;
                             being.rot = new float[1];
-                            if(Game1.ran.Next(0,10000000) == 2)
+                           // if(Game1.ran.Next(0,10000000) == 2)
                             {
                                 being.inteligenta = 0;
                                 being.nume = "I have no ideea what I'm doing here, but well...";
