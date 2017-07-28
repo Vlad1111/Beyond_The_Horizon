@@ -266,7 +266,12 @@ namespace Reluare_priectre
                         }
                         i++;
                     }
-                    cmd(c1, c2, v1, v2);
+                    if (c1 == "play")
+                    {
+                        if (c2 == "B_music_" && v1 <= 3 && v1 > 0)
+                            cmd(c1, c2, v1, v2);
+                    }
+                    else cmd(c1, c2, v1, v2);
                     ADD_CHAT_LINE(c1 + "  |   " + c2);
                 }
             }
@@ -482,13 +487,34 @@ namespace Reluare_priectre
                 if (a2 == "item")
                 {
                     Game1.inventar[(int)v1] += (int)v2;
-                    // ADD_CHAT_LINE("ADDED  ITEM " + (int)v1 + "; quantity  " + (int)v2);
+                   /// ADD_CHAT_LINE("ITEM ADDED; " + (int)v1 + "; quantity  " + (int)v2);
                 }
-                else if (a2 == "planet")
+                else if (a2 == "plenet")
                 {
                     if (v1 < 1000)
                     {
                         Game1.L_PLA[Game1.nr_PLA_S].ID = (int)v1;
+                        int ok, aux = 0;
+                        do
+                        {
+                            ok = 1;
+                            Game1.L_PLA[Game1.nr_PLA_S].poz = Game1.PL.poz;
+                            Game1.L_PLA[Game1.nr_PLA_S].poz.X += 800000 - Game1.ran.Next(200000, 1600000);
+                            Game1.L_PLA[Game1.nr_PLA_S].poz.Y += 800000 - Game1.ran.Next(200000, 1600000);
+
+                            for (int i = 1; i <= Game1.nr_PLA_S; i++)
+                            {
+                                float xx, yy, r;
+                                xx = Game1.L_PLA[i].poz.X - Game1.L_PLA[Game1.nr_PLA_S].poz.X;
+                                yy = Game1.L_PLA[i].poz.Y - Game1.L_PLA[Game1.nr_PLA_S].poz.Y;
+                                r = (float)Math.Sqrt(xx * xx + yy * yy);
+
+                                if (r <= 100000)
+                                    ok = 0;
+                            }
+                            aux++;
+                        }
+                        while (ok == 0 && aux < 50000);
                         Game1.nr_PLA_S++;
                         ///  ADD_CHAT_LINE("ADDED  PLANET  with  ID  " + (int)v1);
                     }

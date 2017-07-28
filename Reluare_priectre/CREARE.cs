@@ -1232,9 +1232,18 @@ namespace Reluare_priectre
                 PLAN.creaturi[PLAN.nr_creaturi++] = cre;
             }
             PLAN.forta = 10;
-            Game1.PL_P.X = PLAN.creaturi[0].Y;
-            Game1.PL_P.Y = PLAN.creaturi[0].X;
-            Game1.PL_P.poz = new Vector2(Game1.PL_P.X * 20, Game1.PL_P.Y * 20);
+            if (PLAN.nr_creaturi > 0)
+            {
+                Game1.PL_P.X = PLAN.creaturi[0].Y;
+                Game1.PL_P.Y = PLAN.creaturi[0].X;
+                Game1.PL_P.poz = new Vector2(Game1.PL_P.X * 20, Game1.PL_P.Y * 20);
+            }
+            else
+            {
+                Game1.PL_P.X = 100;
+                Game1.PL_P.Y = 100;
+                Game1.PL_P.poz = new Vector2(Game1.PL_P.X * 20, Game1.PL_P.Y * 20);
+            }
             return PLAN;
         }
 
@@ -1370,7 +1379,7 @@ namespace Reluare_priectre
             int aux = 1;
             int tip_PLA = 1;
             int tip_AST = 0;
-            int nr_pln_s = 4;
+            int nr_pln_s = 5;
             Game1.nr_PLA_S = 500;
             for (int i = 1; i < Game1.nr_PLA_S; i++)
             {

@@ -116,7 +116,7 @@ namespace Reluare_priectre
                 x = X.Dequeue();
                 y = Y.Dequeue();
                 for (int d = 0; d < 4; d++)
-                   // if (Game1.ran.Next(0, 7) != 2)
+                    if (Game1.ran.Next(0, 7) != 2)
                     {
                         int l, k;
                         k = x + Game1.d1[d];
@@ -130,53 +130,26 @@ namespace Reluare_priectre
                                     map[k, l] = map[x, y] + 1;
                                 }
                     }
-            }
-
-            X.Enqueue(18);
-            Y.Enqueue(18);
-            while (X.Count != 0)
-            {
-                x = X.Dequeue();
-                y = Y.Dequeue();
-                for (int d = 0; d < 4; d++)
-                {
-                    int l, k;
-                    k = x + Game1.d1[d];
-                    l = y + Game1.d2[d];
-                    int ok = 0;
-                    if (k >= 0 && k < 37)
-                        if (l >= 0 && l < 37)
-                        {
-                            if (map[k, l] == 0)
-                                ok = 1;
-                            else if (map[k, l] == map[x, y] + 1)
-                            {
-                                X.Enqueue(k);
-                                Y.Enqueue(l);
-                                ok = 1;
-                            }
-                        }
-                    if (ok == 0)
+                    else
                     {
                         if (Game1.d1[d] == 0 && Game1.d2[d] == 1)
-                            for (k = 0; k <= 6; k++)
+                            for (int k = 0; k <= 6; k++)
                                 AUX.b[x * 7 + k, y * 7 + 6] = 1;
 
-                        else if(Game1.d1[d] == 1 && Game1.d2[d] == 0)
-                            for (k = 0; k <= 6; k++)
+                        else if (Game1.d1[d] == 1 && Game1.d2[d] == 0)
+                            for (int k = 0; k <= 6; k++)
                                 AUX.b[x * 7 + 6, y * 7 + k] = 1;
 
-                        else  if (Game1.d1[d] == 0 && Game1.d2[d] == -1)
-                            for (k = 0; k <= 6; k++)
+                        else if (Game1.d1[d] == 0 && Game1.d2[d] == -1)
+                            for (int k = 0; k <= 6; k++)
                                 AUX.b[x * 7 + k, y * 7] = 1;
 
                         else if (Game1.d1[d] == -1 && Game1.d2[d] == 0)
-                            for (k = 0; k <= 6; k++)
+                            for (int k = 0; k <= 6; k++)
                                 AUX.b[x * 7, y * 7 + k] = 1;
                     }
-                }
-                map[x, y] = 0;
             }
+
 
             for (int i = 1; i < 299; i++)
                 for (int j = 1; j < 299; j++)
@@ -195,7 +168,62 @@ namespace Reluare_priectre
                 AUX.b[x, y] = 1;
             }
 
+            map = new int[300, 300];
+            X.Enqueue(18 * 7 + 3);
+            Y.Enqueue(18 * 7 + 3);
+            map[18 * 7 + 3, 18 * 7 + 3] = 1;
+            int nr_locuri_libere = 0;
+            while (X.Count != 0)
+            {
+                x = X.Dequeue();
+                y = Y.Dequeue();
+                for (int d = 0; d < 4; d++)
+                {
+                    int l, k;
+                    k = x + Game1.d1[d];
+                    l = y + Game1.d2[d];
+                    if (k > 0 && k < 300)
+                        if (l > 0 && l < 300)
+                            if (map[k, l] == 0 || map[k, l] > map[x, y] + 1)
+                                if (AUX.b[x, y] == 0 && AUX.a[x, y] != 0)
+                                {
+                                    X.Enqueue(k);
+                                    Y.Enqueue(l);
+                                    map[k, l] = map[x, y] + 1;
+                                    nr_locuri_libere++;
+                                }
+                }
+            }
+            AUX.nr_creaturi = Game1.ran.Next(nr_locuri_libere / 4, nr_locuri_libere / 2);
+            nr_locuri_libere = 0;
+            AUX.creaturi = new Creatura[AUX.nr_creaturi];
+
+            for (int i = 0; i < 300; i++)
+                for (int j = 0; j < 300; j++)
+                    if (map[i, j] == 0 && AUX.a[i, j] != 0)
+                        AUX.b[i, j] = 1;
+                    else if (AUX.a[i, j] != 0 && map[i, j] > 25 && AUX.b[i, j] == 0)
+                        if (Game1.ran.Next(0, 10) == 3 && nr_locuri_libere < AUX.nr_creaturi)
+                        {
+                            Creatura being = new Creatura();
+                            being.poz = new Vector2(i * 20, j * 20);
+                            being.X = i;
+                            being.Y = j;
+                            being.viata = 100;
+                            being.inteligenta = Game1.ran.Next(0, 100) % 4 + 1;
+                            being.rot = new float[1];
+                            if(Game1.ran.Next(0,10000000) == 2)
+                            {
+                                being.inteligenta = 0;
+                                being.nume = "I have no ideea what I'm doing here, but well...";
+                            }
+                            being.pow = 50;
+                            AUX.creaturi[nr_locuri_libere++] = being;
+                        }
+            AUX.nr_creaturi = nr_locuri_libere;
+
             Game1.PL_P.poz = new Vector2((18 * 7 + 3) * 20, (18 * 7 + 3) * 20);
+            Game1.PL_P.viata = Game1.PL_P.max_viata;
             Game1.PLA_S = AUX;
         }
     }
