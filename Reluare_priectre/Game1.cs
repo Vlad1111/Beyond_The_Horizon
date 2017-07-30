@@ -1483,6 +1483,13 @@ namespace Reluare_priectre
                                         PL_P.Y = PLA_S.creaturi[PLA_S.creaturi[i].parti[9]].X - 3;
                                         PL_P.poz = new Vector2(PL_P.X * 20, PL_P.Y * 20);
                                     }
+                                    else if (PLA_S.creaturi[i].inteligenta == -9)
+                                    {
+                                        int caseta = PLA_A - 1;
+                                        if(caseta > 0 && caseta <= 5)
+                                            if (inventar[NR_comp + NR_subs * NR_elem + 11 + caseta] == 0)
+                                                inventar[NR_comp + NR_subs * NR_elem + 11 + caseta] = 1;
+                                    }
                                 }
                             }
                     }

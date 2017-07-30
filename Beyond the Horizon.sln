@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beyond the Horizon", "Reluare_priectre\Beyond the Horizon.csproj", "{839C4F26-74B9-4AA4-9CEC-2E69180459C2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BtH_setup", "BtH_setup\BtH_setup.vdproj", "{5E05891A-3F50-44BD-8C25-883BF4DB6F52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,8 @@ Global
 		{839C4F26-74B9-4AA4-9CEC-2E69180459C2}.Debug|x86.Build.0 = Debug|x86
 		{839C4F26-74B9-4AA4-9CEC-2E69180459C2}.Release|x86.ActiveCfg = Release|x86
 		{839C4F26-74B9-4AA4-9CEC-2E69180459C2}.Release|x86.Build.0 = Release|x86
+		{5E05891A-3F50-44BD-8C25-883BF4DB6F52}.Debug|x86.ActiveCfg = Debug
+		{5E05891A-3F50-44BD-8C25-883BF4DB6F52}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
