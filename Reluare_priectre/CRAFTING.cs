@@ -123,7 +123,12 @@ namespace Reluare_priectre
 
                 if ((a2 >= 1 && a2 <= 20) || (a2 >= 36 && a2 <= 45) || (a2 >= 51 && a2 <= 55) || (a2 >= 66 && a2 <= 70))
                 {
-                    crft[a2, a2 + nr_comp] = 1;
+                    if (a2 >= 11 && a2 <= 15)
+                        crft[a2, a2 + nr_comp] = 5;
+                    else if (a2 >= 16 && a2 <= 20)
+                        crft[a2, a2 + nr_comp] = 10;
+                    else
+                        crft[a2, a2 + nr_comp] = 1;
                     crft[a2, nr_comp + nr_elem * nr_subs + (a2 - 1) % 5 + 1] = -1;
                 }
                 else if (a2 >= 61 && a2 <= 65)

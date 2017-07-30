@@ -220,6 +220,7 @@ namespace Reluare_priectre
                     }
 
                     int aux = 1;
+                    int semn = 1;
                     while (i < a.Length && a[i] != '<')
                         i++;
                     i++;
@@ -230,6 +231,8 @@ namespace Reluare_priectre
                             if (aux == 1)
                                 aux = 10;
                         }
+                        else if (a[i] == '-')
+                            semn = -1;
                         else if (a[i] >= '0' && a[i] <= '9')
                         {
                             if (aux == 1)
@@ -242,8 +245,10 @@ namespace Reluare_priectre
                         }
                         i++;
                     }
+                    v1 *= semn;
 
                     aux = 1;
+                    semn = 1;
                     while (i < a.Length && a[i] != '<')
                         i++;
                     i++;
@@ -254,6 +259,8 @@ namespace Reluare_priectre
                             if (aux == 1)
                                 aux = 10;
                         }
+                        else if (a[i] == '-')
+                            semn = -1;
                         else if (a[i] >= '0' && a[i] <= '9')
                         {
                             if (aux == 1)
@@ -266,10 +273,11 @@ namespace Reluare_priectre
                         }
                         i++;
                     }
+                    v2 *= semn;
                     ADD_CHAT_LINE(c1 + "  |   " + c2 + "  -  < " + v1 + " , " + v2 + " >");
                     if (c1 == "play")
                     {
-                        if (c2 == "B_music_" && v1 <= 3 && v1 > 0)
+                        if (c2 == "B_music_" && v1 <= 3 && v1 >= 0)
                             cmd(c1, c2, v1, v2);
                     }
                     else cmd(c1, c2, v1, v2);
@@ -289,8 +297,12 @@ namespace Reluare_priectre
                 Game1.MENU = (int)v1;
 
                 if (Game1.MENU == 4)
+                {
                     if (Game1.WINDOW_REZ.X < 700)
                         Game1.ZOOM = Game1.WINDOW_REZ.X / 700;
+                }
+                else if (Game1.MENU == 5)
+                    Game1.ZOOM = MATH.dis(Game1.WINDOW_REZ, Vector2.Zero) / 800f;
 
                 if (Game1.MENU == 3)
                     Game1.MOUSE_T = Game1.game.Content.Load<Texture2D>("MOUSE1");
@@ -592,12 +604,12 @@ namespace Reluare_priectre
                 else if (a2 == "being")
                 {
                     if ((int)v1 == 0)
-                        ADD_CHAT_LINE("being nr. " + (int)v1 + "; coordinates: " + Game1.PL_P.poz.X + ", " + Game1.PL_P.poz.X + "; Power: " 
+                        ADD_CHAT_LINE("being nr. " + (int)v1 + "; coordinates: " + Game1.PL_P.poz.X + ", " + Game1.PL_P.poz.Y + "; Power: " 
                             + Game1.PL_P.pow + "; Health: " + Game1.PL_P.viata + "; Max Health: " + Game1.PL_P.max_viata);
                     else if ((int)v1 <= Game1.PLA_S.nr_creaturi)
                     {
                         v1 -= 1;
-                        ADD_CHAT_LINE("being nr. " + (int)v1 + "; coordinates: " + Game1.PLA_S.creaturi[(int)v1].poz.X + ", " + Game1.PLA_S.creaturi[(int)v1].poz.X + "; Power: " 
+                        ADD_CHAT_LINE("being nr. " + (int)v1 + "; coordinates: " + Game1.PLA_S.creaturi[(int)v1].poz.Y + ", " + Game1.PLA_S.creaturi[(int)v1].poz.X + "; Power: " 
                             + Game1.PLA_S.creaturi[(int)v1].pow + "; Health: " + Game1.PLA_S.creaturi[(int)v1].viata + "; Max Health: " + Game1.PLA_S.creaturi[(int)v1].max_viata);
                     }
                     else ADD_CHAT_LINE("NO BEING WITH THAT NUMBER");
@@ -626,6 +638,30 @@ namespace Reluare_priectre
                             + " , " + vector2.Y + ") -> " + "YES: " + dist + "  with error of " + (dist - v2));
                     else ADD_CHAT_LINE("1: (" + vector1.X + " , " + vector1.Y + ") ; 2: (" + vector2.X 
                         + " , " + vector2.Y + ") -> " + "No: " + dist + "  with error of " + (dist - v2));
+                }
+                else if(a2 == "MATH_prim")
+                {
+                    float rezultat = Unit_Testing.Incadrarea_unghi_la_primul_cerc(v1);
+                    if (Math.Abs(rezultat - v2) < 0.001f)
+                        ADD_CHAT_LINE("YES: " + rezultat + "  with error of " + (rezultat - v2));
+                    else ADD_CHAT_LINE("No: " + rezultat + "  with error of " + (rezultat - v2));
+                }
+                else if (a2 == "MATH_sqrt")
+                {
+                    float rezultat = Unit_Testing.special_sqrt(v1);
+                    if (Math.Abs(rezultat - v2) < 0.001f)
+                        ADD_CHAT_LINE("YES: " + rezultat + "  with error of " + (rezultat - v2));
+                    else ADD_CHAT_LINE("No: " + rezultat + "  with error of " + (rezultat - v2));
+                }
+                else if(a2=="crafting")
+                {
+                    int[] ingrediente = new int[Game1.NR_comp + Game1.NR_subs * Game1.NR_elem + Game1.NR_item + 2];
+                    Unit_Testing.crafting((int)v1, (int)v2, ingrediente);
+                    string chtl = "";
+                    for (int i = 0; i < Game1.NR_comp + Game1.NR_subs * Game1.NR_elem + 5; i++)
+                        if (ingrediente[i] != 0)
+                            chtl += "[ " + i + " , " + ingrediente[i] + " ]  ";
+                    ADD_CHAT_LINE(chtl);
                 }
             }
         }

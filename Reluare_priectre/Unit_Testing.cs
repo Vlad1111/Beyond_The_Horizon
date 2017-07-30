@@ -11,16 +11,6 @@ namespace Reluare_priectre
 {
     class Unit_Testing
     {
-        static public void creare_nava(int a, int b)
-        {
-
-        }
-
-        static public void text()
-        {
-
-        }
-
         static public int viata_bloc(int x)
         {
             return VALOARE_CUB.val(x);
@@ -60,5 +50,22 @@ namespace Reluare_priectre
             }
             return MATH.dis(v1, v2);
         }
+        static public float Incadrarea_unghi_la_primul_cerc(float x)
+        {
+            return MATH.prim_cadran(x);
+        }
+
+        static public float special_sqrt(float x)
+        {
+            return MATH.sqrt(x);
+        }
+
+        static public void crafting(int a1, int a2, int[] comp)
+        {
+            CRAFTING.ver(a1, a2, comp);
+            for (int i = 0; i < comp.Length; i++)
+                comp[i] -= Game1.inventar[i];
+        }
+
     }
 }

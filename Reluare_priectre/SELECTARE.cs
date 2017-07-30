@@ -48,22 +48,7 @@ namespace Reluare_priectre
             {
                 Game1.PLA_S = MaxiFun.IO.Load<Planeta>(Game1.saveDir, "PLANETA" + Game1.L_PLA[Game1.PLA_A].ID);
                 // PLA_S = Newtonsoft.Json.JsonConvert.DeserializeObject<Planeta>(Unzip(File.ReadAllBytes("test.json")));
-
-                int aux_sel = -1;
-                for (int i = 0; i < Game1.PLA_S.nr_creaturi; i++)
-                    if (Game1.PLA_S.creaturi[i].inteligenta == -1)
-                        if (aux_sel == -1 || ran.Next(0, Game1.PLA_S.nr_creaturi + 1) == 1)
-                            aux_sel = i;
-
-                if (aux_sel != -1)
-                {
-                    Game1.PL_P.poz.X = Game1.PLA_S.creaturi[aux_sel].poz.Y;
-                    Game1.PL_P.poz.Y = Game1.PLA_S.creaturi[aux_sel].poz.X;
-                }
-                else
-                {
-                    Game1.PL_P.poz = new Vector2(100, 100);
-                }
+                CREARE.PUNERE_PLAYER_PLANETA(Game1.PLA_S, 3);
             }
         }
 

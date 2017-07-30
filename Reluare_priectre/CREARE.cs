@@ -10,6 +10,59 @@ namespace Reluare_priectre
 {
     public class CREARE
     {
+        static public void PUNERE_PLAYER_PLANETA(Planeta AUX, int tip)
+        {
+            if (tip == 1)
+            {
+                int aux = Game1.ran.Next(1, 299);
+                for (int i = 0; i < 298; i++)
+                {
+                    Game1.PL_P.poz.X = aux * 20;
+                    Game1.PL_P.poz.Y = i * 20;
+                    if (AUX.b[i + 2, aux] != 0)
+                        break;
+                }
+
+                Game1.PL_P.Y = (int)(Game1.PL_P.poz.X + 10) / 20;
+                Game1.PL_P.X = (int)(Game1.PL_P.poz.Y + 30) / 20;
+            }
+            else if(tip == 2)
+            {
+                Game1.PL_P.poz = new Vector2(3000, 3000);
+                Game1.PL_P.X = 150;
+                Game1.PL_P.Y = 150;
+            }
+            else if(tip == 3)
+            {
+                int aux_sel = -1;
+                for (int i = 0; i < AUX.nr_creaturi; i++)
+                    if (AUX.creaturi[i].inteligenta == -1)
+                        if (aux_sel == -1 || Game1.ran.Next(0, AUX.nr_creaturi + 1) == 1)
+                            aux_sel = i;
+
+                if (aux_sel != -1)
+                {
+                    Game1.PL_P.poz.X = AUX.creaturi[aux_sel].poz.Y;
+                    Game1.PL_P.poz.Y = AUX.creaturi[aux_sel].poz.X;
+                }
+                else
+                {
+                    Game1.PL_P.poz = new Vector2(100, 100);
+                }
+            }
+            else if(tip==4)
+            {
+                if (AUX.nr_creaturi > 0)
+                {
+                    Game1.PL_P.X = AUX.creaturi[0].Y;
+                    Game1.PL_P.Y = AUX.creaturi[0].X;
+                    Game1.PL_P.poz = new Vector2(Game1.PL_P.X * 20, Game1.PL_P.Y * 20);
+                }
+                else PUNERE_PLAYER_PLANETA(AUX, 1);
+            }
+        }
+
+
         static public Planeta PLANETA()
         {
             Planeta AUX = new Planeta();
@@ -305,19 +358,6 @@ namespace Reluare_priectre
                         }
                 }
 
-            aux = Game1.ran.Next(1, 299);                       /// POZITIA JUCATORULI
-            for (int i = 0; i < 298; i++)
-            {
-                Game1.PL_P.poz.X = aux * 20;
-                Game1.PL_P.poz.Y = i * 20;
-                if (AUX.b[i + 2, aux] != 0)
-                    break;
-            }
-
-            Game1.PL_P.Y = (int)(Game1.PL_P.poz.X + 10) / 20;
-            Game1.PL_P.X = (int)(Game1.PL_P.poz.Y + 30) / 20;
-            for (int j = 1; j < 300; j++)
-                AUX.b[299, j] = 500;
 
             for (int j = 1; j < 300; j++)                          /// ADAUGAREA LAVA
                 for (int i = 299; i > 0; i--)
@@ -537,6 +577,11 @@ namespace Reluare_priectre
                 AUX.creaturi[i] = cc;
             }
 
+            for (int j = 1; j < 300; j++)
+                AUX.b[299, j] = 500;
+
+            PUNERE_PLAYER_PLANETA(AUX, 1);
+
             return AUX;
         }
         static public Planeta STATIE()
@@ -558,9 +603,7 @@ namespace Reluare_priectre
             AUX.temperatura_n = AUX.temperatura_z = 30;
             AUX.MOON = 0;
 
-            Game1.PL_P.poz = new Vector2(3000, 3000);
-            Game1.PL_P.X = 150;
-            Game1.PL_P.Y = 150;
+            PUNERE_PLAYER_PLANETA(AUX, 2);
 
 
             int[][][] mod_loc = new int[20][][];
@@ -1232,18 +1275,8 @@ namespace Reluare_priectre
                 PLAN.creaturi[PLAN.nr_creaturi++] = cre;
             }
             PLAN.forta = 10;
-            if (PLAN.nr_creaturi > 0)
-            {
-                Game1.PL_P.X = PLAN.creaturi[0].Y;
-                Game1.PL_P.Y = PLAN.creaturi[0].X;
-                Game1.PL_P.poz = new Vector2(Game1.PL_P.X * 20, Game1.PL_P.Y * 20);
-            }
-            else
-            {
-                Game1.PL_P.X = 100;
-                Game1.PL_P.Y = 100;
-                Game1.PL_P.poz = new Vector2(Game1.PL_P.X * 20, Game1.PL_P.Y * 20);
-            }
+
+            PUNERE_PLAYER_PLANETA(PLAN, 4);
             return PLAN;
         }
 
@@ -1379,7 +1412,7 @@ namespace Reluare_priectre
             int aux = 1;
             int tip_PLA = 1;
             int tip_AST = 0;
-            int nr_pln_s = 5;
+            int nr_pln_s = 6;
             Game1.nr_PLA_S = 500;
             for (int i = 1; i < Game1.nr_PLA_S; i++)
             {

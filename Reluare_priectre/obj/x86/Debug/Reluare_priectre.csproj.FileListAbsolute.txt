@@ -628,3 +628,8 @@ C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug
 C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\FONT_8.xnb
 C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_11.xnb
 C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\PLANETA_4.xnb
+C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\PLANETA_5.xnb
+C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_12.xnb
+C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\Sfx_13.xnb
+C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\B_music_0.wma
+C:\Users\sbeng\Downloads\Reluare_priectre\Reluare_priectre\bin\Windows\x86\Debug\Content\Sounds\B_music_0.xnb

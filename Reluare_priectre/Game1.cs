@@ -115,6 +115,8 @@ namespace Reluare_priectre
             if (PLA_A > 0)
                 MaxiFun.IO.Save<Planeta>(PLA_S, saveDir, "PLANETA" + PLA_A);
             MaxiFun.IO.Save<int[]>(inventar, saveDir, "INVENTAR");
+
+            MaxiFun.IO.Save<int[]>(PL_P.parti, saveDir, "PLAYER_TOOLS");
         }
         
         public void ELIMINARE_LAS(int k)
@@ -379,6 +381,7 @@ namespace Reluare_priectre
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             string filePath = saveDir + "/INVENTAR.dat";
+            int melodie_aleasa = 0;
             if (File.Exists(filePath))
             {
                 string[] PLANETE_SALVATE = MaxiFun.IO.Load<string[]>(saveDir, "PLANETE_ID");
@@ -389,7 +392,30 @@ namespace Reluare_priectre
                 }
                 PL = MaxiFun.IO.Load<Nava>(saveDir, "NAVA_PLAYER");
                 inventar = MaxiFun.IO.Load<int[]>(saveDir, "INVENTAR");
-                PLA_A = -1;
+                PLA_A = 0;
+                OBTIUNI = MaxiFun.IO.Load<int[]>(saveDir, "OPTIONS");
+                WINDOW_REZ = new Vector2(OBTIUNI[1], OBTIUNI[2]);
+                PL_P_E = new Vector2(WINDOW_REZ.Y / 2, WINDOW_REZ.X / 2);
+                graphics.PreferredBackBufferHeight = OBTIUNI[1];
+                graphics.PreferredBackBufferWidth = OBTIUNI[2];
+                if (OBTIUNI[0] == 1)
+                    graphics.IsFullScreen = true;
+                else
+                    graphics.IsFullScreen = false;
+                graphics.ApplyChanges();
+
+                PL_P.parti = MaxiFun.IO.Load<int[]>(saveDir, "PLAYER_TOOLS");
+                PL_P.max_viata = 1000;
+                for (int p_aleasa = 2; p_aleasa < 8; p_aleasa++)
+                {
+                    int cmp = PL_P.parti[p_aleasa];
+                    if (cmp >= NR_comp + NR_elem * NR_subs + 9 && cmp <= NR_comp + NR_elem * NR_subs + 11)
+                        PL_P.max_viata += (cmp - (NR_comp + NR_elem * NR_subs + 9) + 1) * 100;
+                    if (p_aleasa == 2)
+                        if (PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11 > 0)
+                            melodie_aleasa = PL_P.parti[2] - NR_comp - NR_subs * NR_elem - 11;
+                }
+                MediaPlayer.Volume = OBTIUNI[5] / 100f;
             }
             else
             {
@@ -397,7 +423,7 @@ namespace Reluare_priectre
                 PLA_A = 2;
                 PLA_S = CREARE.PLANETA_FROM_IMG(Content.Load<Texture2D>("PLANETA_" + (PLA_A - 1)));
             }
-            
+            COMANDA.cmd("play", "B_music_", melodie_aleasa, 1);
             COMANDA.cmd("set_menu", "", 1, 0);
         }
 
@@ -575,6 +601,7 @@ namespace Reluare_priectre
                         graphics.ApplyChanges();
                         COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                         COMANDA.cmd("set_menu", "", 1, 0);
+                        MaxiFun.IO.Save<int[]>(OBTIUNI, saveDir, "OPTIONS");
                     }
                     BUTON_A_3 = true;
                 }
@@ -730,6 +757,7 @@ namespace Reluare_priectre
                                     COMANDA.cmd("play", "Sfx_", 4, 0.3f);
                                 }
                                 COMANDA.cmd("set_menu", "", 1, 0);
+                                MaxiFun.IO.Save<int[]>(OBTIUNI, saveDir, "OPTIONS");
                             }
                         }
                         BUTON_A_2 = true;
@@ -822,6 +850,8 @@ namespace Reluare_priectre
                     PL.rot += 3.1415926f / 5f;
                 PL.poz.X += PL.F * PL.pow * (float)Math.Cos(PL.rot) / PL.nr_c;
                 PL.poz.Y += PL.F * PL.pow * (float)Math.Sin(PL.rot) / PL.nr_c;
+                if (TIME % 50 == 0)
+                    COMANDA.cmd("play", "Sfx_", 12, Math.Abs(PL.F) / 5);
 
                 if (ZOOM_VAL < Mouse.GetState().ScrollWheelValue)
                 {
@@ -1082,16 +1112,30 @@ namespace Reluare_priectre
                         j += 18;
                         if (i >= 0 && i <= 36 && j >= 0 && j <= 36)
                             if (PL.comp[36 - i, 36 - j] == 0)
+                            {
                                 if (inventar[COMP_A] > 0)
                                 {
                                     PL.eng_m += comp[COMP_A].eng;
                                     PL.pow += comp[COMP_A].pow;
 
                                     PL.comp[36 - i, 36 - j] = COMP_A;
-                                    PL.nr_c++;
                                     PL.viata[36 - i, 36 - j] = comp[COMP_A].v;
+                                    PL.nr_c++;
                                     inventar[COMP_A]--;
+                                    COMANDA.cmd("play", "Sfx_", 13, 1);
                                 }
+                            }
+                            else if (PL.viata[36 - i, 36 - j] < comp[PL.comp[36 - i, 36 - j]].v)
+                            {
+
+                                if (inventar[NR_comp + NR_elem * NR_subs + 1] >= 30)
+                                {
+                                    inventar[NR_comp + NR_elem * NR_subs + 1] -= 30;
+                                    PL.viata[36 - i, 36 - j] = comp[PL.comp[36 - i, 36 - j]].v;
+                                    COMANDA.cmd("play", "Sfx_", 13, 1);
+                                }
+                                else COMANDA.ADD_CHAT_LINE("WARNING: You do not have enough resources to repair this part");
+                            }
                     }
 
                 }
@@ -1112,13 +1156,18 @@ namespace Reluare_priectre
                     if (i >= 0 && i <= 36 && j >= 0 && j <= 36 && (i != 18 || j != 18))
                         if (PL.comp[36 - i, 36 - j] != 0)
                         {
-                            PL.eng_m -= comp[PL.comp[36 - i, 36 - j]].eng;
-                            PL.pow -= comp[PL.comp[36 - i, 36 - j]].pow;
+                            if (PL.viata[36 - i, 36 - j] == comp[PL.comp[36 - i, 36 - j]].v)
+                            {
+                                PL.eng_m -= comp[PL.comp[36 - i, 36 - j]].eng;
+                                PL.pow -= comp[PL.comp[36 - i, 36 - j]].pow;
 
-                            inventar[PL.comp[36 - i, 36 - j]]++;
-                            PL.comp[36 - i, 36 - j] = 0;
-                            PL.viata[36 - i, 36 - j] = 0;
-                            PL.nr_c--;
+                                inventar[PL.comp[36 - i, 36 - j]]++;
+                                PL.comp[36 - i, 36 - j] = 0;
+                                PL.viata[36 - i, 36 - j] = 0;
+                                PL.nr_c--;
+                                COMANDA.cmd("play", "Sfx_", 13, 1);
+                            }
+                            else COMANDA.ADD_CHAT_LINE("WARNING: You can not remove a damaged part");
                         }
                 }
                 #endregion
@@ -1522,7 +1571,8 @@ namespace Reluare_priectre
                     PL_P.fx = 0;
                     PL_P.fy = 0;
                     MaxiFun.IO.Save<Planeta>(Game1.PLA_S, Game1.saveDir, "PLANETA" + L_PLA[PLA_A].ID);
-                    COMANDA.cmd("set_menu", "", 3, 0);
+                    // COMANDA.cmd("set_menu", "", 3, 0);
+                    CREARE.PUNERE_PLAYER_PLANETA(PLA_S, 3);
                 }
                 #endregion
             }
@@ -1642,7 +1692,7 @@ namespace Reluare_priectre
                                         COMANDA.cmd("play", "Sfx_", 2, 0.7f);
                                         if (p_aleasa == 2)
                                             if (COMP_A > 0)
-                                                MediaPlayer.Stop();
+                                                COMANDA.cmd("play", "B_music_", 0, 1);
                                     }
                                 }
                             }
@@ -2953,6 +3003,8 @@ namespace Reluare_priectre
                 #region INVENTAR COMPONENTE NAVA
                 if (MENU == 4)
                 {
+                    spriteBatch.Draw(items[0], Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font[4], "x" + inventar[NR_comp + NR_subs * NR_elem + 1], new Vector2(0, 50), Color.White, 0f, Vector2.Zero, 0.3f, SpriteEffects.None, 0f);
                     for (int nr = 0, i = 0, j = 100; nr < NR_comp; nr++)
                         if (inventar[nr] > 0)
                         {
@@ -4310,9 +4362,9 @@ namespace Reluare_priectre
             if (OBTIUNI[9] == 1)
                 for (int i = 0; i < 10; i++)
                 {
-                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f + 2, PL_P_E.Y * OBTIUNI[8] / 2000f + 20 * i), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f - 2, PL_P_E.Y * OBTIUNI[8] / 2000f + 20 * i), Color.Blue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
-                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f, PL_P_E.Y * OBTIUNI[8] / 2000f + 20 * i), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f + 2, PL_P_E.Y * OBTIUNI[8] / 2000f + 23 * i), Color.White, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f - 2, PL_P_E.Y * OBTIUNI[8] / 2000f + 23 * i), Color.Blue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font[8], CHAT[i], new Vector2(PL_P_E.X * OBTIUNI[7] / 2000f, PL_P_E.Y * OBTIUNI[8] / 2000f + 23 * i), Color.LightBlue, 0f, Vector2.Zero, 0.4f, SpriteEffects.None, 0f);
                 }
             if (MENU != 10 && MENU < 20)
                 spriteBatch.Draw(MOUSE_T, MOUSE_P, null, Color.White, PL.rot, new Vector2(40, 40), 1f, SpriteEffects.None, 0f);
